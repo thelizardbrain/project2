@@ -32,10 +32,10 @@ def button():
  mouse = pygame.mouse.get_pos()
 
 
- if 400+100 > mouse[0] > 400 and 450+50 > mouse[1] > 450:
-      pygame.draw.rect(display, dark_red,(400,450,100,50))
+ if 320+100 > mouse[0] > 320 and 450+50 > mouse[1] > 450:
+      pygame.draw.rect(display, dark_red,(320,450,100,50))
  else:
-      pygame.draw.rect(display, red,(400,450,100,50))
+      pygame.draw.rect(display, red,(320,450,100,50))
 
 
  if 550 + 100 > mouse[0] > 550 and 450 + 50 > mouse[1] > 450:
@@ -43,10 +43,6 @@ def button():
  else:
      pygame.draw.rect(display, red,(550, 450, 100, 50))
 
- if 250 + 100 > mouse[0] > 250 and 450 + 50 > mouse[1] > 450:
-      pygame.draw.rect(display, dark_red, (250,450,100,50))
- else:
-      pygame.draw.rect(display, red, (250,450,100,50))
 
  if 100 + 100 > mouse[0] > 100 and 450 + 50 > mouse[1] > 450:
        pygame.draw.rect(display, dark_red,(100,450,100,50))
@@ -59,12 +55,9 @@ def button():
  display.blit(textSurf,textRect)
 
  textSurf, textRect = text_object("INFO",tekst)
- textRect.center= ((400+(100/2)), (450 +(50/2)))
+ textRect.center= ((320+(100/2)), (450 +(50/2)))
  display.blit(textSurf,textRect)
 
- textSurf, textRect = text_object("OPTIONS",tekst)
- textRect.center= ((250+(100/2)), (450 +(50/2)))
- display.blit(textSurf,textRect)
 
  textSurf, textRect = text_object("PLAY",tekst)
  textRect.center= ((100+(100/2)), (450 +(50/2)))
