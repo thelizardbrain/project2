@@ -73,7 +73,7 @@ backPic = pygame.image.load('Oak.jpg')
 DISPLAYSURF.blit(pygame.transform.scale(backPic, (675, 650)), (0, 0))
 fight = pygame.image.load('fight.png')
 fightx1 = 250
-fighty1 = 1
+fighty1 = 0
 fightx2 = 0
 fighty2 = 250
 fightx3 = 500
