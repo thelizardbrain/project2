@@ -2,7 +2,7 @@ import pygame, sys
 from pygame.locals import *
 
 pygame.init()
-DISPLAYSURF = pygame.display.set_mode((1160, 700))
+DISPLAYSURF = pygame.display.set_mode((1150, 700))
 pygame.display.set_caption('Survivor')
 backPic = pygame.image.load('Oak.jpg')
 DISPLAYSURF.blit(pygame.transform.scale(backPic, (1150, 700)), (0, 0))
