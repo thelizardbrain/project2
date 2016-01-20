@@ -1,0 +1,60 @@
+import os, sys
+import random
+import pygame
+from pygame.locals import *
+pygame.init()
+APPLICATION_x_size = 800
+APPLICATION_y_size = 600
+screen = pygame.display.set_mode((APPLICATION_x_size, APPLICATION_y_size))
+pygame.display.set_caption('players')
+pygame.mouse.set_visible(True)
+#pygame.mouse.set_visible(False)
+black_square_that_is_the_size_of_the_screen = pygame.Surface(screen.get_size())
+black_square_that_is_the_size_of_the_screen.fill((0, 0, 0))
+screen.blit(black_square_that_is_the_size_of_the_screen, (0, 0))
+pygame.display.flip()
+Weeee = True
+while Weeee:
+    # a color can be: (0 to 255, 0 to 255, 0 to 255)
+   red = (200, 0, 0)
+   bright_red = (255, 0, 0)
+   green = (0, 200, 0)
+   bright_green = (0, 255, 0)
+
+       # "screen.set_at((x, y), Color)" and "pygame.draw.rect(screen, Color, (x, y, x_size, y_size))" draw colors on to an "in computer memory image" called: "screen"
+   #
+
+   mouse = pygame.mouse.get_pos()
+   #print(mouse)
+
+
+
+   if 400+100 > mouse[0] > 400 and 450+50 > mouse[1] > 450:
+      pygame.draw.rect(screen, bright_red,(400,450,100,50))
+   else:
+      pygame.draw.rect(screen, red,(400,450,100,50))
+
+
+   if 550 + 100 > mouse[0] > 550 and 450 + 50 > mouse[1] > 450:
+      pygame.draw.rect(screen, bright_red, (550,450,100,50))
+   else:
+      pygame.draw.rect(screen, red,(550, 450, 100, 50))
+
+   if 250 + 100 > mouse[0] > 250 and 450 + 50 > mouse[1] > 450:
+      pygame.draw.rect(screen, bright_red, (250,450,100,50))
+   else:
+      pygame.draw.rect(screen, red, (250,450,100,50))
+
+   if 100 + 100 > mouse[0] > 100 and 450 + 50 > mouse[1] > 450:
+      pygame.draw.rect(screen, bright_red,(100,450,100,50))
+   else:
+      pygame.draw.rect(screen, red, (100,450,100,50))
+
+
+ 
+    # If you delete the below line you should no longer see the vibrant colors.
+   pygame.display.flip()
+    # if the 'X' button is pressed the window should close:
+   exitGame= pygame.event.get()
+   if len(exitGame) > 0:
+    if exitGame[0].type == QUIT: Weeee = False
