@@ -30,9 +30,9 @@ y = (600 * 0.1)
 
 def button(action=None):
     mouse = pygame.mouse.get_pos()
-    click = pygame.mouse.get_pressed() #nieuwe functie die erop let dat er een mousebutton wordt ingedrukt
-    print(click) #print een stroom van (0, 0, 0) in de console, checkt of er een mousebutton wordt ingedrukt
-#linkermuisknop = (1, 0, 0)     rechtermuisknop = (0, 0, 1)     middlemuisknop = (0, 1, 0)
+    click = pygame.mouse.get_pressed()  #nieuwe functie die erop let dat er een mousebutton wordt ingedrukt
+    print(click)                        #print een stroom van (0, 0, 0) in de console, checkt of er een mousebutton wordt ingedrukt
+                                        #linkermuisknop = (1, 0, 0)     rechtermuisknop = (0, 0, 1)     middlemuisknop = (0, 1, 0)
 
     if 400+100 > mouse[0] > 400 and 450+50 > mouse[1] > 450:
         pygame.draw.rect(display, dark_red,(400,450,100,50))
@@ -42,8 +42,8 @@ def button(action=None):
 
     if 550 + 100 > mouse[0] > 550 and 450 + 50 > mouse[1] > 450:  #Quit button
         pygame.draw.rect(display, dark_red, (550,450,100,50))
-        if click[0] == 1: #Checkt of linkermuisknop is ingedrukt op gegeven coordinaten
-            quit()        #Actie bij de if statement, kan ook verwijzen naar functies en loops(dus andere screens)
+        if click[0] == 1:               #Checkt of linkermuisknop is ingedrukt op gegeven coordinaten
+            quit()                      #Actie bij de if statement, kan ook verwijzen naar functies en loops(dus andere screens)
     else:
         pygame.draw.rect(display, red,(550, 450, 100, 50))
 
@@ -73,14 +73,6 @@ def button(action=None):
     textSurf, textRect = text_object("PLAY",tekst)
     textRect.center= ((100+(100/2)), (450 +(50/2)))
     display.blit(textSurf,textRect)
-
-
-
-
-
-
-
-
 
 
 
