@@ -30,7 +30,7 @@ y = (600 * 0.1)
 
 def button(action=None):
     mouse = pygame.mouse.get_pos()
-    click = pygame.mouse.get_pressed()  #nieuwe functie die erop let dat er een mousebutton wordt ingedrukt
+    click = pygame.mouse.get_pressed()  # nieuwe functie die erop let dat er een mousebutton wordt ingedrukt
     print(click)                        #print een stroom van (0, 0, 0) in de console, checkt of er een mousebutton wordt ingedrukt
                                         #linkermuisknop = (1, 0, 0)     rechtermuisknop = (0, 0, 1)     middlemuisknop = (0, 1, 0)
 
