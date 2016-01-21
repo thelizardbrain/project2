@@ -36,7 +36,8 @@ def button(action=None):
     if 400+100 > mouse[0] > 400 and 450+50 > mouse[1] > 450:
         pygame.draw.rect(display, dark_red,(400,450,100,50))
         if click[0] == 1:
-            print("Starts a game with 4 players")
+            print("window mode")
+            pygame.display.set_mode((800,600),pygame.RESIZABLE)
     else:
         pygame.draw.rect(display, red,(400,450,100,50))
 
@@ -48,38 +49,39 @@ def button(action=None):
     else:
         pygame.draw.rect(display, red,(550, 450, 100, 50))
 
-    if 250 + 100 > mouse[0] > 250 and 450 + 50 > mouse[1] > 450:
-        pygame.draw.rect(display, dark_red, (250,450,100,50))
+    if 150 + 100 > mouse[0] > 150 and 450 + 50 > mouse[1] > 450:
+        pygame.draw.rect(display, dark_red, (150,450,100,50))
         if click[0] == 1:
-            print("starts a game with 3 players")
+            pygame.display.set_mode((800,600),pygame.FULLSCREEN)
+            print("fullscreen mode")
             # pygame.display.set_mode((800,600),pygame.FULLSCREEN)
             # pygame.display.set_mode((800,600),pygame.RESIZABLE)
     else:
-        pygame.draw.rect(display, red, (250,450,100,50))
+        pygame.draw.rect(display, red, (150,450,100,50))
 
-    if 100 + 100 > mouse[0] > 100 and 450 + 50 > mouse[1] > 450:
-        pygame.draw.rect(display, dark_red,(100,450,100,50))
-        if click[0] == 1:
-            print("Starts a game with 2 players")
-    else:
-        pygame.draw.rect(display, red, (100,450,100,50))
+    # if 100 + 100 > mouse[0] > 100 and 450 + 50 > mouse[1] > 450:
+    #     pygame.draw.rect(display, dark_red,(100,450,100,50))
+    #     if click[0] == 1:
+    #         print("Starts a game with 2 players")
+    # else:
+    #     pygame.draw.rect(display, red, (100,450,100,50))
 
 
     textSurf, textRect = text_object("Return",tekst)
     textRect.center= ((550+(100/2)), (450 +(50/2)))
     display.blit(textSurf,textRect)
 
-    textSurf, textRect = text_object("4 Players",tekst)
+    textSurf, textRect = text_object("Windowed",tekst)
     textRect.center= ((400+(100/2)), (450 +(50/2)))
     display.blit(textSurf,textRect)
 
-    textSurf, textRect = text_object("3 Players",tekst)
-    textRect.center= ((250+(100/2)), (450 +(50/2)))
+    textSurf, textRect = text_object("Fullscreen",tekst)
+    textRect.center= ((150+(100/2)), (450 +(50/2)))
     display.blit(textSurf,textRect)
 
-    textSurf, textRect = text_object("2 Players",tekst)
-    textRect.center= ((100+(100/2)), (450 +(50/2)))
-    display.blit(textSurf,textRect)
+    # textSurf, textRect = text_object("2 Players",tekst)
+    # textRect.center= ((100+(100/2)), (450 +(50/2)))
+    # display.blit(textSurf,textRect)
 
 
 
