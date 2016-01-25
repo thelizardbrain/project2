@@ -1,5 +1,6 @@
 import pygame, sys
 from pygame.locals import *
+from players import *
 
 
 #constants representing colours
@@ -68,10 +69,8 @@ MAPHEIGHT = 11
 
 #set up the display
 pygame.init()
-# DISPLAYSURF = pygame.display.set_mode((MAPWIDTH*TILESIZE,MAPHEIGHT*TILESIZE))
 DISPLAYSURF = pygame.display.set_mode((750, 750))
 midPic = pygame.image.load('Midden van bord.png')
-
 backPic = pygame.image.load('Hout2.png')
 DISPLAYSURF.blit(pygame.transform.scale(backPic, (750, 750)), (0, 0))
 shade = pygame.image.load('zwart.png')
@@ -84,6 +83,8 @@ fightx2 = 100
 fighty2 = 350
 fightx3 = 600
 fighty3 = 600
+
+
 while True:
     #get all the user events
     for event in pygame.event.get():
