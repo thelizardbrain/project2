@@ -183,6 +183,7 @@ while True:
         gPy -= 50
         if gPy == 100:
             gDirection = 'right'
+    print('MADE BY: \nMIKE KOUWENHOVEN')
 
     for event in pygame.event.get():
         if event.type == QUIT:
