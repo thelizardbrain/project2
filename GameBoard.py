@@ -2,7 +2,6 @@ import pygame, sys
 from pygame.locals import *
 from players import *
 
-
 #constants representing colours
 YELLOW = (255, 255, 102)
 ANDERSGEEL = (204, 204, 0)
@@ -10,13 +9,11 @@ RED = (201, 57, 57)
 ANDERSROOD = (153, 0, 0)
 GREEN = (102,   204, 0  )
 ANDERSGROEN = (0, 102, 0)
-BLUE  = (0,   102,   205)
+BLUE = (0,   102,   205)
 ANDERSBLAUW = (0, 51, 102)
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
 GREY = (224, 224, 224)
-
-
 
 #constants representing the different resources
 ROODVAK  = 0
@@ -31,7 +28,6 @@ ANDERSGEELVAK = 8
 ANDERSROODVAK = 9
 ANDERSBLAUWVAK = 10
 
-
 #a dictionary linking resources to colours
 colours =   {
                 ROODVAK  : RED,
@@ -44,7 +40,7 @@ colours =   {
                 ANDERSGROENVAK : ANDERSGROEN,
                 ANDERSGEELVAK : ANDERSGEEL,
                 ANDERSROODVAK : ANDERSROOD,
-                ANDERSBLAUWVAK : ANDERSBLAUW,
+                ANDERSBLAUWVAK : ANDERSBLAUW
             }
 
 #a list representing our tilemap
@@ -84,16 +80,7 @@ fighty2 = 350
 fightx3 = 600
 fighty3 = 600
 
-
 while True:
-    #get all the user events
-    for event in pygame.event.get():
-        #if the user wants to quit
-        if event.type == QUIT:
-            #and the game and close the window
-            pygame.quit()
-            sys.exit()
-
     #loop through each row
     for row in range(MAPHEIGHT):
         #loop through each column in the row
@@ -105,5 +92,9 @@ while True:
             DISPLAYSURF.blit(pygame.transform.scale(fight, (50, 50)), (fightx2, fighty2))
             DISPLAYSURF.blit(pygame.transform.scale(fight, (50, 50)), (fightx1, fighty3))
             DISPLAYSURF.blit(pygame.transform.scale(fight, (50, 50)), (fightx3, fighty2))
-    #update the display
+
+    for event in pygame.event.get():
+        if event.type == QUIT:
+            pygame.quit()
+            sys.exit()
     pygame.display.update()
