@@ -69,9 +69,21 @@ DISPLAYSURF = pygame.display.set_mode((750, 750))
 midPic = pygame.image.load('Midden van bord.png')
 backPic = pygame.image.load('Hout2.png')
 roodPion = pygame.image.load('glove_red.png')
+rPx = 600
+rPy = 100
+rDirection = 'down'
 blauwPion = pygame.image.load('glove_blue.png')
+bPx = 100
+bPy = 100
+bDirection = 'right'
 groenPion = pygame.image.load('glove_green.png')
+grPx = 600
+grPy = 600
+grDirection = 'left'
 geelPion = pygame.image.load('glove_yellow.png')
+gPx = 100
+gPy = 600
+gDirection = 'up'
 DISPLAYSURF.blit(pygame.transform.scale(backPic, (750, 750)), (0, 0))
 shade = pygame.image.load('zwart.png')
 DISPLAYSURF.blit(pygame.transform.scale(shade, (550, 5)), (105, 650))
@@ -96,29 +108,81 @@ while True:
             DISPLAYSURF.blit(pygame.transform.scale(fight, (50, 50)), (fightx2, fighty2))
             DISPLAYSURF.blit(pygame.transform.scale(fight, (50, 50)), (fightx1, fighty3))
             DISPLAYSURF.blit(pygame.transform.scale(fight, (50, 50)), (fightx3, fighty2))
-            DISPLAYSURF.blit(pygame.transform.scale(roodPion, (50, 50)), (600, 100))
-            DISPLAYSURF.blit(pygame.transform.scale(blauwPion, (50, 50)), (100, 100))
-            DISPLAYSURF.blit(pygame.transform.scale(geelPion, (50, 50)), (100, 600))
-            DISPLAYSURF.blit(pygame.transform.scale(groenPion, (50, 50)), (600, 600))
+            DISPLAYSURF.blit(pygame.transform.scale(roodPion, (50, 50)), (rPx, rPy))
+            DISPLAYSURF.blit(pygame.transform.scale(blauwPion, (50, 50)), (bPx, bPy))
+            DISPLAYSURF.blit(pygame.transform.scale(geelPion, (50, 50)), (gPx, gPy))
+            DISPLAYSURF.blit(pygame.transform.scale(groenPion, (50, 50)), (grPx, grPy))
 
-    # if direction == 'right':
-    #     catx += 5
-    #     if catx == 280:
-    #         direction = 'down'
-    #
-    # elif direction == 'down':
-    #
-    #     caty += 5
-    #     if caty == 220:
-    #         direction = 'left'
-    # elif direction == 'left':
-    #     catx -= 5
-    #     if catx == 10:
-    #         direction = 'up'
-    # elif direction == 'up':
-    #     caty -= 5
-    #     if caty == 10:
-    #         direction = 'right'
+    if rDirection == 'right':
+        rPx += 50
+        if rPx == 600:
+            rDirection = 'down'
+    elif rDirection == 'down':
+        rPy += 50
+        if rPy == 600:
+            rDirection = 'left'
+    elif rDirection == 'left':
+        rPx -= 50
+        if rPx == 100:
+            rDirection = 'up'
+    elif rDirection == 'up':
+        rPy -= 50
+        if rPy == 100:
+            rDirection = 'right'
+
+
+    if bDirection == 'right':
+        bPx += 50
+        if bPx == 600:
+            bDirection = 'down'
+    elif bDirection == 'down':
+        bPy += 50
+        if bPy == 600:
+            bDirection = 'left'
+    elif bDirection == 'left':
+        bPx -= 50
+        if bPx == 100:
+            bDirection = 'up'
+    elif bDirection == 'up':
+        bPy -= 50
+        if bPy == 100:
+            bDirection = 'right'
+
+
+    if grDirection == 'right':
+        grPx += 50
+        if grPx == 600:
+            grDirection = 'down'
+    elif grDirection == 'down':
+        grPy += 50
+        if grPy == 600:
+            grDirection = 'left'
+    elif grDirection == 'left':
+        grPx -= 50
+        if grPx == 100:
+            grDirection = 'up'
+    elif grDirection == 'up':
+        grPy -= 50
+        if grPy == 100:
+            grDirection = 'right'
+
+
+    if gDirection == 'right':
+        gPx += 50
+        if gPx == 600:
+            gDirection = 'down'
+    elif gDirection == 'down':
+        gPy += 50
+        if gPy == 600:
+            gDirection = 'left'
+    elif gDirection == 'left':
+        gPx -= 50
+        if gPx == 100:
+            gDirection = 'up'
+    elif gDirection == 'up':
+        gPy -= 50
+        if gPy == 100:
+            gDirection = 'right'
 
     for event in pygame.event.get():
         if event.type == QUIT:
