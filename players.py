@@ -29,7 +29,7 @@ class players:
             self.number = 4
             self.position = " "
 
-    def scards (self, scorecard):
+    def scards (self):
         self.scorecard1 = "mike tysen.png"
         self.scorecard2 = "rocky belboa.png"
         self.scorecard3 = "bedr heri.png"

@@ -68,6 +68,10 @@ pygame.init()
 DISPLAYSURF = pygame.display.set_mode((750, 750))
 midPic = pygame.image.load('Midden van bord.png')
 backPic = pygame.image.load('Hout2.png')
+roodPion = pygame.image.load('glove_red.png')
+blauwPion = pygame.image.load('glove_blue.png')
+groenPion = pygame.image.load('glove_green.png')
+geelPion = pygame.image.load('glove_yellow.png')
 DISPLAYSURF.blit(pygame.transform.scale(backPic, (750, 750)), (0, 0))
 shade = pygame.image.load('zwart.png')
 DISPLAYSURF.blit(pygame.transform.scale(shade, (550, 5)), (105, 650))
@@ -92,6 +96,29 @@ while True:
             DISPLAYSURF.blit(pygame.transform.scale(fight, (50, 50)), (fightx2, fighty2))
             DISPLAYSURF.blit(pygame.transform.scale(fight, (50, 50)), (fightx1, fighty3))
             DISPLAYSURF.blit(pygame.transform.scale(fight, (50, 50)), (fightx3, fighty2))
+            DISPLAYSURF.blit(pygame.transform.scale(roodPion, (50, 50)), (600, 100))
+            DISPLAYSURF.blit(pygame.transform.scale(blauwPion, (50, 50)), (100, 100))
+            DISPLAYSURF.blit(pygame.transform.scale(geelPion, (50, 50)), (100, 600))
+            DISPLAYSURF.blit(pygame.transform.scale(groenPion, (50, 50)), (600, 600))
+
+    # if direction == 'right':
+    #     catx += 5
+    #     if catx == 280:
+    #         direction = 'down'
+    #
+    # elif direction == 'down':
+    #
+    #     caty += 5
+    #     if caty == 220:
+    #         direction = 'left'
+    # elif direction == 'left':
+    #     catx -= 5
+    #     if catx == 10:
+    #         direction = 'up'
+    # elif direction == 'up':
+    #     caty -= 5
+    #     if caty == 10:
+    #         direction = 'right'
 
     for event in pygame.event.get():
         if event.type == QUIT:
