@@ -1,6 +1,7 @@
 import pygame, sys
 from pygame.locals import *
 
+
 #constants representing colours
 YELLOW = (255, 255, 102)
 ANDERSGEEL = (204, 204, 0)
@@ -68,16 +69,21 @@ MAPHEIGHT = 11
 #set up the display
 pygame.init()
 # DISPLAYSURF = pygame.display.set_mode((MAPWIDTH*TILESIZE,MAPHEIGHT*TILESIZE))
-DISPLAYSURF = pygame.display.set_mode((675, 650))
-backPic = pygame.image.load('Oak.jpg')
-DISPLAYSURF.blit(pygame.transform.scale(backPic, (675, 650)), (0, 0))
+DISPLAYSURF = pygame.display.set_mode((750, 750))
+midPic = pygame.image.load('Midden van bord.png')
+
+backPic = pygame.image.load('Hout2.png')
+DISPLAYSURF.blit(pygame.transform.scale(backPic, (750, 750)), (0, 0))
+shade = pygame.image.load('zwart.png')
+DISPLAYSURF.blit(pygame.transform.scale(shade, (550, 5)), (105, 650))
+DISPLAYSURF.blit(pygame.transform.scale(shade, (5, 550)), (650, 100))
 fight = pygame.image.load('fight.png')
-fightx1 = 250
-fighty1 = 0
-fightx2 = 0
-fighty2 = 250
-fightx3 = 500
-fighty3 = 500
+fightx1 = 350
+fighty1 = 100
+fightx2 = 100
+fighty2 = 350
+fightx3 = 600
+fighty3 = 600
 while True:
     #get all the user events
     for event in pygame.event.get():
@@ -92,7 +98,8 @@ while True:
         #loop through each column in the row
         for column in range(MAPWIDTH):
             #draw the resource at that position in the tilemap, using the correct colour
-            pygame.draw.rect(DISPLAYSURF, colours[tilemap[row][column]], (column*TILESIZE,row*TILESIZE,TILESIZE,TILESIZE))
+            pygame.draw.rect(DISPLAYSURF, colours[tilemap[row][column]], (100 + column*TILESIZE, 100 + row*TILESIZE, TILESIZE, TILESIZE))
+            DISPLAYSURF.blit(pygame.transform.scale(midPic, (450, 450)), (150, 150))
             DISPLAYSURF.blit(pygame.transform.scale(fight, (50, 50)), (fightx1, fighty1))
             DISPLAYSURF.blit(pygame.transform.scale(fight, (50, 50)), (fightx2, fighty2))
             DISPLAYSURF.blit(pygame.transform.scale(fight, (50, 50)), (fightx1, fighty3))

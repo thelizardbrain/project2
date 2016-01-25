@@ -6,7 +6,7 @@ pygame.init()
 
 display = pygame.display.set_mode((800,600)) # basis framework
 caption = pygame.display.set_caption('Survivor')
-fps = pygame.time.Clock()
+# fps = pygame.time.Clock()
 logoIMG=pygame.image.load('logo.png')
 tekst= pygame.font.Font('freesansbold.ttf',20)
 
@@ -192,7 +192,7 @@ while True: # game loop
     logo(x,y)
     button()
     pygame.display.flip()
-    fps.tick()
+    # fps.tick()
 
 pygame.quit()
 quit()
