@@ -76,8 +76,11 @@ pygame.init()
 DISPLAYSURF = pygame.display.set_mode((750, 750))
 midPic = pygame.image.load('Midden van bord.png')
 
-backPic = pygame.image.load('Oak.jpg')
+backPic = pygame.image.load('Hout2.png')
 DISPLAYSURF.blit(pygame.transform.scale(backPic, (750, 750)), (0, 0))
+shade = pygame.image.load('zwart.png')
+DISPLAYSURF.blit(pygame.transform.scale(shade, (550, 5)), (105, 650))
+DISPLAYSURF.blit(pygame.transform.scale(shade, (5, 550)), (650, 100))
 fight = pygame.image.load('fight.png')
 fightx1 = 350
 fighty1 = 100
