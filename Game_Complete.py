@@ -20,7 +20,7 @@ red = (255, 20, 0)
 dark_red = (150, 0, 0)
 
 
-def gameboard():
+def game():
 #constants representing colours
     YELLOW = (255, 255, 102)
     ANDERSGEEL = (204, 204, 0)
@@ -347,7 +347,7 @@ def button_player():
     if 400+100 > mouse[0] > 400 and 450+50 > mouse[1] > 450:
         pygame.draw.rect(display, dark_red, (400, 450, 100, 50))
         if click[0] == 1:
-            gameboard()
+            game()
     else:
         pygame.draw.rect(display, red, (400, 450, 100, 50))
 
@@ -361,7 +361,7 @@ def button_player():
     if 250 + 100 > mouse[0] > 250 and 450 + 50 > mouse[1] > 450:
         pygame.draw.rect(display, dark_red, (250, 450, 100, 50))
         if click[0] == 1:
-            gameboard()
+            game()
 
     else:
         pygame.draw.rect(display, red, (250, 450, 100, 50))
@@ -369,7 +369,7 @@ def button_player():
     if 100 + 100 > mouse[0] > 100 and 450 + 50 > mouse[1] > 450:
         pygame.draw.rect(display, dark_red, (100, 450, 100, 50))
         if click[0] == 1:
-            gameboard()
+            game()
     else:
         pygame.draw.rect(display, red, (100, 450, 100, 50))
     textsurf, textrect = text_object("Return", tekst)
