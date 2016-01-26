@@ -9,6 +9,9 @@ caption = pygame.display.set_caption('Survivor')
 fps = pygame.time.Clock()
 logoIMG = pygame.image.load('logo.png')
 tekst = pygame.font.Font('freesansbold.ttf', 20)
+pygame.mixer.music.load("test.mp3")
+pygame.mixer.music.play(-1, 0.0)
+pygame.mixer.music.set_volume(0.8)
 
 
 black = (0, 0, 0)
