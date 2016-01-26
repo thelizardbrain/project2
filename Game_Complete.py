@@ -10,9 +10,9 @@ caption = pygame.display.set_caption('Survivor')
 fps = pygame.time.Clock()
 logoIMG = pygame.image.load('logo.png')
 tekst = pygame.font.Font('freesansbold.ttf', 20)
-pygame.mixer.music.load("test.mp3")
-pygame.mixer.music.play(-1, 0.0)
-pygame.mixer.music.set_volume(0.8)
+# pygame.mixer.music.load("test.mp3")
+# pygame.mixer.music.play(-1, 0.0)
+# pygame.mixer.music.set_volume(0.8)
 
 black = (0, 0, 0)
 white = (255, 255, 255)
@@ -20,7 +20,7 @@ red = (255, 20, 0)
 dark_red = (150, 0, 0)
 
 
-def game():
+def gameboard():
 #constants representing colours
     YELLOW = (255, 255, 102)
     ANDERSGEEL = (204, 204, 0)
@@ -49,16 +49,16 @@ def game():
 
     #a dictionary linking resources to colours
     colours = {
-                    ROODVAK:  RED,
-                    GROENVAK: GREEN,
-                    BLAUWVAK: BLUE,
-                    GEELVAK: YELLOW,
-                    WITVAK: WHITE,
-                    GRIJSVAK: GREY,
-                    ZWARTVAK: BLACK,
+                    ROODVAK:        RED,
+                    GROENVAK:       GREEN,
+                    BLAUWVAK:       BLUE,
+                    GEELVAK:        YELLOW,
+                    WITVAK:         WHITE,
+                    GRIJSVAK:       GREY,
+                    ZWARTVAK:       BLACK,
                     ANDERSGROENVAK: ANDERSGROEN,
-                    ANDERSGEELVAK: ANDERSGEEL,
-                    ANDERSROODVAK: ANDERSROOD,
+                    ANDERSGEELVAK:  ANDERSGEEL,
+                    ANDERSROODVAK:  ANDERSROOD,
                     ANDERSBLAUWVAK: ANDERSBLAUW
                 }
 
@@ -115,6 +115,8 @@ def game():
     fightx3 = 600
     fighty3 = 600
 
+    turn = 'playerOne'
+
     #def game(rPx, rPy, bPx, bPy, gPx, gPy, grPx, grPy):
     while True:
         #loop through each row
@@ -132,74 +134,98 @@ def game():
                 DISPLAYSURF.blit(pygame.transform.scale(blauwPion, (50, 50)), (bPx, bPy))
                 DISPLAYSURF.blit(pygame.transform.scale(geelPion, (50, 50)), (gPx, gPy))
                 DISPLAYSURF.blit(pygame.transform.scale(groenPion, (50, 50)), (grPx, grPy))
-        if rDirection == 'right':
-            rPx += 50
-            if rPx == 600:
-                rDirection = 'down'
-        elif rDirection == 'down':
-            rPy += 50
-            if rPy == 600:
-                rDirection = 'left'
-        elif rDirection == 'left':
-            rPx -= 50
-            if rPx == 100:
-                rDirection = 'up'
-        elif rDirection == 'up':
-            rPy -= 50
-            if rPy == 100:
-                rDirection = 'right'
 
-        if bDirection == 'right':
-            bPx += 50
-            if bPx == 600:
-                bDirection = 'down'
-        elif bDirection == 'down':
-            bPy += 50
-            if bPy == 600:
-                bDirection = 'left'
-        elif bDirection == 'left':
-            bPx -= 50
-            if bPx == 100:
-                bDirection = 'up'
-        elif bDirection == 'up':
-            bPy -= 50
-            if bPy == 100:
-                bDirection = 'right'
+        if turn == 'playerOne':
+            if bDirection == 'right':
+                bPx += 50
+                if bPx == 600:
+                    bDirection = 'down'
+                turn = 'playerTwo'
+            elif bDirection == 'down':
+                bPy += 50
+                if bPy == 600:
+                    bDirection = 'left'
+                turn = 'playerTwo'
+            elif bDirection == 'left':
+                bPx -= 50
+                if bPx == 100:
+                    bDirection = 'up'
+                turn = 'playerTwo'
+            elif bDirection == 'up':
+                bPy -= 50
+                if bPy == 100:
+                    bDirection = 'right'
+                turn = 'playerTwo'
 
-        if grDirection == 'right':
-            grPx += 50
-            if grPx == 600:
-                grDirection = 'down'
-        elif grDirection == 'down':
-            grPy += 50
-            if grPy == 600:
-                grDirection = 'left'
-        elif grDirection == 'left':
-            grPx -= 50
-            if grPx == 100:
-                grDirection = 'up'
-        elif grDirection == 'up':
-            grPy -= 50
-            if grPy == 100:
-                grDirection = 'right'
 
-        if gDirection == 'right':
-            gPx += 50
-            if gPx == 600:
-                gDirection = 'down'
-        elif gDirection == 'down':
-            gPy += 50
-            if gPy == 600:
-                gDirection = 'left'
-        elif gDirection == 'left':
-            gPx -= 50
-            if gPx == 100:
-                gDirection = 'up'
-        elif gDirection == 'up':
-            gPy -= 50
-            if gPy == 100:
-                gDirection = 'right'
-        print('MADE BY: \nMIKE KOUWENHOVEN')
+        elif turn == 'playerTwo':
+            if rDirection == 'right':
+                rPx += 50
+                if rPx == 600:
+                    rDirection = 'down'
+                turn = 'playerThree'
+            elif rDirection == 'down':
+                rPy += 50
+                if rPy == 600:
+                    rDirection = 'left'
+                turn = 'playerThree'
+            elif rDirection == 'left':
+                rPx -= 50
+                if rPx == 100:
+                    rDirection = 'up'
+                turn = 'playerThree'
+            elif rDirection == 'up':
+                rPy -= 50
+                if rPy == 100:
+                    rDirection = 'right'
+                turn = 'playerThree'
+
+
+        elif turn == 'playerThree':
+            if gDirection == 'right':
+                gPx += 50
+                if gPx == 600:
+                    gDirection = 'down'
+                turn = 'playerFour'
+            elif gDirection == 'down':
+                gPy += 50
+                if gPy == 600:
+                    gDirection = 'left'
+                turn = 'playerFour'
+            elif gDirection == 'left':
+                gPx -= 50
+                if gPx == 100:
+                    gDirection = 'up'
+                turn = 'playerFour'
+            elif gDirection == 'up':
+                gPy -= 50
+                if gPy == 100:
+                    gDirection = 'right'
+                turn = 'playerFour'
+
+
+        else:
+            if grDirection == 'right':
+                grPx += 50
+                if grPx == 600:
+                    grDirection = 'down'
+                turn = 'playerOne'
+            elif grDirection == 'down':
+                grPy += 50
+                if grPy == 600:
+                    grDirection = 'left'
+                turn = 'playerOne'
+            elif grDirection == 'left':
+                grPx -= 50
+                if grPx == 100:
+                    grDirection = 'up'
+                turn = 'playerOne'
+            elif grDirection == 'up':
+                grPy -= 50
+                if grPy == 100:
+                    grDirection = 'right'
+                turn = 'playerOne'
+
 
         for event in pygame.event.get():
             if event.type == QUIT:
@@ -321,7 +347,7 @@ def button_player():
     if 400+100 > mouse[0] > 400 and 450+50 > mouse[1] > 450:
         pygame.draw.rect(display, dark_red, (400, 450, 100, 50))
         if click[0] == 1:
-            game()
+            gameboard()
     else:
         pygame.draw.rect(display, red, (400, 450, 100, 50))
 
@@ -335,7 +361,7 @@ def button_player():
     if 250 + 100 > mouse[0] > 250 and 450 + 50 > mouse[1] > 450:
         pygame.draw.rect(display, dark_red, (250, 450, 100, 50))
         if click[0] == 1:
-            game()
+            gameboard()
 
     else:
         pygame.draw.rect(display, red, (250, 450, 100, 50))
@@ -343,7 +369,7 @@ def button_player():
     if 100 + 100 > mouse[0] > 100 and 450 + 50 > mouse[1] > 450:
         pygame.draw.rect(display, dark_red, (100, 450, 100, 50))
         if click[0] == 1:
-            game()
+            gameboard()
     else:
         pygame.draw.rect(display, red, (100, 450, 100, 50))
     textsurf, textrect = text_object("Return", tekst)
