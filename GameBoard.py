@@ -96,6 +96,8 @@ fighty2 = 350
 fightx3 = 600
 fighty3 = 600
 
+turn = 'playerOne'
+
 while True:
     #loop through each row
     for row in range(MAPHEIGHT):
@@ -113,77 +115,97 @@ while True:
             DISPLAYSURF.blit(pygame.transform.scale(geelPion, (50, 50)), (gPx, gPy))
             DISPLAYSURF.blit(pygame.transform.scale(groenPion, (50, 50)), (grPx, grPy))
 
-    if rDirection == 'right':
-        rPx += 50
-        if rPx == 600:
-            rDirection = 'down'
-    elif rDirection == 'down':
-        rPy += 50
-        if rPy == 600:
-            rDirection = 'left'
-    elif rDirection == 'left':
-        rPx -= 50
-        if rPx == 100:
-            rDirection = 'up'
-    elif rDirection == 'up':
-        rPy -= 50
-        if rPy == 100:
-            rDirection = 'right'
+    if turn == 'playerOne':
+        if bDirection == 'right':
+            bPx += 50
+            if bPx == 600:
+                bDirection = 'down'
+            turn = 'playerTwo'
+        elif bDirection == 'down':
+            bPy += 50
+            if bPy == 600:
+                bDirection = 'left'
+            turn = 'playerTwo'
+        elif bDirection == 'left':
+            bPx -= 50
+            if bPx == 100:
+                bDirection = 'up'
+            turn = 'playerTwo'
+        elif bDirection == 'up':
+            bPy -= 50
+            if bPy == 100:
+                bDirection = 'right'
+            turn = 'playerTwo'
 
 
-    if bDirection == 'right':
-        bPx += 50
-        if bPx == 600:
-            bDirection = 'down'
-    elif bDirection == 'down':
-        bPy += 50
-        if bPy == 600:
-            bDirection = 'left'
-    elif bDirection == 'left':
-        bPx -= 50
-        if bPx == 100:
-            bDirection = 'up'
-    elif bDirection == 'up':
-        bPy -= 50
-        if bPy == 100:
-            bDirection = 'right'
+    elif turn == 'playerTwo':
+        if rDirection == 'right':
+            rPx += 50
+            if rPx == 600:
+                rDirection = 'down'
+            turn = 'playerThree'
+        elif rDirection == 'down':
+            rPy += 50
+            if rPy == 600:
+                rDirection = 'left'
+            turn = 'playerThree'
+        elif rDirection == 'left':
+            rPx -= 50
+            if rPx == 100:
+                rDirection = 'up'
+            turn = 'playerThree'
+        elif rDirection == 'up':
+            rPy -= 50
+            if rPy == 100:
+                rDirection = 'right'
+            turn = 'playerThree'
 
 
-    if grDirection == 'right':
-        grPx += 50
-        if grPx == 600:
-            grDirection = 'down'
-    elif grDirection == 'down':
-        grPy += 50
-        if grPy == 600:
-            grDirection = 'left'
-    elif grDirection == 'left':
-        grPx -= 50
-        if grPx == 100:
-            grDirection = 'up'
-    elif grDirection == 'up':
-        grPy -= 50
-        if grPy == 100:
-            grDirection = 'right'
+    elif turn == 'playerThree':
+        if gDirection == 'right':
+            gPx += 50
+            if gPx == 600:
+                gDirection = 'down'
+            turn = 'playerFour'
+        elif gDirection == 'down':
+            gPy += 50
+            if gPy == 600:
+                gDirection = 'left'
+            turn = 'playerFour'
+        elif gDirection == 'left':
+            gPx -= 50
+            if gPx == 100:
+                gDirection = 'up'
+            turn = 'playerFour'
+        elif gDirection == 'up':
+            gPy -= 50
+            if gPy == 100:
+                gDirection = 'right'
+            turn = 'playerFour'
 
 
-    if gDirection == 'right':
-        gPx += 50
-        if gPx == 600:
-            gDirection = 'down'
-    elif gDirection == 'down':
-        gPy += 50
-        if gPy == 600:
-            gDirection = 'left'
-    elif gDirection == 'left':
-        gPx -= 50
-        if gPx == 100:
-            gDirection = 'up'
-    elif gDirection == 'up':
-        gPy -= 50
-        if gPy == 100:
-            gDirection = 'right'
-    print('MADE BY: \nMIKE KOUWENHOVEN')
+    else:
+        if grDirection == 'right':
+            grPx += 50
+            if grPx == 600:
+                grDirection = 'down'
+            turn = 'playerOne'
+        elif grDirection == 'down':
+            grPy += 50
+            if grPy == 600:
+                grDirection = 'left'
+            turn = 'playerOne'
+        elif grDirection == 'left':
+            grPx -= 50
+            if grPx == 100:
+                grDirection = 'up'
+            turn = 'playerOne'
+        elif grDirection == 'up':
+            grPy -= 50
+            if grPy == 100:
+                grDirection = 'right'
+            turn = 'playerOne'
+
 
     for event in pygame.event.get():
         if event.type == QUIT:
