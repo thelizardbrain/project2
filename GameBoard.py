@@ -1,6 +1,9 @@
 import pygame, sys
 from pygame.locals import *
 from players import *
+from dobbelsteen import *
+
+
 
 #constants representing colours
 YELLOW = (255, 255, 102)
@@ -117,7 +120,7 @@ while True:
 
     if turn == 'playerOne':
         if bDirection == 'right':
-            bPx += 50
+            bPx += (50 * row)
             if bPx == 600:
                 bDirection = 'down'
             turn = 'playerTwo'
