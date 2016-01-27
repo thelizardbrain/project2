@@ -49,4 +49,3 @@ while True:
     display.fill(white)
     button_draw('Dice!',500,200,100,50,red,dark_red,'action')
     pygame.display.update()
-

@@ -1,6 +1,7 @@
 import pygame, sys
 from pygame.locals import *
 from players import *
+import random
 
 #constants representing colours
 YELLOW = (255, 255, 102)
@@ -65,7 +66,36 @@ MAPHEIGHT = 11
 
 #set up the display
 pygame.init()
+class Button:
+    def __init__(self, screen_rect):
+        self.image = pygame.Surface([100, 50]).convert()
+        self.image.fill((255,0,0))
+        self.rect = self.image.get_rect(center=screen_rect.center)
+    def render(self, surf):
+        surf.blit(self.image, self.rect)
+
+def strip_from_sheet(sheet, start, size, columns, rows=1):
+    frames = []
+    for j in range(rows):
+        for i in range(columns):
+            location = (start[0]+size[0]*i, start[1]+size[1]*j)
+            frames.append(sheet.subsurface(pygame.Rect(location, size)))
+    return frames
+
+pygame.init()
 DISPLAYSURF = pygame.display.set_mode((750, 750))
+screen_rect = DISPLAYSURF.get_rect()
+
+
+dice_sheet = pygame.image.load('dice.png')
+dice = strip_from_sheet(dice_sheet, (0,0), (36,36), 1, 6)
+
+
+
+image = pygame.Surface([0, 0]).convert()
+btn = Button(screen_rect)
+
+
 midPic = pygame.image.load('Midden van bord.png')
 backPic = pygame.image.load('Hout2.png')
 roodPion = pygame.image.load('glove_red.png')
@@ -99,6 +129,17 @@ fighty3 = 600
 turn = 'playerOne'
 
 while True:
+    for event in pygame.event.get():
+        if event.type == QUIT:
+            pygame.quit()
+            sys.exit()
+        elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+            if btn.rect.collidepoint(pygame.mouse.get_pos()):
+                rand = random.randint(0,5)
+                image = dice[rand]
+                grand = rand + 1
+                print(grand)
+
     #loop through each row
     for row in range(MAPHEIGHT):
         #loop through each column in the row
@@ -115,9 +156,9 @@ while True:
             DISPLAYSURF.blit(pygame.transform.scale(geelPion, (50, 50)), (gPx, gPy))
             DISPLAYSURF.blit(pygame.transform.scale(groenPion, (50, 50)), (grPx, grPy))
 
-    if turn == 'playerOne':
+    if turn == 'playerOne' and (event.type == pygame.MOUSEBUTTONDOWN):
         if bDirection == 'right':
-            bPx += 50
+            bPx += (50)
             if bPx == 600:
                 bDirection = 'down'
             turn = 'playerTwo'
@@ -138,7 +179,7 @@ while True:
             turn = 'playerTwo'
 
 
-    elif turn == 'playerTwo':
+    elif turn == 'playerTwo' and (event.type == pygame.MOUSEBUTTONDOWN):
         if rDirection == 'right':
             rPx += 50
             if rPx == 600:
@@ -161,7 +202,7 @@ while True:
             turn = 'playerThree'
 
 
-    elif turn == 'playerThree':
+    elif turn == 'playerThree' and (event.type == pygame.MOUSEBUTTONDOWN):
         if gDirection == 'right':
             gPx += 50
             if gPx == 600:
@@ -184,7 +225,7 @@ while True:
             turn = 'playerFour'
 
 
-    else:
+    elif turn == 'playerFour' and (event.type == pygame.MOUSEBUTTONDOWN):
         if grDirection == 'right':
             grPx += 50
             if grPx == 600:
@@ -206,9 +247,6 @@ while True:
                 grDirection = 'right'
             turn = 'playerOne'
 
-
-    for event in pygame.event.get():
-        if event.type == QUIT:
-            pygame.quit()
-            sys.exit()
+    DISPLAYSURF.blit(image, (680,680))
+    btn.render(DISPLAYSURF)
     pygame.display.update()
