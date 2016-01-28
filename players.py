@@ -58,3 +58,4 @@ class players:
     def changeCpoins(self, condition):
         self.cpoints -= condition
 
+
