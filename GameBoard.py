@@ -83,7 +83,7 @@ def strip_from_sheet(sheet, start, size, columns, rows=1):
     return frames
 
 pygame.init()
-DISPLAYSURF = pygame.display.set_mode((750, 750))
+DISPLAYSURF = pygame.display.set_mode((850, 750))
 screen_rect = DISPLAYSURF.get_rect()
 
 
@@ -139,6 +139,96 @@ while True:
                 image = dice[rand]
                 grand = rand + 1
                 print(grand)
+                if turn == 'playerOne':
+                    if bDirection == 'right':
+                        bPx += (50 * grand)
+                        if bPx == 600:
+                            bDirection = 'down'
+                        turn = 'playerTwo'
+                    elif bDirection == 'down':
+                        bPy += (50 * grand)
+                        if bPy == 600:
+                            bDirection = 'left'
+                        turn = 'playerTwo'
+                    elif bDirection == 'left':
+                        bPx -= (50 * grand)
+                        if bPx == 100:
+                            bDirection = 'up'
+                        turn = 'playerTwo'
+                    elif bDirection == 'up':
+                        bPy -= (50 * grand)
+                        if bPy == 100:
+                            bDirection = 'right'
+                        turn = 'playerTwo'
+
+
+                elif turn == 'playerTwo':
+                    if rDirection == 'right':
+                        rPx += (50 * grand)
+                        if rPx == 600:
+                            rDirection = 'down'
+                        turn = 'playerThree'
+                    elif rDirection == 'down':
+                        rPy += (50 * grand)
+                        if rPy == 600:
+                            rDirection = 'left'
+                        turn = 'playerThree'
+                    elif rDirection == 'left':
+                        rPx -= (50 * grand)
+                        if rPx == 100:
+                            rDirection = 'up'
+                        turn = 'playerThree'
+                    elif rDirection == 'up':
+                        rPy -= (50 * grand)
+                        if rPy == 100:
+                            rDirection = 'right'
+                        turn = 'playerThree'
+
+
+                elif turn == 'playerThree':
+                    if gDirection == 'right':
+                        gPx += (50 * grand)
+                        if gPx == 600:
+                            gDirection = 'down'
+                        turn = 'playerFour'
+                    elif gDirection == 'down':
+                        gPy += (50 * grand)
+                        if gPy == 600:
+                            gDirection = 'left'
+                        turn = 'playerFour'
+                    elif gDirection == 'left':
+                        gPx -= (50 * grand)
+                        if gPx == 100:
+                            gDirection = 'up'
+                        turn = 'playerFour'
+                    elif gDirection == 'up':
+                        gPy -= (50 * grand)
+                        if gPy == 100:
+                            gDirection = 'right'
+                        turn = 'playerFour'
+
+
+                elif turn == 'playerFour':
+                    if grDirection == 'right':
+                        grPx += (50 * grand)
+                        if grPx == 600:
+                            grDirection = 'down'
+                        turn = 'playerOne'
+                    elif grDirection == 'down':
+                        grPy += (50 * grand)
+                        if grPy == 600:
+                            grDirection = 'left'
+                        turn = 'playerOne'
+                    elif grDirection == 'left':
+                        grPx -= (50 * grand)
+                        if grPx == 100:
+                            grDirection = 'up'
+                        turn = 'playerOne'
+                    elif grDirection == 'up':
+                        grPy -= (50 * grand)
+                        if grPy == 100:
+                            grDirection = 'right'
+                        turn = 'playerOne'
 
     #loop through each row
     for row in range(MAPHEIGHT):
@@ -156,97 +246,7 @@ while True:
             DISPLAYSURF.blit(pygame.transform.scale(geelPion, (50, 50)), (gPx, gPy))
             DISPLAYSURF.blit(pygame.transform.scale(groenPion, (50, 50)), (grPx, grPy))
 
-    if turn == 'playerOne' and (event.type == pygame.MOUSEBUTTONDOWN):
-        if bDirection == 'right':
-            bPx += (50)
-            if bPx == 600:
-                bDirection = 'down'
-            turn = 'playerTwo'
-        elif bDirection == 'down':
-            bPy += 50
-            if bPy == 600:
-                bDirection = 'left'
-            turn = 'playerTwo'
-        elif bDirection == 'left':
-            bPx -= 50
-            if bPx == 100:
-                bDirection = 'up'
-            turn = 'playerTwo'
-        elif bDirection == 'up':
-            bPy -= 50
-            if bPy == 100:
-                bDirection = 'right'
-            turn = 'playerTwo'
 
-
-    elif turn == 'playerTwo' and (event.type == pygame.MOUSEBUTTONDOWN):
-        if rDirection == 'right':
-            rPx += 50
-            if rPx == 600:
-                rDirection = 'down'
-            turn = 'playerThree'
-        elif rDirection == 'down':
-            rPy += 50
-            if rPy == 600:
-                rDirection = 'left'
-            turn = 'playerThree'
-        elif rDirection == 'left':
-            rPx -= 50
-            if rPx == 100:
-                rDirection = 'up'
-            turn = 'playerThree'
-        elif rDirection == 'up':
-            rPy -= 50
-            if rPy == 100:
-                rDirection = 'right'
-            turn = 'playerThree'
-
-
-    elif turn == 'playerThree' and (event.type == pygame.MOUSEBUTTONDOWN):
-        if gDirection == 'right':
-            gPx += 50
-            if gPx == 600:
-                gDirection = 'down'
-            turn = 'playerFour'
-        elif gDirection == 'down':
-            gPy += 50
-            if gPy == 600:
-                gDirection = 'left'
-            turn = 'playerFour'
-        elif gDirection == 'left':
-            gPx -= 50
-            if gPx == 100:
-                gDirection = 'up'
-            turn = 'playerFour'
-        elif gDirection == 'up':
-            gPy -= 50
-            if gPy == 100:
-                gDirection = 'right'
-            turn = 'playerFour'
-
-
-    elif turn == 'playerFour' and (event.type == pygame.MOUSEBUTTONDOWN):
-        if grDirection == 'right':
-            grPx += 50
-            if grPx == 600:
-                grDirection = 'down'
-            turn = 'playerOne'
-        elif grDirection == 'down':
-            grPy += 50
-            if grPy == 600:
-                grDirection = 'left'
-            turn = 'playerOne'
-        elif grDirection == 'left':
-            grPx -= 50
-            if grPx == 100:
-                grDirection = 'up'
-            turn = 'playerOne'
-        elif grDirection == 'up':
-            grPy -= 50
-            if grPy == 100:
-                grDirection = 'right'
-            turn = 'playerOne'
-
-    DISPLAYSURF.blit(image, (680,680))
+    DISPLAYSURF.blit(image, (781,680))
     btn.render(DISPLAYSURF)
     pygame.display.update()
