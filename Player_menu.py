@@ -42,7 +42,7 @@ def button(action=None):
     if 550 + 100 > mouse[0] > 550 and 450 + 50 > mouse[1] > 450:
         pygame.draw.rect(display, dark_red, (550,450,100,50))
         if click[0] == 1:
-            main_loop()
+            quit()
     else:
         pygame.draw.rect(display, red,(550, 450, 100, 50))
 
