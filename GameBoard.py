@@ -2,6 +2,7 @@ import pygame, sys
 from pygame.locals import *
 from players import *
 import random
+import time
 
 #constants representing colours
 YELLOW = (255, 255, 102)
@@ -59,12 +60,17 @@ tilemap = [
             [ANDERSGEELVAK, GEELVAK, GRIJSVAK, WITVAK, GRIJSVAK, WITVAK, GRIJSVAK, WITVAK, GRIJSVAK, GROENVAK, ANDERSGROENVAK]
           ]
 
+looproute = [
+                [(100,100), (150,100), (200,100), (250,100), (300,100), (350,100), (400,100), (450,100), (500,100), (550,100), (600,100)],
+                [(600,150), (600,200), (600,250), (600,300), (600,350), (600,400), (600,450), (600,500), (600,550), (600,600)],
+                [(550,600), (500,600), (450,600), (400,600), (350,600), (300,600), (250,600), (200,600), (150,600), (100,600)],
+                [(100,550), (100,500), (100,450), (100,400), (100,350), (100,300), (100,250), (100,200), (100,150)]
+             ]
+
 #useful game dimensions
 TILESIZE  = 50
 MAPWIDTH  = 11
 MAPHEIGHT = 11
-
-
 
 #set up the display
 pygame.init()
@@ -76,7 +82,6 @@ class Button:
     def render(self, surf):
         surf.blit(self.image, self.rect)
 
-
 def strip_from_sheet(sheet, start, size, columns, rows=1):
     frames = []
     for j in range(rows):
@@ -84,22 +89,6 @@ def strip_from_sheet(sheet, start, size, columns, rows=1):
             location = (start[0]+size[0]*i, start[1]+size[1]*j)
             frames.append(sheet.subsurface(pygame.Rect(location, size)))
     return frames
-
-
-
-def button():
-    mouse = pygame.mouse.get_pos()
-    click = pygame.mouse.get_pressed()
-    if 750 + 100 > mouse[0] > 750 and 450 + 50 > mouse[1] > 450:
-        pygame.draw.rect(DISPLAYSURF, ANDERSROOD, (750,450,100,50))
-        if click[0] == 1:
-            quit()
-    else:
-        pygame.draw.rect(DISPLAYSURF, RED,(750, 450, 100, 50))
-
-
-
-
 
 pygame.init()
 DISPLAYSURF = pygame.display.set_mode((850, 750))
@@ -145,8 +134,6 @@ fighty2 = 350
 fightx3 = 600
 fighty3 = 600
 
-
-
 turn = 'playerOne'
 
 while True:
@@ -156,137 +143,182 @@ while True:
             sys.exit()
         elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
             if btn.rect.collidepoint(pygame.mouse.get_pos()):
-                list = [1,2,3,4,5,6]
+                list = [1,2,3,4,5,6,7]
                 rand = random.randint(0,5)
                 image = dice[rand]
                 grand = rand + 1
-                button()
-                print(grand)
+                ggrand = grand + 1
 
                 if turn == 'playerOne':
                     if bDirection == 'right':
                         for i in list[:grand]:
-                            bPx += 50
                             if bPx == 600:
                                 bDirection = 'down'
+                                for n in list[i:ggrand]:
+                                    bPy += 50
                                 break
+                            else:
+                                bPx += 50
                         turn = 'playerTwo'
                     elif bDirection == 'down':
                         for i in list[:grand]:
-                            bPy += 50
                             if bPy == 600:
                                 bDirection = 'left'
+                                for n in list[i:ggrand]:
+                                    bPx -= 50
                                 break
+                            else:
+                                bPy += 50
                         turn = 'playerTwo'
                     elif bDirection == 'left':
                         for i in list[:grand]:
-                            bPx -= 50
                             if bPx == 100:
                                 bDirection = 'up'
+                                for n in list[i:ggrand]:
+                                    bPy -= 50
                                 break
+                            else:
+                                bPx -= 50
                         turn = 'playerTwo'
                     elif bDirection == 'up':
                         for i in list[:grand]:
-                            bPy -= 50
                             if bPy == 100:
                                 bDirection = 'right'
+                                for n in list[i:ggrand]:
+                                    bPx += 50
                                 break
+                            else:
+                                bPy -= 50
                         turn = 'playerTwo'
 
 
                 elif turn == 'playerTwo':
                     if rDirection == 'right':
                         for i in list[:grand]:
-                            rPx += 50
                             if rPx == 600:
                                 rDirection = 'down'
+                                for n in list[i:ggrand]:
+                                    rPy += 50
                                 break
+                            else:
+                                rPx += 50
                         turn = 'playerThree'
                     elif rDirection == 'down':
                         for i in list[:grand]:
-                            rPy += 50
                             if rPy == 600:
                                 rDirection = 'left'
+                                for n in list[i:ggrand]:
+                                    rPx -= 50
                                 break
+                            else:
+                                rPy += 50
                         turn = 'playerThree'
                     elif rDirection == 'left':
                         for i in list[:grand]:
-                            rPx -= 50
                             if rPx == 100:
                                 rDirection = 'up'
+                                for n in list[i:ggrand]:
+                                    rPy -= 50
                                 break
+                            else:
+                                rPx -= 50
                         turn = 'playerThree'
                     elif rDirection == 'up':
                         for i in list[:grand]:
-                            rPy -= 50
                             if rPy == 100:
                                 rDirection = 'right'
+                                for n in list[i:ggrand]:
+                                    rPx += 50
                                 break
+                            else:
+                                rPy -= 50
                         turn = 'playerThree'
 
 
-                elif turn == 'playerThree':
+                elif turn == 'playerFour':
                     if gDirection == 'right':
                         for i in list[:grand]:
-                            gPx += 50
                             if gPx == 600:
                                 gDirection = 'down'
+                                for n in list[i:ggrand]:
+                                    gPy += 50
                                 break
-                        turn = 'playerFour'
+                            else:
+                               gPx += 50
+                        turn = 'playerOne'
                     elif gDirection == 'down':
                         for i in list[:grand]:
-                            gPy += 50
                             if gPy == 600:
                                 gDirection = 'left'
+                                for n in list[i:ggrand]:
+                                    gPx -= 50
                                 break
-                        turn = 'playerFour'
+                            else:
+                                gPy += 50
+                        turn = 'playerOne'
                     elif gDirection == 'left':
                         for i in list[:grand]:
-                            gPx -= 50
                             if gPx == 100:
                                 gDirection = 'up'
+                                for n in list[i:ggrand]:
+                                    gPy -= 50
                                 break
-                        turn = 'playerFour'
+                            else:
+                                gPx -= 50
+                        turn = 'playerOne'
                     elif gDirection == 'up':
                         for i in list[:grand]:
-                            gPy -= 50
                             if gPy == 100:
                                 gDirection = 'right'
+                                for n in list[i:ggrand]:
+                                    gPx += 50
                                 break
-                        turn = 'playerFour'
+                            else:
+                                gPy -= 50
+                        turn = 'playerOne'
 
 
-                elif turn == 'playerFour':
+                elif turn == 'playerThree':
                     if grDirection == 'right':
                         for i in list[:grand]:
-                            grPx += 50
                             if grPx == 600:
                                 grDirection = 'down'
+                                for n in list[i:ggrand]:
+                                    grPy += 50
                                 break
-                        turn = 'playerOne'
+                            else:
+                                grPx += 50
+                        turn = 'playerFour'
                     elif grDirection == 'down':
                         for i in list[:grand]:
-                            grPy += 50
                             if grPy == 600:
                                 grDirection = 'left'
+                                for n in list[i:ggrand]:
+                                    grPx -= 50
                                 break
-                        turn = 'playerOne'
+                            else:
+                                grPy += 50
+                        turn = 'playerFour'
                     elif grDirection == 'left':
                         for i in list[:grand]:
-                            grPx -= 50
                             if grPx == 100:
                                 grDirection = 'up'
+                                for n in list[i:ggrand]:
+                                    grPy -= 50
                                 break
-                        turn = 'playerOne'
+                            else:
+                                grPx -= 50
+                        turn = 'playerFour'
                     elif grDirection == 'up':
                         for i in list[:grand]:
-                            grPy -= 50
                             if grPy == 100:
                                 grDirection = 'right'
+                                for n in list[i:ggrand]:
+                                    grPx += 50
                                 break
-                        turn = 'playerOne'
-
-
+                            else:
+                                grPy -= 50
+                        turn = 'playerFour'
 
     #loop through each row
     for row in range(MAPHEIGHT):
@@ -305,9 +337,6 @@ while True:
             DISPLAYSURF.blit(pygame.transform.scale(groenPion, (50, 50)), (grPx, grPy))
 
 
-
-
     DISPLAYSURF.blit(image, (781,680))
-    button()
     btn.render(DISPLAYSURF)
     pygame.display.update()
