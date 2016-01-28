@@ -1,14 +1,19 @@
 import pygame as pygame, sys
-from pygame.locals import *
+import pygame.locals
 import random
+
+
 
 class Button:
     def __init__(self, screen_rect):
-        self.image = pygame.Surface([100, 50]).convert()
+        self.image = pygame.Surface([130, 50]).convert()
         self.image.fill((255,0,0))
-        self.rect = self.image.get_rect(center=screen_rect.center)
+        self.rect = self.image.get_rect(center=(500,500))# positie button
+        self.font = pygame.font.Font('freesansbold.ttf',48)
+
     def render(self, surf):
         surf.blit(self.image, self.rect)
+        screen.blit(self.font.render("DICE!",True,(0,0,0)),(self.rect))
 
 def strip_from_sheet(sheet, start, size, columns, rows=1):
     frames = []
@@ -42,7 +47,7 @@ while not done:
                 image = dice[rand]
                 print(rand + 1)
 
-    screen.blit(image, (500,100))
+    screen.blit(image, (300,100)) # positie dobbelsteen
     btn.render(screen)
     pygame.display.update()
 
