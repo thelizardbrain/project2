@@ -64,6 +64,8 @@ TILESIZE  = 50
 MAPWIDTH  = 11
 MAPHEIGHT = 11
 
+
+
 #set up the display
 pygame.init()
 class Button:
@@ -74,6 +76,7 @@ class Button:
     def render(self, surf):
         surf.blit(self.image, self.rect)
 
+
 def strip_from_sheet(sheet, start, size, columns, rows=1):
     frames = []
     for j in range(rows):
@@ -81,6 +84,22 @@ def strip_from_sheet(sheet, start, size, columns, rows=1):
             location = (start[0]+size[0]*i, start[1]+size[1]*j)
             frames.append(sheet.subsurface(pygame.Rect(location, size)))
     return frames
+
+
+
+def button():
+    mouse = pygame.mouse.get_pos()
+    click = pygame.mouse.get_pressed()
+    if 750 + 100 > mouse[0] > 750 and 450 + 50 > mouse[1] > 450:
+        pygame.draw.rect(DISPLAYSURF, ANDERSROOD, (750,450,100,50))
+        if click[0] == 1:
+            quit()
+    else:
+        pygame.draw.rect(DISPLAYSURF, RED,(750, 450, 100, 50))
+
+
+
+
 
 pygame.init()
 DISPLAYSURF = pygame.display.set_mode((850, 750))
@@ -126,6 +145,8 @@ fighty2 = 350
 fightx3 = 600
 fighty3 = 600
 
+
+
 turn = 'playerOne'
 
 while True:
@@ -138,6 +159,7 @@ while True:
                 rand = random.randint(0,5)
                 image = dice[rand]
                 grand = rand + 1
+                button()
                 print(grand)
                 if turn == 'playerOne':
                     if bDirection == 'right':
@@ -230,6 +252,8 @@ while True:
                             grDirection = 'right'
                         turn = 'playerOne'
 
+
+
     #loop through each row
     for row in range(MAPHEIGHT):
         #loop through each column in the row
@@ -247,6 +271,9 @@ while True:
             DISPLAYSURF.blit(pygame.transform.scale(groenPion, (50, 50)), (grPx, grPy))
 
 
+
+
     DISPLAYSURF.blit(image, (781,680))
+    button()
     btn.render(DISPLAYSURF)
     pygame.display.update()
