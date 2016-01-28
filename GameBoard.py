@@ -247,6 +247,6 @@ while True:
             DISPLAYSURF.blit(pygame.transform.scale(groenPion, (50, 50)), (grPx, grPy))
 
 
-    DISPLAYSURF.blit(image, (780,680))
+    DISPLAYSURF.blit(image, (781,680))
     btn.render(DISPLAYSURF)
     pygame.display.update()
