@@ -156,6 +156,7 @@ def gameboard_4():
         if 750 + 100 > mouse[0] > 750 and 450 + 50 > mouse[1] > 450:
             pygame.draw.rect(DISPLAYSURF, RED, (750,450,100,50))
             if click[0] == 1:
+                time.sleep(1)
                 webbrowser.open_new("file://" + os.path.realpath("Manual.pdf"))
         else:
             pygame.draw.rect(DISPLAYSURF, ANDERSROOD, (750,450,100,50))
@@ -494,6 +495,7 @@ def gameboard_3():
         if 750 + 100 > mouse[0] > 750 and 450 + 50 > mouse[1] > 450:
             pygame.draw.rect(DISPLAYSURF, RED, (750,450,100,50))
             if click[0] == 1:
+                time.sleep(1)
                 webbrowser.open_new("file://" + os.path.realpath("Manual.pdf"))
         else:
             pygame.draw.rect(DISPLAYSURF, ANDERSROOD, (750,450,100,50))
@@ -782,6 +784,7 @@ def gameboard_2():
         if 750 + 100 > mouse[0] > 750 and 450 + 50 > mouse[1] > 450:
             pygame.draw.rect(DISPLAYSURF, RED, (750,450,100,50))
             if click[0] == 1:
+                time.sleep(1)
                 webbrowser.open_new("file://" + os.path.realpath("Manual.pdf"))
         else:
             pygame.draw.rect(DISPLAYSURF, ANDERSROOD, (750,450,100,50))
@@ -991,13 +994,32 @@ def button_options():
 
     mouse = pygame.mouse.get_pos()
     click = pygame.mouse.get_pressed()
-    if 400+100 > mouse[0] > 400 and 450+50 > mouse[1] > 450:
-        pygame.draw.rect(display, dark_red, (400, 450, 100, 50))
+
+    if 390+100 > mouse[0] > 390 and 450 + 50 > mouse[1] > 450:
+        pygame.draw.rect(display, dark_red, (390, 450, 100, 50))
+        if click[0] == 1:
+            pygame.mixer.music.set_volume(0.1)
+    else:
+        pygame.draw.rect(display, red, (390, 450, 100, 50))
+
+    if 510+100 > mouse[0] > 510 and 450 + 50 > mouse[1] > 450:
+        pygame.draw.rect(display, dark_red, (510, 450, 100, 50))
+        if click[0] == 1:
+            pygame.mixer.music.set_volume(0.9)
+    else:
+        pygame.draw.rect(display, red, (510, 450, 100, 50))
+
+
+
+
+
+    if 270+100 > mouse[0] > 270 and 450+50 > mouse[1] > 450:
+        pygame.draw.rect(display, dark_red, (270, 450, 100, 50))
         if click[0] == 1:
             print("window mode")
             pygame.display.set_mode((800, 600), pygame.RESIZABLE)
     else:
-        pygame.draw.rect(display, red, (400, 450, 100, 50))
+        pygame.draw.rect(display, red, (270, 450, 100, 50))
 
     if 650 + 100 > mouse[0] > 650 and 450 + 50 > mouse[1] > 450:
         pygame.draw.rect(display, dark_red, (650, 450, 100, 50))
@@ -1018,8 +1040,16 @@ def button_options():
     textrect.center = ((650+(100/2)), (450 + (50/2)))
     display.blit(textsurf, textrect)
 
+    textsurf, textrect = text_object(" Sound +", tekst)
+    textrect.center = ((510 +(100/2)), (450 + (50/2)))
+    display.blit(textsurf, textrect)
+
+    textsurf, textrect = text_object(" Sound -", tekst)
+    textrect.center = ((390+(100/2)), (450 + (50/2)))
+    display.blit(textsurf, textrect)
+
     textsurf, textrect = text_object("Windowed", tekst)
-    textrect.center = ((400+(100/2)), (450 + (50/2)))
+    textrect.center = ((270+(100/2)), (450 + (50/2)))
     display.blit(textsurf, textrect)
 
     textsurf, textrect = text_object("Fullscreen", tekst)
