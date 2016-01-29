@@ -5,15 +5,16 @@ import time
 import random
 pygame.init()
 
+pygame.mixer.music.load("test1.mp4")
+pygame.mixer.music.play(-1, 0.0)
+pygame.mixer.music.set_volume(0.5)
 
 display = pygame.display.set_mode((800, 600))   # basis framework
 caption = pygame.display.set_caption('Survivor')
 fps = pygame.time.Clock()
 logoIMG = pygame.image.load('logo.png')
 tekst = pygame.font.Font('freesansbold.ttf', 20)
-# pygame.mixer.music.load("test.mp3")
-# pygame.mixer.music.play(-1, 0.0)
-# pygame.mixer.music.set_volume(0.8)
+
 
 black = (0, 0, 0)
 white = (255, 255, 255)
@@ -137,6 +138,37 @@ def gameboard_4():
     fighty2 = 350
     fightx3 = 600
     fighty3 = 600
+
+    def text_object(text,font):
+        textSurface = font.render(text,True,white)
+        return textSurface, textSurface.get_rect()
+
+    def quitbutton():
+        mouse = pygame.mouse.get_pos()
+        click = pygame.mouse.get_pressed()
+        if 750 + 100 > mouse[0] > 750 and 520 + 50 > mouse[1] > 520:
+            pygame.draw.rect(DISPLAYSURF, RED, (750,520,100,50))
+            if click[0] == 1:
+                quit()
+        else:
+            pygame.draw.rect(DISPLAYSURF, ANDERSROOD,(750, 520, 100, 50))
+
+        if 750 + 100 > mouse[0] > 750 and 450 + 50 > mouse[1] > 450:
+            pygame.draw.rect(DISPLAYSURF, RED, (750,450,100,50))
+            if click[0] == 1:
+                webbrowser.open_new("file://" + os.path.realpath("Manual.pdf"))
+        else:
+            pygame.draw.rect(DISPLAYSURF, ANDERSROOD, (750,450,100,50))
+
+
+        textSurf, textRect = text_object("Info",tekst)
+        textRect.center= ((750+(100/2)), (450 +(50/2)))
+        display.blit(textSurf,textRect)
+
+        textSurf, textRect = text_object("Quit",tekst)
+        textRect.center= ((750+(100/2)), (520 +(50/2)))
+        display.blit(textSurf,textRect)
+
 
     turn = 'playerOne'
 
@@ -342,6 +374,7 @@ def gameboard_4():
         DISPLAYSURF.blit(pygame.transform.scale(groenPion, (50, 50)), (grPx, grPy))
 
 
+        quitbutton()
         DISPLAYSURF.blit(image, (781,680))
         btn.render(DISPLAYSURF)
         pygame.display.update()
@@ -443,6 +476,36 @@ def gameboard_3():
     fighty2 = 350
     fightx3 = 600
     fighty3 = 600
+
+    def text_object(text,font):
+        textSurface = font.render(text,True,white)
+        return textSurface, textSurface.get_rect()
+
+    def quitbutton():
+        mouse = pygame.mouse.get_pos()
+        click = pygame.mouse.get_pressed()
+        if 750 + 100 > mouse[0] > 750 and 520 + 50 > mouse[1] > 520:
+            pygame.draw.rect(DISPLAYSURF, RED, (750,520,100,50))
+            if click[0] == 1:
+                quit()
+        else:
+            pygame.draw.rect(DISPLAYSURF, ANDERSROOD,(750, 520, 100, 50))
+
+        if 750 + 100 > mouse[0] > 750 and 450 + 50 > mouse[1] > 450:
+            pygame.draw.rect(DISPLAYSURF, RED, (750,450,100,50))
+            if click[0] == 1:
+                webbrowser.open_new("file://" + os.path.realpath("Manual.pdf"))
+        else:
+            pygame.draw.rect(DISPLAYSURF, ANDERSROOD, (750,450,100,50))
+
+
+        textSurf, textRect = text_object("Info",tekst)
+        textRect.center= ((750+(100/2)), (450 +(50/2)))
+        display.blit(textSurf,textRect)
+
+        textSurf, textRect = text_object("Quit",tekst)
+        textRect.center= ((750+(100/2)), (520 +(50/2)))
+        display.blit(textSurf,textRect)
 
     turn = 'playerOne'
 
@@ -602,7 +665,7 @@ def gameboard_3():
         DISPLAYSURF.blit(pygame.transform.scale(blauwPion, (50, 50)), (bPx, bPy))
         DISPLAYSURF.blit(pygame.transform.scale(groenPion, (50, 50)), (grPx, grPy))
 
-
+        quitbutton()
         DISPLAYSURF.blit(image, (781,680))
         btn.render(DISPLAYSURF)
         pygame.display.update()
@@ -701,6 +764,37 @@ def gameboard_2():
     fighty2 = 350
     fightx3 = 600
     fighty3 = 600
+
+    def text_object(text,font):
+        textSurface = font.render(text,True,white)
+        return textSurface, textSurface.get_rect()
+
+    def quitbutton():
+        mouse = pygame.mouse.get_pos()
+        click = pygame.mouse.get_pressed()
+        if 750 + 100 > mouse[0] > 750 and 520 + 50 > mouse[1] > 520:
+            pygame.draw.rect(DISPLAYSURF, RED, (750,520,100,50))
+            if click[0] == 1:
+                quit()
+        else:
+            pygame.draw.rect(DISPLAYSURF, ANDERSROOD,(750, 520, 100, 50))
+
+        if 750 + 100 > mouse[0] > 750 and 450 + 50 > mouse[1] > 450:
+            pygame.draw.rect(DISPLAYSURF, RED, (750,450,100,50))
+            if click[0] == 1:
+                webbrowser.open_new("file://" + os.path.realpath("Manual.pdf"))
+        else:
+            pygame.draw.rect(DISPLAYSURF, ANDERSROOD, (750,450,100,50))
+
+
+        textSurf, textRect = text_object("Info",tekst)
+        textRect.center= ((750+(100/2)), (450 +(50/2)))
+        display.blit(textSurf,textRect)
+
+        textSurf, textRect = text_object("Quit",tekst)
+        textRect.center= ((750+(100/2)), (520 +(50/2)))
+        display.blit(textSurf,textRect)
+
 
     turn = 'playerOne'
 
@@ -818,7 +912,7 @@ def gameboard_2():
         DISPLAYSURF.blit(pygame.transform.scale(roodPion, (50, 50)), (rPx, rPy))
         DISPLAYSURF.blit(pygame.transform.scale(blauwPion, (50, 50)), (bPx, bPy))
 
-
+        quitbutton()
         DISPLAYSURF.blit(image, (781,680))
         btn.render(DISPLAYSURF)
         pygame.display.update()
@@ -834,6 +928,9 @@ def logo(x, y):
 
 x = (800 * 0.211)
 y = (600 * 0.1)
+
+
+
 
 
 def button_main():
