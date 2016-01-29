@@ -87,11 +87,8 @@ pygame.init()
 DISPLAYSURF = pygame.display.set_mode((850, 750))
 screen_rect = DISPLAYSURF.get_rect()
 
-
 dice_sheet = pygame.image.load('dice.png')
 dice = strip_from_sheet(dice_sheet, (0,0), (36,36), 1, 6)
-
-
 
 image = pygame.Surface([0, 0]).convert()
 btn = Button(screen_rect)
