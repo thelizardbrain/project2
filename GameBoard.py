@@ -84,7 +84,7 @@ def strip_from_sheet(sheet, start, size, columns, rows=1):
     return frames
 
 pygame.init()
-DISPLAYSURF = pygame.display.set_mode((850, 750))
+DISPLAYSURF = pygame.display.set_mode((1200, 750))
 screen_rect = DISPLAYSURF.get_rect()
 
 dice_sheet = pygame.image.load('dice.png')
@@ -97,31 +97,37 @@ btn = Button(screen_rect)
 midPic = pygame.image.load('Midden van bord.png')
 backPic = pygame.image.load('Hout2.png')
 roodPion = pygame.image.load('glove_red.png')
-rPx = 600
+roodscore = pygame.image.load('red_score.png')
+rPx = 950
 rPy = 100
 rDirection = 'down'
 blauwPion = pygame.image.load('glove_blue.png')
-bPx = 100
+blauwscore = pygame.image.load('blue_score.png')
+bPx = 450
 bPy = 100
 bDirection = 'right'
 groenPion = pygame.image.load('glove_green.png')
-grPx = 600
+groenscore = pygame.image.load('green_score.png')
+grPx = 950
 grPy = 600
 grDirection = 'left'
 geelPion = pygame.image.load('glove_yellow.png')
-gPx = 100
+geelscore = pygame.image.load('yellow_score.png')
+gPx = 450
 gPy = 600
 gDirection = 'up'
-DISPLAYSURF.blit(pygame.transform.scale(backPic, (750, 750)), (0, 0))
+DISPLAYSURF.blit(pygame.transform.scale(backPic, (750, 750)), (350, 0))
 shade = pygame.image.load('zwart.png')
-DISPLAYSURF.blit(pygame.transform.scale(shade, (550, 5)), (105, 650))
-DISPLAYSURF.blit(pygame.transform.scale(shade, (5, 550)), (650, 100))
+DISPLAYSURF.blit(pygame.transform.scale(shade, (555, 5)), (450, 650))
+DISPLAYSURF.blit(pygame.transform.scale(shade, (555, 5)), (450, 95))
+DISPLAYSURF.blit(pygame.transform.scale(shade, (5, 560)), (445, 95))
+DISPLAYSURF.blit(pygame.transform.scale(shade, (5, 550)), (1000, 100))
 fight = pygame.image.load('fight.png')
-fightx1 = 350
+fightx1 = 700
 fighty1 = 100
-fightx2 = 100
+fightx2 = 450
 fighty2 = 350
-fightx3 = 600
+fightx3 = 950
 fighty3 = 600
 
 turn = 'playerOne'
@@ -140,9 +146,10 @@ while True:
                 ggrand = grand + 1
 
                 if turn == 'playerOne':
+                    DISPLAYSURF.blit(pygame.transform.scale(blauwscore, (350, 450)), (0, 300))
                     if bDirection == 'right':
                         for i in list[:grand]:
-                            if bPx == 600:
+                            if bPx == 950:
                                 bDirection = 'down'
                                 for n in list[i:ggrand]:
                                     bPy += 50
@@ -162,7 +169,7 @@ while True:
                         turn = 'playerTwo'
                     elif bDirection == 'left':
                         for i in list[:grand]:
-                            if bPx == 100:
+                            if bPx == 450:
                                 bDirection = 'up'
                                 for n in list[i:ggrand]:
                                     bPy -= 50
@@ -183,9 +190,10 @@ while True:
 
 
                 elif turn == 'playerTwo':
+                    DISPLAYSURF.blit(pygame.transform.scale(roodscore, (350, 450)), (0, 300))
                     if rDirection == 'right':
                         for i in list[:grand]:
-                            if rPx == 600:
+                            if rPx == 950:
                                 rDirection = 'down'
                                 for n in list[i:ggrand]:
                                     rPy += 50
@@ -205,7 +213,7 @@ while True:
                         turn = 'playerThree'
                     elif rDirection == 'left':
                         for i in list[:grand]:
-                            if rPx == 100:
+                            if rPx == 450:
                                 rDirection = 'up'
                                 for n in list[i:ggrand]:
                                     rPy -= 50
@@ -226,9 +234,10 @@ while True:
 
 
                 elif turn == 'playerFour':
+                    DISPLAYSURF.blit(pygame.transform.scale(geelscore, (350, 450)), (0, 300))
                     if gDirection == 'right':
                         for i in list[:grand]:
-                            if gPx == 600:
+                            if gPx == 950:
                                 gDirection = 'down'
                                 for n in list[i:ggrand]:
                                     gPy += 50
@@ -248,7 +257,7 @@ while True:
                         turn = 'playerOne'
                     elif gDirection == 'left':
                         for i in list[:grand]:
-                            if gPx == 100:
+                            if gPx == 450:
                                 gDirection = 'up'
                                 for n in list[i:ggrand]:
                                     gPy -= 50
@@ -269,9 +278,10 @@ while True:
 
 
                 elif turn == 'playerThree':
+                    DISPLAYSURF.blit(pygame.transform.scale(groenscore, (350, 450)), (0, 300))
                     if grDirection == 'right':
                         for i in list[:grand]:
-                            if grPx == 600:
+                            if grPx == 950:
                                 grDirection = 'down'
                                 for n in list[i:ggrand]:
                                     grPy += 50
@@ -291,7 +301,7 @@ while True:
                         turn = 'playerFour'
                     elif grDirection == 'left':
                         for i in list[:grand]:
-                            if grPx == 100:
+                            if grPx == 450:
                                 grDirection = 'up'
                                 for n in list[i:ggrand]:
                                     grPy -= 50
@@ -315,16 +325,16 @@ while True:
         #loop through each column in the row
         for column in range(MAPWIDTH):
             #draw the resource at that position in the tilemap, using the correct colour
-            pygame.draw.rect(DISPLAYSURF, colours[tilemap[row][column]], (100 + column*TILESIZE, 100 + row*TILESIZE, TILESIZE, TILESIZE))
-            DISPLAYSURF.blit(pygame.transform.scale(midPic, (450, 450)), (150, 150))
-            DISPLAYSURF.blit(pygame.transform.scale(fight, (50, 50)), (fightx1, fighty1))
-            DISPLAYSURF.blit(pygame.transform.scale(fight, (50, 50)), (fightx2, fighty2))
-            DISPLAYSURF.blit(pygame.transform.scale(fight, (50, 50)), (fightx1, fighty3))
-            DISPLAYSURF.blit(pygame.transform.scale(fight, (50, 50)), (fightx3, fighty2))
-            DISPLAYSURF.blit(pygame.transform.scale(roodPion, (50, 50)), (rPx, rPy))
-            DISPLAYSURF.blit(pygame.transform.scale(blauwPion, (50, 50)), (bPx, bPy))
-            DISPLAYSURF.blit(pygame.transform.scale(geelPion, (50, 50)), (gPx, gPy))
-            DISPLAYSURF.blit(pygame.transform.scale(groenPion, (50, 50)), (grPx, grPy))
+            pygame.draw.rect(DISPLAYSURF, colours[tilemap[row][column]], (450 + column*TILESIZE, 100 + row*TILESIZE, TILESIZE, TILESIZE))
+    DISPLAYSURF.blit(pygame.transform.scale(midPic, (450, 450)), (500, 150))
+    DISPLAYSURF.blit(pygame.transform.scale(fight, (50, 50)), (fightx1, fighty1))
+    DISPLAYSURF.blit(pygame.transform.scale(fight, (50, 50)), (fightx2, fighty2))
+    DISPLAYSURF.blit(pygame.transform.scale(fight, (50, 50)), (fightx1, fighty3))
+    DISPLAYSURF.blit(pygame.transform.scale(fight, (50, 50)), (fightx3, fighty2))
+    DISPLAYSURF.blit(pygame.transform.scale(roodPion, (50, 50)), (rPx, rPy))
+    DISPLAYSURF.blit(pygame.transform.scale(blauwPion, (50, 50)), (bPx, bPy))
+    DISPLAYSURF.blit(pygame.transform.scale(geelPion, (50, 50)), (gPx, gPy))
+    DISPLAYSURF.blit(pygame.transform.scale(groenPion, (50, 50)), (grPx, grPy))
 
 
     DISPLAYSURF.blit(image, (781,680))
