@@ -29,10 +29,12 @@ dark_red = (150, 0, 0)
 class Button:
         def __init__(self, screen_rect):
             self.image = pygame.Surface([100, 50]).convert()
-            self.image.fill((255,0,0))
-            self.rect = self.image.get_rect(center=screen_rect.center)
+            self.image.fill((150,0,0))
+            self.rect = self.image.get_rect(center=(800,150))
+            self.font = pygame.font.Font('freesansbold.ttf',40)
         def render(self, surf):
             surf.blit(self.image, self.rect)
+            surf.blit(self.font.render("DICE!",True,(250,250,250)),(self.rect))
 
 def strip_from_sheet(sheet, start, size, columns, rows=1):
         frames = []
@@ -384,7 +386,7 @@ def gameboard_4():
 
 
         quitbutton()
-        DISPLAYSURF.blit(image, (781,680))
+        DISPLAYSURF.blit(image, (780,180))
         btn.render(DISPLAYSURF)
         pygame.display.update()
 
@@ -675,7 +677,7 @@ def gameboard_3():
         DISPLAYSURF.blit(pygame.transform.scale(groenPion, (50, 50)), (grPx, grPy))
 
         quitbutton()
-        DISPLAYSURF.blit(image, (781,680))
+        DISPLAYSURF.blit(image, (781,683))
         btn.render(DISPLAYSURF)
         pygame.display.update()
 
