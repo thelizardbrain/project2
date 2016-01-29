@@ -5,9 +5,9 @@ import time
 import random
 pygame.init()
 
-pygame.mixer.music.load("test1.mp4")
-pygame.mixer.music.play(-1, 0.0)
-pygame.mixer.music.set_volume(0.5)
+#pygame.mixer.music.load("test1.mp4")
+#pygame.mixer.music.play(-1, 0.0)
+#pygame.mixer.music.set_volume(0.5)
 
 display = pygame.display.set_mode((800, 600))   # basis framework
 caption = pygame.display.set_caption('Survivor')
@@ -15,6 +15,11 @@ fps = pygame.time.Clock()
 logoIMG = pygame.image.load('logo.png')
 tekst = pygame.font.Font('freesansbold.ttf', 20)
 
+
+hudpion1 = pygame.image.load("hud_glove_blue.png")
+hudpion2 = pygame.image.load("hud_glove_green.png")
+hudpion3 = pygame.image.load("hud_glove_red.png")
+hudpion4 = pygame.image.load("hud_glove_yellow.png")
 
 black = (0, 0, 0)
 white = (255, 255, 255)
@@ -187,6 +192,7 @@ def gameboard_4():
                     ggrand = grand + 1
 
                     if turn == 'playerOne':
+                        DISPLAYSURF.blit(pygame.transform.scale(hudpion3, (100, 100)), (750, 0))
                         if bDirection == 'right':
                             for i in list[:grand]:
                                 if bPx == 600:
@@ -230,6 +236,7 @@ def gameboard_4():
 
 
                     elif turn == 'playerTwo':
+                        DISPLAYSURF.blit(pygame.transform.scale(hudpion2, (100, 100)), (750, 0))
                         if rDirection == 'right':
                             for i in list[:grand]:
                                 if rPx == 600:
@@ -273,6 +280,7 @@ def gameboard_4():
 
 
                     elif turn == 'playerFour':
+                        DISPLAYSURF.blit(pygame.transform.scale(hudpion1, (100, 100)), (750, 0))
                         if gDirection == 'right':
                             for i in list[:grand]:
                                 if gPx == 600:
@@ -316,6 +324,7 @@ def gameboard_4():
 
 
                     elif turn == 'playerThree':
+                        DISPLAYSURF.blit(pygame.transform.scale(hudpion4, (100, 100)), (750, 0))
                         if grDirection == 'right':
                             for i in list[:grand]:
                                 if grPx == 600:
@@ -813,6 +822,7 @@ def gameboard_2():
                     ggrand = grand + 1
 
                     if turn == 'playerOne':
+
                         if bDirection == 'right':
                             for i in list[:grand]:
                                 if bPx == 600:
