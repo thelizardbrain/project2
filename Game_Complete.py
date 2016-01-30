@@ -29,12 +29,12 @@ dark_red = (150, 0, 0)
 class Button:
         def __init__(self, screen_rect):
             self.image = pygame.Surface([100, 50]).convert()
-            self.image.fill((150,0,0))
-            self.rect = self.image.get_rect(center=(800,150))
-            self.font = pygame.font.Font('freesansbold.ttf',40)
+            self.image.fill((150, 0, 0))
+            self.rect = self.image.get_rect(center=(1150, 150))
+            self.font = pygame.font.Font('freesansbold.ttf', 40)
         def render(self, surf):
             surf.blit(self.image, self.rect)
-            surf.blit(self.font.render("DICE!",True,(250,250,250)),(self.rect))
+            surf.blit(self.font.render("DICE!", True, (250, 250, 250)), (self.rect))
 
 def strip_from_sheet(sheet, start, size, columns, rows=1):
         frames = []
@@ -110,13 +110,16 @@ def gameboard_4():
     screen_rect = DISPLAYSURF.get_rect()
 
     dice_sheet = pygame.image.load('dice.png')
-    dice = strip_from_sheet(dice_sheet, (0,0), (36,36), 1, 6)
+    dice = strip_from_sheet(dice_sheet, (0, 0), (36, 36), 1, 6)
 
     image = pygame.Surface([0, 0]).convert()
     btn = Button(screen_rect)
 
     #set up the display
     midPic = pygame.image.load('Midden van bord.png')
+    centerPic = pygame.image.load('superfight.png')
+    cPx = 700
+    cPy = 300
     backPic = pygame.image.load('Hout2.png')
     roodPion = pygame.image.load('glove_red.png')
     roodscore = pygame.image.load('red_score.png')
@@ -153,35 +156,35 @@ def gameboard_4():
     fighty3 = 600
 
     def text_object(text,font):
-        textSurface = font.render(text,True,white)
+        textSurface = font.render(text, True, white)
         return textSurface, textSurface.get_rect()
 
     def quitbutton():
         mouse = pygame.mouse.get_pos()
         click = pygame.mouse.get_pressed()
-        if 750 + 100 > mouse[0] > 750 and 520 + 50 > mouse[1] > 520:
-            pygame.draw.rect(DISPLAYSURF, RED, (750,520,100,50))
+        if 1100 + 100 > mouse[0] > 1100 and 520 + 50 > mouse[1] > 520:
+            pygame.draw.rect(DISPLAYSURF, RED, (1100, 520, 100, 50))
             if click[0] == 1:
                 quit()
         else:
-            pygame.draw.rect(DISPLAYSURF, ANDERSROOD,(750, 520, 100, 50))
+            pygame.draw.rect(DISPLAYSURF, ANDERSROOD,(1100, 520, 100, 50))
 
-        if 750 + 100 > mouse[0] > 750 and 450 + 50 > mouse[1] > 450:
-            pygame.draw.rect(DISPLAYSURF, RED, (750,450,100,50))
+        if 1100 + 100 > mouse[0] > 1100 and 450 + 50 > mouse[1] > 450:
+            pygame.draw.rect(DISPLAYSURF, RED, (1100, 450, 100, 50))
             if click[0] == 1:
                 time.sleep(1)
                 webbrowser.open_new("file://" + os.path.realpath("Manual.pdf"))
         else:
-            pygame.draw.rect(DISPLAYSURF, ANDERSROOD, (750,450,100,50))
+            pygame.draw.rect(DISPLAYSURF, ANDERSROOD, (1100, 450, 100, 50))
 
 
         textSurf, textRect = text_object("Info",tekst)
-        textRect.center= ((750+(100/2)), (450 +(50/2)))
-        display.blit(textSurf,textRect)
+        textRect.center= ((1100+(100/2)), (450 +(50/2)))
+        display.blit(textSurf, textRect)
 
         textSurf, textRect = text_object("Quit",tekst)
-        textRect.center= ((750+(100/2)), (520 +(50/2)))
-        display.blit(textSurf,textRect)
+        textRect.center= ((1100+(100/2)), (520 + (50/2)))
+        display.blit(textSurf, textRect)
 
 
     turn = 'playerOne'
@@ -394,6 +397,7 @@ def gameboard_4():
         DISPLAYSURF.blit(pygame.transform.scale(blauwPion, (50, 50)), (bPx, bPy))
         DISPLAYSURF.blit(pygame.transform.scale(geelPion, (50, 50)), (gPx, gPy))
         DISPLAYSURF.blit(pygame.transform.scale(groenPion, (50, 50)), (grPx, grPy))
+        DISPLAYSURF.blit(pygame.transform.scale(centerPic, (100, 150)), (cPx, cPy))
 
 
         quitbutton()
@@ -528,12 +532,12 @@ def gameboard_3():
 
 
         textSurf, textRect = text_object("Info",tekst)
-        textRect.center= ((750+(100/2)), (450 +(50/2)))
+        textRect.center = ((750+(100/2)), (450 + (50/2)))
         display.blit(textSurf,textRect)
 
         textSurf, textRect = text_object("Quit",tekst)
-        textRect.center= ((750+(100/2)), (520 +(50/2)))
-        display.blit(textSurf,textRect)
+        textRect.center = ((750+(100/2)), (520 + (50/2)))
+        display.blit(textSurf, textRect)
 
     turn = 'playerOne'
 
@@ -697,7 +701,7 @@ def gameboard_3():
         DISPLAYSURF.blit(pygame.transform.scale(groenPion, (50, 50)), (grPx, grPy))
 
         quitbutton()
-        DISPLAYSURF.blit(image, (1121,683))
+        DISPLAYSURF.blit(image, (1175, 683))
         btn.render(DISPLAYSURF)
         pygame.display.update()
 

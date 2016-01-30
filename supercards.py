@@ -4,6 +4,7 @@ import os
 class supercards:
     def __init__(self, supercardname):
         self.name = supercardname
+        self.image = ("superfightcards", "superfight.png")
 
         if supercardname == "John Cena":
             self.image = os.path.join("superfightcards", "john cena.png")
