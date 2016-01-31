@@ -29,10 +29,12 @@ dark_red = (150, 0, 0)
 class Button:
         def __init__(self, screen_rect):
             self.image = pygame.Surface([100, 50]).convert()
-            self.image.fill((255,0,0))
-            self.rect = self.image.get_rect(center=screen_rect.center)
+            self.image.fill((150, 0, 0))
+            self.rect = self.image.get_rect(center=(1150, 150))
+            self.font = pygame.font.Font('freesansbold.ttf', 40)
         def render(self, surf):
             surf.blit(self.image, self.rect)
+            surf.blit(self.font.render("DICE!", True, (250, 250, 250)), (self.rect))
 
 def strip_from_sheet(sheet, start, size, columns, rows=1):
         frames = []
@@ -104,76 +106,85 @@ def gameboard_4():
     MAPWIDTH  = 11
     MAPHEIGHT = 11
 
-    DISPLAYSURF = pygame.display.set_mode((850, 750))
+    DISPLAYSURF = pygame.display.set_mode((1200, 750))
     screen_rect = DISPLAYSURF.get_rect()
 
     dice_sheet = pygame.image.load('dice.png')
-    dice = strip_from_sheet(dice_sheet, (0,0), (36,36), 1, 6)
+    dice = strip_from_sheet(dice_sheet, (0, 0), (36, 36), 1, 6)
 
     image = pygame.Surface([0, 0]).convert()
     btn = Button(screen_rect)
 
     #set up the display
     midPic = pygame.image.load('Midden van bord.png')
+    centerPic = pygame.image.load('superfight.png')
+    cPx = 700
+    cPy = 300
     backPic = pygame.image.load('Hout2.png')
     roodPion = pygame.image.load('glove_red.png')
-    rPx = 600
+    roodscore = pygame.image.load('red_score.png')
+    rPx = 950
     rPy = 100
     rDirection = 'down'
     blauwPion = pygame.image.load('glove_blue.png')
-    bPx = 100
+    blauwscore = pygame.image.load('blue_score.png')
+    bPx = 450
     bPy = 100
     bDirection = 'right'
     groenPion = pygame.image.load('glove_green.png')
-    grPx = 600
+    groenscore = pygame.image.load('green_score.png')
+    grPx = 950
     grPy = 600
     grDirection = 'left'
     geelPion = pygame.image.load('glove_yellow.png')
-    gPx = 100
+    geelscore = pygame.image.load('yellow_score.png')
+    gPx = 450
     gPy = 600
     gDirection = 'up'
-    DISPLAYSURF.blit(pygame.transform.scale(backPic, (750, 750)), (0, 0))
+    DISPLAYSURF.blit(pygame.transform.scale(backPic, (750, 750)), (350, 0))
     shade = pygame.image.load('zwart.png').convert()
-    DISPLAYSURF.blit(pygame.transform.scale(shade, (550, 5)), (105, 650))
-    DISPLAYSURF.blit(pygame.transform.scale(shade, (5, 550)), (650, 100))
+    DISPLAYSURF.blit(pygame.transform.scale(shade, (555, 5)), (450, 650))
+    DISPLAYSURF.blit(pygame.transform.scale(shade, (555, 5)), (450, 95))
+    DISPLAYSURF.blit(pygame.transform.scale(shade, (5, 560)), (445, 95))
+    DISPLAYSURF.blit(pygame.transform.scale(shade, (5, 550)), (1000, 100))
     fight = pygame.image.load('fight.png').convert()
-    fightx1 = 350
+    fightx1 = 700
     fighty1 = 100
-    fightx2 = 100
+    fightx2 = 450
     fighty2 = 350
-    fightx3 = 600
+    fightx3 = 950
     fighty3 = 600
 
     def text_object(text,font):
-        textSurface = font.render(text,True,white)
+        textSurface = font.render(text, True, white)
         return textSurface, textSurface.get_rect()
 
     def quitbutton():
         mouse = pygame.mouse.get_pos()
         click = pygame.mouse.get_pressed()
-        if 750 + 100 > mouse[0] > 750 and 520 + 50 > mouse[1] > 520:
-            pygame.draw.rect(DISPLAYSURF, RED, (750,520,100,50))
+        if 1100 + 100 > mouse[0] > 1100 and 520 + 50 > mouse[1] > 520:
+            pygame.draw.rect(DISPLAYSURF, RED, (1100, 520, 100, 50))
             if click[0] == 1:
                quit()
         else:
-            pygame.draw.rect(DISPLAYSURF, ANDERSROOD,(750, 520, 100, 50))
+            pygame.draw.rect(DISPLAYSURF, ANDERSROOD,(1100, 520, 100, 50))
 
-        if 750 + 100 > mouse[0] > 750 and 450 + 50 > mouse[1] > 450:
-            pygame.draw.rect(DISPLAYSURF, RED, (750,450,100,50))
+        if 1100 + 100 > mouse[0] > 1100 and 450 + 50 > mouse[1] > 450:
+            pygame.draw.rect(DISPLAYSURF, RED, (1100, 450, 100, 50))
             if click[0] == 1:
                 time.sleep(1)
                 webbrowser.open_new("file://" + os.path.realpath("Manual.pdf"))
         else:
-            pygame.draw.rect(DISPLAYSURF, ANDERSROOD, (750,450,100,50))
+            pygame.draw.rect(DISPLAYSURF, ANDERSROOD, (1100, 450, 100, 50))
 
 
         textSurf, textRect = text_object("Info",tekst)
-        textRect.center= ((750+(100/2)), (450 +(50/2)))
-        display.blit(textSurf,textRect)
+        textRect.center= ((1100+(100/2)), (450 +(50/2)))
+        display.blit(textSurf, textRect)
 
         textSurf, textRect = text_object("Quit",tekst)
-        textRect.center= ((750+(100/2)), (520 +(50/2)))
-        display.blit(textSurf,textRect)
+        textRect.center= ((1100+(100/2)), (520 + (50/2)))
+        display.blit(textSurf, textRect)
 
 
     turn = 'playerOne'
@@ -193,10 +204,11 @@ def gameboard_4():
                     ggrand = grand + 1
 
                     if turn == 'playerOne':
+                        DISPLAYSURF.blit(pygame.transform.scale(blauwscore, (350, 450)), (0, 300))
                         DISPLAYSURF.blit(pygame.transform.scale(hudpion3, (100, 100)), (750, 0))
                         if bDirection == 'right':
                             for i in list[:grand]:
-                                if bPx == 600:
+                                if bPx == 950:
                                     bDirection = 'down'
                                     for n in list[i:ggrand]:
                                         bPy += 50
@@ -216,7 +228,7 @@ def gameboard_4():
                             turn = 'playerTwo'
                         elif bDirection == 'left':
                             for i in list[:grand]:
-                                if bPx == 100:
+                                if bPx == 450:
                                     bDirection = 'up'
                                     for n in list[i:ggrand]:
                                         bPy -= 50
@@ -237,10 +249,11 @@ def gameboard_4():
 
 
                     elif turn == 'playerTwo':
+                        DISPLAYSURF.blit(pygame.transform.scale(roodscore, (350, 450)), (0, 300))
                         DISPLAYSURF.blit(pygame.transform.scale(hudpion2, (100, 100)), (750, 0))
                         if rDirection == 'right':
                             for i in list[:grand]:
-                                if rPx == 600:
+                                if rPx == 950:
                                     rDirection = 'down'
                                     for n in list[i:ggrand]:
                                         rPy += 50
@@ -260,7 +273,7 @@ def gameboard_4():
                             turn = 'playerThree'
                         elif rDirection == 'left':
                             for i in list[:grand]:
-                                if rPx == 100:
+                                if rPx == 450:
                                     rDirection = 'up'
                                     for n in list[i:ggrand]:
                                         rPy -= 50
@@ -281,10 +294,11 @@ def gameboard_4():
 
 
                     elif turn == 'playerFour':
+                        DISPLAYSURF.blit(pygame.transform.scale(geelscore, (350, 450)), (0, 300))
                         DISPLAYSURF.blit(pygame.transform.scale(hudpion1, (100, 100)), (750, 0))
                         if gDirection == 'right':
                             for i in list[:grand]:
-                                if gPx == 600:
+                                if gPx == 950:
                                     gDirection = 'down'
                                     for n in list[i:ggrand]:
                                         gPy += 50
@@ -304,7 +318,7 @@ def gameboard_4():
                             turn = 'playerOne'
                         elif gDirection == 'left':
                             for i in list[:grand]:
-                                if gPx == 100:
+                                if gPx == 450:
                                     gDirection = 'up'
                                     for n in list[i:ggrand]:
                                         gPy -= 50
@@ -325,10 +339,11 @@ def gameboard_4():
 
 
                     elif turn == 'playerThree':
+                        DISPLAYSURF.blit(pygame.transform.scale(groenscore, (350, 450)), (0, 300))
                         DISPLAYSURF.blit(pygame.transform.scale(hudpion4, (100, 100)), (750, 0))
                         if grDirection == 'right':
                             for i in list[:grand]:
-                                if grPx == 600:
+                                if grPx == 950:
                                     grDirection = 'down'
                                     for n in list[i:ggrand]:
                                         grPy += 50
@@ -348,7 +363,7 @@ def gameboard_4():
                             turn = 'playerFour'
                         elif grDirection == 'left':
                             for i in list[:grand]:
-                                if grPx == 100:
+                                if grPx == 450:
                                     grDirection = 'up'
                                     for n in list[i:ggrand]:
                                         grPy -= 50
@@ -372,8 +387,8 @@ def gameboard_4():
             #loop through each column in the row
             for column in range(MAPWIDTH):
                 #draw the resource at that position in the tilemap, using the correct colour
-                pygame.draw.rect(DISPLAYSURF, colours[tilemap[row][column]], (100 + column*TILESIZE, 100 + row*TILESIZE, TILESIZE, TILESIZE))
-        DISPLAYSURF.blit(pygame.transform.scale(midPic, (450, 450)), (150, 150))
+                pygame.draw.rect(DISPLAYSURF, colours[tilemap[row][column]], (450 + column*TILESIZE, 100 + row*TILESIZE, TILESIZE, TILESIZE))
+        DISPLAYSURF.blit(pygame.transform.scale(midPic, (450, 450)), (500, 150))
         DISPLAYSURF.blit(pygame.transform.scale(fight, (50, 50)), (fightx1, fighty1))
         DISPLAYSURF.blit(pygame.transform.scale(fight, (50, 50)), (fightx2, fighty2))
         DISPLAYSURF.blit(pygame.transform.scale(fight, (50, 50)), (fightx1, fighty3))
@@ -382,10 +397,11 @@ def gameboard_4():
         DISPLAYSURF.blit(pygame.transform.scale(blauwPion, (50, 50)), (bPx, bPy))
         DISPLAYSURF.blit(pygame.transform.scale(geelPion, (50, 50)), (gPx, gPy))
         DISPLAYSURF.blit(pygame.transform.scale(groenPion, (50, 50)), (grPx, grPy))
+        DISPLAYSURF.blit(pygame.transform.scale(centerPic, (100, 150)), (cPx, cPy))
 
 
         quitbutton()
-        DISPLAYSURF.blit(image, (781,680))
+        DISPLAYSURF.blit(image, (1121,180))
         btn.render(DISPLAYSURF)
         pygame.display.update()
 
@@ -451,7 +467,7 @@ def gameboard_3():
     MAPWIDTH  = 11
     MAPHEIGHT = 11
 
-    DISPLAYSURF = pygame.display.set_mode((850, 750))
+    DISPLAYSURF = pygame.display.set_mode((1200, 750))
     screen_rect = DISPLAYSURF.get_rect()
 
     dice_sheet = pygame.image.load('dice.png')
@@ -464,27 +480,32 @@ def gameboard_3():
     midPic = pygame.image.load('Midden van bord.png')
     backPic = pygame.image.load('Hout2.png')
     roodPion = pygame.image.load('glove_red.png')
-    rPx = 600
+    roodscore = pygame.image.load('red_score.png')
+    rPx = 950
     rPy = 100
     rDirection = 'down'
     blauwPion = pygame.image.load('glove_blue.png')
-    bPx = 100
+    blauwscore = pygame.image.load('blue_score.png')
+    bPx = 450
     bPy = 100
     bDirection = 'right'
     groenPion = pygame.image.load('glove_green.png')
-    grPx = 600
+    groenscore = pygame.image.load('green_score.png')
+    grPx = 950
     grPy = 600
     grDirection = 'left'
-    DISPLAYSURF.blit(pygame.transform.scale(backPic, (750, 750)), (0, 0))
-    shade = pygame.image.load('zwart.png').convert()
-    DISPLAYSURF.blit(pygame.transform.scale(shade, (550, 5)), (105, 650))
-    DISPLAYSURF.blit(pygame.transform.scale(shade, (5, 550)), (650, 100))
-    fight = pygame.image.load('fight.png').convert()
-    fightx1 = 350
+    DISPLAYSURF.blit(pygame.transform.scale(backPic, (750, 750)), (350, 0))
+    shade = pygame.image.load('zwart.png')
+    DISPLAYSURF.blit(pygame.transform.scale(shade, (555, 5)), (450, 650))
+    DISPLAYSURF.blit(pygame.transform.scale(shade, (555, 5)), (450, 95))
+    DISPLAYSURF.blit(pygame.transform.scale(shade, (5, 560)), (445, 95))
+    DISPLAYSURF.blit(pygame.transform.scale(shade, (5, 550)), (1000, 100))
+    fight = pygame.image.load('fight.png')
+    fightx1 = 700
     fighty1 = 100
-    fightx2 = 100
+    fightx2 = 450
     fighty2 = 350
-    fightx3 = 600
+    fightx3 = 950
     fighty3 = 600
 
     def text_object(text,font):
@@ -511,12 +532,12 @@ def gameboard_3():
 
 
         textSurf, textRect = text_object("Info",tekst)
-        textRect.center= ((750+(100/2)), (450 +(50/2)))
+        textRect.center = ((750+(100/2)), (450 + (50/2)))
         display.blit(textSurf,textRect)
 
         textSurf, textRect = text_object("Quit",tekst)
-        textRect.center= ((750+(100/2)), (520 +(50/2)))
-        display.blit(textSurf,textRect)
+        textRect.center = ((750+(100/2)), (520 + (50/2)))
+        display.blit(textSurf, textRect)
 
     turn = 'playerOne'
 
@@ -535,9 +556,10 @@ def gameboard_3():
                     ggrand = grand + 1
 
                     if turn == 'playerOne':
+                        DISPLAYSURF.blit(pygame.transform.scale(blauwscore, (350, 450)), (0, 300))
                         if bDirection == 'right':
                             for i in list[:grand]:
-                                if bPx == 600:
+                                if bPx == 950:
                                     bDirection = 'down'
                                     for n in list[i:ggrand]:
                                         bPy += 50
@@ -557,7 +579,7 @@ def gameboard_3():
                             turn = 'playerTwo'
                         elif bDirection == 'left':
                             for i in list[:grand]:
-                                if bPx == 100:
+                                if bPx == 450:
                                     bDirection = 'up'
                                     for n in list[i:ggrand]:
                                         bPy -= 50
@@ -578,9 +600,10 @@ def gameboard_3():
 
 
                     elif turn == 'playerTwo':
+                        DISPLAYSURF.blit(pygame.transform.scale(roodscore, (350, 450)), (0, 300))
                         if rDirection == 'right':
                             for i in list[:grand]:
-                                if rPx == 600:
+                                if rPx == 950:
                                     rDirection = 'down'
                                     for n in list[i:ggrand]:
                                         rPy += 50
@@ -600,7 +623,7 @@ def gameboard_3():
                             turn = 'playerThree'
                         elif rDirection == 'left':
                             for i in list[:grand]:
-                                if rPx == 100:
+                                if rPx == 450:
                                     rDirection = 'up'
                                     for n in list[i:ggrand]:
                                         rPy -= 50
@@ -620,9 +643,10 @@ def gameboard_3():
                             turn = 'playerThree'
 
                     elif turn == 'playerThree':
+                        DISPLAYSURF.blit(pygame.transform.scale(groenscore, (350, 450)), (0, 300))
                         if grDirection == 'right':
                             for i in list[:grand]:
-                                if grPx == 600:
+                                if grPx == 950:
                                     grDirection = 'down'
                                     for n in list[i:ggrand]:
                                         grPy += 50
@@ -642,7 +666,7 @@ def gameboard_3():
                             turn = 'playerOne'
                         elif grDirection == 'left':
                             for i in list[:grand]:
-                                if grPx == 100:
+                                if grPx == 450:
                                     grDirection = 'up'
                                     for n in list[i:ggrand]:
                                         grPy -= 50
@@ -666,8 +690,8 @@ def gameboard_3():
             #loop through each column in the row
             for column in range(MAPWIDTH):
                 #draw the resource at that position in the tilemap, using the correct colour
-                pygame.draw.rect(DISPLAYSURF, colours[tilemap[row][column]], (100 + column*TILESIZE, 100 + row*TILESIZE, TILESIZE, TILESIZE))
-        DISPLAYSURF.blit(pygame.transform.scale(midPic, (450, 450)), (150, 150))
+                pygame.draw.rect(DISPLAYSURF, colours[tilemap[row][column]], (450 + column*TILESIZE, 100 + row*TILESIZE, TILESIZE, TILESIZE))
+        DISPLAYSURF.blit(pygame.transform.scale(midPic, (450, 450)), (500, 150))
         DISPLAYSURF.blit(pygame.transform.scale(fight, (50, 50)), (fightx1, fighty1))
         DISPLAYSURF.blit(pygame.transform.scale(fight, (50, 50)), (fightx2, fighty2))
         DISPLAYSURF.blit(pygame.transform.scale(fight, (50, 50)), (fightx1, fighty3))
@@ -677,7 +701,7 @@ def gameboard_3():
         DISPLAYSURF.blit(pygame.transform.scale(groenPion, (50, 50)), (grPx, grPy))
 
         quitbutton()
-        DISPLAYSURF.blit(image, (781,680))
+        DISPLAYSURF.blit(image, (1175, 683))
         btn.render(DISPLAYSURF)
         pygame.display.update()
 
@@ -743,7 +767,7 @@ def gameboard_2():
     MAPWIDTH  = 11
     MAPHEIGHT = 11
 
-    DISPLAYSURF = pygame.display.set_mode((850, 750))
+    DISPLAYSURF = pygame.display.set_mode((1200, 750))
     screen_rect = DISPLAYSURF.get_rect()
 
     dice_sheet = pygame.image.load('dice.png')
@@ -753,27 +777,30 @@ def gameboard_2():
     btn = Button(screen_rect)
 
     #set up the display
-    DISPLAYSURF = pygame.display.set_mode((850, 750))
     midPic = pygame.image.load('Midden van bord.png')
     backPic = pygame.image.load('Hout2.png')
     roodPion = pygame.image.load('glove_red.png')
-    rPx = 600
+    roodscore = pygame.image.load('red_score.png')
+    rPx = 950
     rPy = 100
     rDirection = 'down'
     blauwPion = pygame.image.load('glove_blue.png')
-    bPx = 100
+    blauwscore = pygame.image.load('blue_score.png')
+    bPx = 450
     bPy = 100
     bDirection = 'right'
-    DISPLAYSURF.blit(pygame.transform.scale(backPic, (750, 750)), (0, 0))
+    DISPLAYSURF.blit(pygame.transform.scale(backPic, (750, 750)), (350, 0))
     shade = pygame.image.load('zwart.png').convert()
-    DISPLAYSURF.blit(pygame.transform.scale(shade, (550, 5)), (105, 650))
-    DISPLAYSURF.blit(pygame.transform.scale(shade, (5, 550)), (650, 100))
+    DISPLAYSURF.blit(pygame.transform.scale(shade, (555, 5)), (450, 650))
+    DISPLAYSURF.blit(pygame.transform.scale(shade, (555, 5)), (450, 95))
+    DISPLAYSURF.blit(pygame.transform.scale(shade, (5, 560)), (445, 95))
+    DISPLAYSURF.blit(pygame.transform.scale(shade, (5, 550)), (1000, 100))
     fight = pygame.image.load('fight.png').convert()
-    fightx1 = 350
+    fightx1 = 700
     fighty1 = 100
-    fightx2 = 100
+    fightx2 = 450
     fighty2 = 350
-    fightx3 = 600
+    fightx3 = 950
     fighty3 = 600
 
     def text_object(text,font):
@@ -825,10 +852,10 @@ def gameboard_2():
                     ggrand = grand + 1
 
                     if turn == 'playerOne':
-
+                        DISPLAYSURF.blit(pygame.transform.scale(blauwscore, (350, 450)), (0, 300))
                         if bDirection == 'right':
                             for i in list[:grand]:
-                                if bPx == 600:
+                                if bPx == 950:
                                     bDirection = 'down'
                                     for n in list[i:ggrand]:
                                         bPy += 50
@@ -848,7 +875,7 @@ def gameboard_2():
                             turn = 'playerTwo'
                         elif bDirection == 'left':
                             for i in list[:grand]:
-                                if bPx == 100:
+                                if bPx == 450:
                                     bDirection = 'up'
                                     for n in list[i:ggrand]:
                                         bPy -= 50
@@ -869,9 +896,10 @@ def gameboard_2():
 
 
                     elif turn == 'playerTwo':
+                        DISPLAYSURF.blit(pygame.transform.scale(roodscore, (350, 450)), (0, 300))
                         if rDirection == 'right':
                             for i in list[:grand]:
-                                if rPx == 600:
+                                if rPx == 950:
                                     rDirection = 'down'
                                     for n in list[i:ggrand]:
                                         rPy += 50
@@ -891,7 +919,7 @@ def gameboard_2():
                             turn = 'playerOne'
                         elif rDirection == 'left':
                             for i in list[:grand]:
-                                if rPx == 100:
+                                if rPx == 450:
                                     rDirection = 'up'
                                     for n in list[i:ggrand]:
                                         rPy -= 50
@@ -916,8 +944,8 @@ def gameboard_2():
             #loop through each column in the row
             for column in range(MAPWIDTH):
                 #draw the resource at that position in the tilemap, using the correct colour
-                pygame.draw.rect(DISPLAYSURF, colours[tilemap[row][column]], (100 + column*TILESIZE, 100 + row*TILESIZE, TILESIZE, TILESIZE))
-        DISPLAYSURF.blit(pygame.transform.scale(midPic, (450, 450)), (150, 150))
+                pygame.draw.rect(DISPLAYSURF, colours[tilemap[row][column]], (450 + column*TILESIZE, 100 + row*TILESIZE, TILESIZE, TILESIZE))
+        DISPLAYSURF.blit(pygame.transform.scale(midPic, (450, 450)), (500, 150))
         DISPLAYSURF.blit(pygame.transform.scale(fight, (50, 50)), (fightx1, fighty1))
         DISPLAYSURF.blit(pygame.transform.scale(fight, (50, 50)), (fightx2, fighty2))
         DISPLAYSURF.blit(pygame.transform.scale(fight, (50, 50)), (fightx1, fighty3))
@@ -941,9 +969,6 @@ def logo(x, y):
 
 x = (800 * 0.211)
 y = (600 * 0.1)
-
-
-
 
 
 def button_main():
