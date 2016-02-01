@@ -545,6 +545,14 @@ def gameboard_3():
     fightx3 = 950
     fighty3 = 600
 
+    def text(text, textc, size, x, y):
+        font = pygame.font.Font(None, size)
+        text = font.render(text, 1, (textc))
+        textpos = text.get_rect()
+        textpos.x = x
+        textpos.y = y
+        DISPLAYSURF.blit(text, textpos)
+
     def text_object(text,font):
         textSurface = font.render(text,True,white)
         return textSurface, textSurface.get_rect()
@@ -579,6 +587,27 @@ def gameboard_3():
     turn = 'playerOne'
     DISPLAYSURF.blit(pygame.transform.scale(blauwscore, (350, 450)), (0, 300))
     DISPLAYSURF.blit(pygame.transform.scale(hudpion_blauw, (100, 100)), (1000, 0))
+
+    P1color = (0,   102,   205)
+    hp1 = 100
+    cpnt1 = 15
+    text("Mike Tysen ", P1color, 30, 20, 20)
+    text("HP:       "+ str(hp1), white, 30, 20, 40)
+    text("cpnt:     "+ str(cpnt1), white, 30, 20, 60)
+
+    hp2 = 100
+    cpnt2 = 15
+    P2color = (201, 57, 57)
+    text("Rocky Belboa ", P2color, 30, 20, 90)
+    text("HP:       " + str(hp2), white, 30, 20, 110)
+    text("cpnt:     " + str(cpnt2), white, 30, 20, 130)
+
+    hp3 = 100
+    cpnt3 = 15
+    P3color = (102, 204, 0)
+    text("Badr Heri ", P3color, 30, 20, 160)
+    text("HP:       " + str(hp3), white, 30, 20, 180)
+    text("cpnt:     " + str(cpnt3), white, 30, 20, 200)
 
     #def game(rPx, rPy, bPx, bPy, gPx, gPy, grPx, grPy):
     while True:
@@ -845,6 +874,14 @@ def gameboard_2():
     fightx3 = 950
     fighty3 = 600
 
+    def text(text, textc, size, x, y):
+        font = pygame.font.Font(None, size)
+        text = font.render(text, 1, (textc))
+        textpos = text.get_rect()
+        textpos.x = x
+        textpos.y = y
+        DISPLAYSURF.blit(text, textpos)
+
     def text_object(text,font):
         textSurface = font.render(text,True,white)
         return textSurface, textSurface.get_rect()
@@ -880,6 +917,20 @@ def gameboard_2():
     turn = 'playerOne'
     DISPLAYSURF.blit(pygame.transform.scale(blauwscore, (350, 450)), (0, 300))
     DISPLAYSURF.blit(pygame.transform.scale(hudpion_blauw, (100, 100)), (1000, 0))
+
+    P1color = (0,   102,   205)
+    hp1 = 100
+    cpnt1 = 15
+    text("Mike Tysen ", P1color, 30, 20, 20)
+    text("HP:       "+ str(hp1), white, 30, 20, 40)
+    text("cpnt:     "+ str(cpnt1), white, 30, 20, 60)
+
+    hp2 = 100
+    cpnt2 = 15
+    P2color = (201, 57, 57)
+    text("Rocky Belboa ", P2color, 30, 20, 90)
+    text("HP:       " + str(hp2), white, 30, 20, 110)
+    text("cpnt:     " + str(cpnt2), white, 30, 20, 130)
 
     #def game(rPx, rPy, bPx, bPy, gPx, gPy, grPx, grPy):
     while True:
