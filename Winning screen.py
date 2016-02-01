@@ -2,7 +2,6 @@ import pygame,sys,time
 
 pygame.init()
 display = pygame.display.set_mode((800,600))
-screen_rect = display.get_rect()
 white = (255,255,255)
 black = (0,0,0)
 red = (250,0,0)
