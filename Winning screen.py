@@ -7,14 +7,14 @@ white = (255,255,255)
 black = (0,0,0)
 
 
-def text_objects(text, font):
+def winningscreen_object(text, font):
         textSurface = font.render(text, True, black)
         return textSurface, textSurface.get_rect()
 
-def message_display(text):
+def winningscreen(text):
 
         largeText = pygame.font.Font('freesansbold.ttf',115)
-        TextSurf, TextRect = text_objects(text, largeText)
+        TextSurf, TextRect = winningscreen_object(text, largeText)
         TextRect.center = ((400),(300))
         display.blit(TextSurf, TextRect)
 
