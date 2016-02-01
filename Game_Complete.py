@@ -5,9 +5,9 @@ import time
 import random
 pygame.init()
 
-#pygame.mixer.music.load("test1.mp4")
-#pygame.mixer.music.play(-1, 0.0)
-#pygame.mixer.music.set_volume(0.5)
+pygame.mixer.music.load("test1.mp4")
+pygame.mixer.music.play(-1, 0.0)
+pygame.mixer.music.set_volume(0.5)
 
 display = pygame.display.set_mode((800, 600))   # basis framework
 caption = pygame.display.set_caption('Survivor')
@@ -165,7 +165,7 @@ def gameboard_4():
         if 1100 + 100 > mouse[0] > 1100 and 520 + 50 > mouse[1] > 520:
             pygame.draw.rect(DISPLAYSURF, RED, (1100, 520, 100, 50))
             if click[0] == 1:
-                quit()
+               quit()
         else:
             pygame.draw.rect(DISPLAYSURF, ANDERSROOD,(1100, 520, 100, 50))
 
@@ -1030,19 +1030,49 @@ def button_options():
     mouse = pygame.mouse.get_pos()
     click = pygame.mouse.get_pressed()
 
-    if 390+100 > mouse[0] > 390 and 450 + 50 > mouse[1] > 450:
-        pygame.draw.rect(display, dark_red, (390, 450, 100, 50))
+    if 390+30 > mouse[0] > 390 and 450 + 50 > mouse[1] > 450:
+        pygame.draw.rect(display, dark_red, (390, 450, 30, 50))
         if click[0] == 1:
-            pygame.mixer.music.set_volume(0.1)
+            pygame.mixer.music.set_volume(0.0)
     else:
-        pygame.draw.rect(display, red, (390, 450, 100, 50))
+        pygame.draw.rect(display, red, (390, 450, 30, 50))
 
-    if 510+100 > mouse[0] > 510 and 450 + 50 > mouse[1] > 450:
-        pygame.draw.rect(display, dark_red, (510, 450, 100, 50))
+    if 420+30 > mouse[0] > 420 and 450 + 50 > mouse[1] > 450:
+        pygame.draw.rect(display, dark_red, (420, 450, 30, 50))
         if click[0] == 1:
-            pygame.mixer.music.set_volume(0.9)
+            pygame.mixer.music.set_volume(0.2)
     else:
-        pygame.draw.rect(display, red, (510, 450, 100, 50))
+        pygame.draw.rect(display, red, (420, 450, 30, 50))
+
+    if 450+30 > mouse[0] > 450 and 450 + 50 > mouse[1] > 450:
+        pygame.draw.rect(display, dark_red, (450, 450, 30, 50))
+        if click[0] == 1:
+            pygame.mixer.music.set_volume(0.4)
+    else:
+        pygame.draw.rect(display, red, (450, 450, 30, 50))
+
+
+    if 480+30 > mouse[0] > 480 and 450 + 50 > mouse[1] > 450:
+        pygame.draw.rect(display, dark_red, (480, 450, 30, 50))
+        if click[0] == 1:
+            pygame.mixer.music.set_volume(0.6)
+    else:
+        pygame.draw.rect(display, red, (480, 450, 30, 50))
+
+    if 510+30 > mouse[0] > 510 and 450 + 50 > mouse[1] > 450:
+        pygame.draw.rect(display, dark_red, (510, 450, 30, 50))
+        if click[0] == 1:
+            pygame.mixer.music.set_volume(0.8)
+    else:
+        pygame.draw.rect(display, red, (510, 450, 30, 50))
+
+
+    if 540+30 > mouse[0] > 540 and 450 + 50 > mouse[1] > 450:
+        pygame.draw.rect(display, dark_red, (540, 450, 30, 50))
+        if click[0] == 1:
+            pygame.mixer.music.set_volume(1.0)
+    else:
+        pygame.draw.rect(display, red, (540, 450, 30, 50))
 
 
 
@@ -1075,12 +1105,17 @@ def button_options():
     textrect.center = ((650+(100/2)), (450 + (50/2)))
     display.blit(textsurf, textrect)
 
-    textsurf, textrect = text_object(" Sound +", tekst)
-    textrect.center = ((510 +(100/2)), (450 + (50/2)))
+    textsurf, textrect = text_object("  +", tekst)
+    textrect.center = ((500 +(100/2)), (450 + (50/2)))
     display.blit(textsurf, textrect)
 
-    textsurf, textrect = text_object(" Sound -", tekst)
-    textrect.center = ((390+(100/2)), (450 + (50/2)))
+    textsurf, textrect = text_object(" Volume ", tekst)
+    textrect.center = ((425+(100/2)), (450 + (50/2)))
+    display.blit(textsurf, textrect)
+
+
+    textsurf, textrect = text_object("  -", tekst)
+    textrect.center = ((350+(100/2)), (450 + (50/2)))
     display.blit(textsurf, textrect)
 
     textsurf, textrect = text_object("Windowed", tekst)
