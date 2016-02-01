@@ -5,9 +5,9 @@ import time
 import random
 pygame.init()
 
-# pygame.mixer.music.load("test1.mp4")
-# pygame.mixer.music.play(-1, 0.0)
-# pygame.mixer.music.set_volume(0.5)
+#pygame.mixer.music.load("test1.mp4")
+#pygame.mixer.music.play(-1, 0.0)
+#pygame.mixer.music.set_volume(0.5)
 
 display = pygame.display.set_mode((800, 600))   # basis framework
 caption = pygame.display.set_caption('Survivor')
@@ -15,10 +15,11 @@ fps = pygame.time.Clock()
 logoIMG = pygame.image.load('logo.png')
 tekst = pygame.font.Font('freesansbold.ttf', 20)
 
-hudpion_blauw = pygame.image.load("hud_glove_blue.png")
-hudpion_groen = pygame.image.load("hud_glove_green.png")
-hudpion_rood = pygame.image.load("hud_glove_red.png")
-hudpion_geel = pygame.image.load("hud_glove_yellow.png")
+
+hudpion1 = pygame.image.load("hud_glove_blue.png")
+hudpion2 = pygame.image.load("hud_glove_green.png")
+hudpion3 = pygame.image.load("hud_glove_red.png")
+hudpion4 = pygame.image.load("hud_glove_yellow.png")
 
 black = (0, 0, 0)
 white = (255, 255, 255)
@@ -115,8 +116,8 @@ def gameboard_4():
     btn = Button(screen_rect)
 
     #set up the display
-    midPic = pygame.image.load('Midden van bord.png')
-    centerPic = pygame.image.load('superfight.png')
+    midPic = pygame.image.load('Midden_van_bord.png')
+    #centerPic = pygame.image.load('superfight.png')
     cPx = 700
     cPy = 300
     backPic = pygame.image.load('Hout2.png')
@@ -204,7 +205,7 @@ def gameboard_4():
 
                     if turn == 'playerOne':
                         DISPLAYSURF.blit(pygame.transform.scale(blauwscore, (350, 450)), (0, 300))
-                        DISPLAYSURF.blit(pygame.transform.scale(hudpion_rood, (100, 100)), (1000, 0))
+                        DISPLAYSURF.blit(pygame.transform.scale(hudpion3, (100, 100)), (750, 0))
                         if bDirection == 'right':
                             for i in list[:grand]:
                                 if bPx == 950:
@@ -249,7 +250,7 @@ def gameboard_4():
 
                     elif turn == 'playerTwo':
                         DISPLAYSURF.blit(pygame.transform.scale(roodscore, (350, 450)), (0, 300))
-                        DISPLAYSURF.blit(pygame.transform.scale(hudpion_groen, (100, 100)), (1000, 0))
+                        DISPLAYSURF.blit(pygame.transform.scale(hudpion2, (100, 100)), (750, 0))
                         if rDirection == 'right':
                             for i in list[:grand]:
                                 if rPx == 950:
@@ -294,7 +295,7 @@ def gameboard_4():
 
                     elif turn == 'playerFour':
                         DISPLAYSURF.blit(pygame.transform.scale(geelscore, (350, 450)), (0, 300))
-                        DISPLAYSURF.blit(pygame.transform.scale(hudpion_rood, (100, 100)), (1000, 0))
+                        DISPLAYSURF.blit(pygame.transform.scale(hudpion1, (100, 100)), (750, 0))
                         if gDirection == 'right':
                             for i in list[:grand]:
                                 if gPx == 950:
@@ -339,7 +340,7 @@ def gameboard_4():
 
                     elif turn == 'playerThree':
                         DISPLAYSURF.blit(pygame.transform.scale(groenscore, (350, 450)), (0, 300))
-                        DISPLAYSURF.blit(pygame.transform.scale(hudpion_geel, (100, 100)), (1000, 0))
+                        DISPLAYSURF.blit(pygame.transform.scale(hudpion4, (100, 100)), (750, 0))
                         if grDirection == 'right':
                             for i in list[:grand]:
                                 if grPx == 950:
@@ -396,11 +397,11 @@ def gameboard_4():
         DISPLAYSURF.blit(pygame.transform.scale(blauwPion, (50, 50)), (bPx, bPy))
         DISPLAYSURF.blit(pygame.transform.scale(geelPion, (50, 50)), (gPx, gPy))
         DISPLAYSURF.blit(pygame.transform.scale(groenPion, (50, 50)), (grPx, grPy))
-        DISPLAYSURF.blit(pygame.transform.scale(centerPic, (100, 150)), (cPx, cPy))
+        #DISPLAYSURF.blit(pygame.transform.scale(centerPic, (100, 150)), (cPx, cPy))
 
 
         quitbutton()
-        DISPLAYSURF.blit(image, (1130,200))
+        DISPLAYSURF.blit(image, (1121,180))
         btn.render(DISPLAYSURF)
         pygame.display.update()
 
@@ -476,7 +477,7 @@ def gameboard_3():
     btn = Button(screen_rect)
 
     #set up the display
-    midPic = pygame.image.load('Midden van bord.png')
+    midPic = pygame.image.load('Midden_van_bord.png')
     backPic = pygame.image.load('Hout2.png')
     roodPion = pygame.image.load('glove_red.png')
     roodscore = pygame.image.load('red_score.png')
@@ -556,7 +557,6 @@ def gameboard_3():
 
                     if turn == 'playerOne':
                         DISPLAYSURF.blit(pygame.transform.scale(blauwscore, (350, 450)), (0, 300))
-                        DISPLAYSURF.blit(pygame.transform.scale(hudpion_rood, (100, 100)), (1000, 0))
                         if bDirection == 'right':
                             for i in list[:grand]:
                                 if bPx == 950:
@@ -601,7 +601,6 @@ def gameboard_3():
 
                     elif turn == 'playerTwo':
                         DISPLAYSURF.blit(pygame.transform.scale(roodscore, (350, 450)), (0, 300))
-                        DISPLAYSURF.blit(pygame.transform.scale(hudpion_groen, (100, 100)), (1000, 0))
                         if rDirection == 'right':
                             for i in list[:grand]:
                                 if rPx == 950:
@@ -645,7 +644,6 @@ def gameboard_3():
 
                     elif turn == 'playerThree':
                         DISPLAYSURF.blit(pygame.transform.scale(groenscore, (350, 450)), (0, 300))
-                        DISPLAYSURF.blit(pygame.transform.scale(hudpion_blauw, (100, 100)), (1000, 0))
                         if grDirection == 'right':
                             for i in list[:grand]:
                                 if grPx == 950:
@@ -703,7 +701,7 @@ def gameboard_3():
         DISPLAYSURF.blit(pygame.transform.scale(groenPion, (50, 50)), (grPx, grPy))
 
         quitbutton()
-        DISPLAYSURF.blit(image, (1130, 200))
+        DISPLAYSURF.blit(image, (1175, 683))
         btn.render(DISPLAYSURF)
         pygame.display.update()
 
@@ -779,7 +777,7 @@ def gameboard_2():
     btn = Button(screen_rect)
 
     #set up the display
-    midPic = pygame.image.load('Midden van bord.png')
+    midPic = pygame.image.load('Midden_van_bord.png')
     backPic = pygame.image.load('Hout2.png')
     roodPion = pygame.image.load('glove_red.png')
     roodscore = pygame.image.load('red_score.png')
@@ -855,7 +853,6 @@ def gameboard_2():
 
                     if turn == 'playerOne':
                         DISPLAYSURF.blit(pygame.transform.scale(blauwscore, (350, 450)), (0, 300))
-                        DISPLAYSURF.blit(pygame.transform.scale(hudpion_rood, (100, 100)), (1000, 0))
                         if bDirection == 'right':
                             for i in list[:grand]:
                                 if bPx == 950:
@@ -900,7 +897,6 @@ def gameboard_2():
 
                     elif turn == 'playerTwo':
                         DISPLAYSURF.blit(pygame.transform.scale(roodscore, (350, 450)), (0, 300))
-                        DISPLAYSURF.blit(pygame.transform.scale(hudpion_blauw, (100, 100)), (1000, 0))
                         if rDirection == 'right':
                             for i in list[:grand]:
                                 if rPx == 950:
@@ -958,7 +954,7 @@ def gameboard_2():
         DISPLAYSURF.blit(pygame.transform.scale(blauwPion, (50, 50)), (bPx, bPy))
 
         quitbutton()
-        DISPLAYSURF.blit(image, (1130,200))
+        DISPLAYSURF.blit(image, (781,680))
         btn.render(DISPLAYSURF)
         pygame.display.update()
 
