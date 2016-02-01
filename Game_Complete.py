@@ -15,11 +15,10 @@ fps = pygame.time.Clock()
 logoIMG = pygame.image.load('logo.png')
 tekst = pygame.font.Font('freesansbold.ttf', 20)
 
-
-hudpion1 = pygame.image.load("hud_glove_blue.png")
-hudpion2 = pygame.image.load("hud_glove_green.png")
-hudpion3 = pygame.image.load("hud_glove_red.png")
-hudpion4 = pygame.image.load("hud_glove_yellow.png")
+hudpion_blauw = pygame.image.load("hud_glove_blue.png")
+hudpion_groen = pygame.image.load("hud_glove_green.png")
+hudpion_rood = pygame.image.load("hud_glove_red.png")
+hudpion_geel = pygame.image.load("hud_glove_yellow.png")
 
 black = (0, 0, 0)
 white = (255, 255, 255)
@@ -196,6 +195,8 @@ def gameboard_4():
 
 
     turn = 'playerOne'
+    DISPLAYSURF.blit(pygame.transform.scale(blauwscore, (350, 450)), (0, 300))
+    DISPLAYSURF.blit(pygame.transform.scale(hudpion_blauw, (100, 100)), (1000, 0))
 
     #def game(rPx, rPy, bPx, bPy, gPx, gPy, grPx, grPy):
     while True:
@@ -212,8 +213,8 @@ def gameboard_4():
                     ggrand = grand + 1
 
                     if turn == 'playerOne':
-                        DISPLAYSURF.blit(pygame.transform.scale(blauwscore, (350, 450)), (0, 300))
-                        DISPLAYSURF.blit(pygame.transform.scale(hudpion3, (100, 100)), (750, 0))
+                        DISPLAYSURF.blit(pygame.transform.scale(roodscore, (350, 450)), (0, 300))
+                        DISPLAYSURF.blit(pygame.transform.scale(hudpion_rood, (100, 100)), (1000, 0))
                         P1color = (0,   102,   205)
                         hp1 = 100
                         cpnt1 = 15
@@ -263,8 +264,8 @@ def gameboard_4():
 
 
                     elif turn == 'playerTwo':
-                        DISPLAYSURF.blit(pygame.transform.scale(roodscore, (350, 450)), (0, 300))
-                        DISPLAYSURF.blit(pygame.transform.scale(hudpion2, (100, 100)), (750, 0))
+                        DISPLAYSURF.blit(pygame.transform.scale(groenscore, (350, 450)), (0, 300))
+                        DISPLAYSURF.blit(pygame.transform.scale(hudpion_groen, (100, 100)), (1000, 0))
                         hp2 = 100
                         cpnt2 = 15
                         P2color = (102,   204, 0)
@@ -314,8 +315,8 @@ def gameboard_4():
 
 
                     elif turn == 'playerFour':
-                        DISPLAYSURF.blit(pygame.transform.scale(geelscore, (350, 450)), (0, 300))
-                        DISPLAYSURF.blit(pygame.transform.scale(hudpion1, (100, 100)), (750, 0))
+                        DISPLAYSURF.blit(pygame.transform.scale(blauwscore, (350, 450)), (0, 300))
+                        DISPLAYSURF.blit(pygame.transform.scale(hudpion_blauw, (100, 100)), (1000, 0))
                         hp4 = 100
                         cpnt4 = 15
                         P4color = (255, 255, 102)
@@ -365,8 +366,8 @@ def gameboard_4():
 
 
                     elif turn == 'playerThree':
-                        DISPLAYSURF.blit(pygame.transform.scale(groenscore, (350, 450)), (0, 300))
-                        DISPLAYSURF.blit(pygame.transform.scale(hudpion4, (100, 100)), (750, 0))
+                        DISPLAYSURF.blit(pygame.transform.scale(geelscore, (350, 450)), (0, 300))
+                        DISPLAYSURF.blit(pygame.transform.scale(hudpion_geel, (100, 100)), (1000, 0))
                         hp3 = 100
                         cpnt3 = 15
                         P3color = (201, 57, 57)
@@ -433,7 +434,7 @@ def gameboard_4():
 
 
         quitbutton()
-        DISPLAYSURF.blit(image, (1121,180))
+        DISPLAYSURF.blit(image, (1130,200))
         btn.render(DISPLAYSURF)
         pygame.display.update()
 
@@ -572,6 +573,8 @@ def gameboard_3():
         display.blit(textSurf, textRect)
 
     turn = 'playerOne'
+    DISPLAYSURF.blit(pygame.transform.scale(blauwscore, (350, 450)), (0, 300))
+    DISPLAYSURF.blit(pygame.transform.scale(hudpion_blauw, (100, 100)), (1000, 0))
 
     #def game(rPx, rPy, bPx, bPy, gPx, gPy, grPx, grPy):
     while True:
@@ -588,7 +591,8 @@ def gameboard_3():
                     ggrand = grand + 1
 
                     if turn == 'playerOne':
-                        DISPLAYSURF.blit(pygame.transform.scale(blauwscore, (350, 450)), (0, 300))
+                        DISPLAYSURF.blit(pygame.transform.scale(roodscore, (350, 450)), (0, 300))
+                        DISPLAYSURF.blit(pygame.transform.scale(hudpion_rood, (100, 100)), (1000, 0))
                         if bDirection == 'right':
                             for i in list[:grand]:
                                 if bPx == 950:
@@ -632,7 +636,8 @@ def gameboard_3():
 
 
                     elif turn == 'playerTwo':
-                        DISPLAYSURF.blit(pygame.transform.scale(roodscore, (350, 450)), (0, 300))
+                        DISPLAYSURF.blit(pygame.transform.scale(groenscore, (350, 450)), (0, 300))
+                        DISPLAYSURF.blit(pygame.transform.scale(hudpion_groen, (100, 100)), (1000, 0))
                         if rDirection == 'right':
                             for i in list[:grand]:
                                 if rPx == 950:
@@ -675,7 +680,8 @@ def gameboard_3():
                             turn = 'playerThree'
 
                     elif turn == 'playerThree':
-                        DISPLAYSURF.blit(pygame.transform.scale(groenscore, (350, 450)), (0, 300))
+                        DISPLAYSURF.blit(pygame.transform.scale(blauwscore, (350, 450)), (0, 300))
+                        DISPLAYSURF.blit(pygame.transform.scale(hudpion_blauw, (100, 100)), (1000, 0))
                         if grDirection == 'right':
                             for i in list[:grand]:
                                 if grPx == 950:
@@ -733,7 +739,7 @@ def gameboard_3():
         DISPLAYSURF.blit(pygame.transform.scale(groenPion, (50, 50)), (grPx, grPy))
 
         quitbutton()
-        DISPLAYSURF.blit(image, (1175, 683))
+        DISPLAYSURF.blit(image, (1130, 200))
         btn.render(DISPLAYSURF)
         pygame.display.update()
 
@@ -868,6 +874,8 @@ def gameboard_2():
 
 
     turn = 'playerOne'
+    DISPLAYSURF.blit(pygame.transform.scale(blauwscore, (350, 450)), (0, 300))
+    DISPLAYSURF.blit(pygame.transform.scale(hudpion_blauw, (100, 100)), (1000, 0))
 
     #def game(rPx, rPy, bPx, bPy, gPx, gPy, grPx, grPy):
     while True:
@@ -884,7 +892,8 @@ def gameboard_2():
                     ggrand = grand + 1
 
                     if turn == 'playerOne':
-                        DISPLAYSURF.blit(pygame.transform.scale(blauwscore, (350, 450)), (0, 300))
+                        DISPLAYSURF.blit(pygame.transform.scale(roodscore, (350, 450)), (0, 300))
+                        DISPLAYSURF.blit(pygame.transform.scale(hudpion_rood, (100, 100)), (1000, 0))
                         if bDirection == 'right':
                             for i in list[:grand]:
                                 if bPx == 950:
@@ -928,7 +937,8 @@ def gameboard_2():
 
 
                     elif turn == 'playerTwo':
-                        DISPLAYSURF.blit(pygame.transform.scale(roodscore, (350, 450)), (0, 300))
+                        DISPLAYSURF.blit(pygame.transform.scale(blauwscore, (350, 450)), (0, 300))
+                        DISPLAYSURF.blit(pygame.transform.scale(hudpion_blauw, (100, 100)), (1000, 0))
                         if rDirection == 'right':
                             for i in list[:grand]:
                                 if rPx == 950:
@@ -986,7 +996,7 @@ def gameboard_2():
         DISPLAYSURF.blit(pygame.transform.scale(blauwPion, (50, 50)), (bPx, bPy))
 
         quitbutton()
-        DISPLAYSURF.blit(image, (781,680))
+        DISPLAYSURF.blit(image, (1130,200))
         btn.render(DISPLAYSURF)
         pygame.display.update()
 
