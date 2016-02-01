@@ -515,28 +515,28 @@ def gameboard_3():
     def quitbutton():
         mouse = pygame.mouse.get_pos()
         click = pygame.mouse.get_pressed()
-        if 750 + 100 > mouse[0] > 750 and 520 + 50 > mouse[1] > 520:
-            pygame.draw.rect(DISPLAYSURF, RED, (750,520,100,50))
+        if 1100 + 100 > mouse[0] > 1100 and 520 + 50 > mouse[1] > 520:
+            pygame.draw.rect(DISPLAYSURF, RED, (1100,520,100,50))
             if click[0] == 1:
                 quit()
         else:
-            pygame.draw.rect(DISPLAYSURF, ANDERSROOD,(750, 520, 100, 50))
+            pygame.draw.rect(DISPLAYSURF, ANDERSROOD,(1100, 520, 100, 50))
 
-        if 750 + 100 > mouse[0] > 750 and 450 + 50 > mouse[1] > 450:
-            pygame.draw.rect(DISPLAYSURF, RED, (750,450,100,50))
+        if 1100 + 100 > mouse[0] > 1100 and 450 + 50 > mouse[1] > 450:
+            pygame.draw.rect(DISPLAYSURF, RED, (1100,450,100,50))
             if click[0] == 1:
                 time.sleep(1)
                 webbrowser.open_new("file://" + os.path.realpath("Manual.pdf"))
         else:
-            pygame.draw.rect(DISPLAYSURF, ANDERSROOD, (750,450,100,50))
+            pygame.draw.rect(DISPLAYSURF, ANDERSROOD, (1100,450,100,50))
 
 
         textSurf, textRect = text_object("Info",tekst)
-        textRect.center = ((750+(100/2)), (450 + (50/2)))
+        textRect.center = ((1100+(100/2)), (450 + (50/2)))
         display.blit(textSurf,textRect)
 
         textSurf, textRect = text_object("Quit",tekst)
-        textRect.center = ((750+(100/2)), (520 + (50/2)))
+        textRect.center = ((1100+(100/2)), (520 + (50/2)))
         display.blit(textSurf, textRect)
 
     turn = 'playerOne'
@@ -810,28 +810,28 @@ def gameboard_2():
     def quitbutton():
         mouse = pygame.mouse.get_pos()
         click = pygame.mouse.get_pressed()
-        if 750 + 100 > mouse[0] > 750 and 520 + 50 > mouse[1] > 520:
-            pygame.draw.rect(DISPLAYSURF, RED, (750,520,100,50))
+        if 1100 + 100 > mouse[0] > 1100 and 520 + 50 > mouse[1] > 520:
+            pygame.draw.rect(DISPLAYSURF, RED, (1100,520,100,50))
             if click[0] == 1:
                 quit()
         else:
-            pygame.draw.rect(DISPLAYSURF, ANDERSROOD,(750, 520, 100, 50))
+            pygame.draw.rect(DISPLAYSURF, ANDERSROOD,(1100, 520, 100, 50))
 
-        if 750 + 100 > mouse[0] > 750 and 450 + 50 > mouse[1] > 450:
-            pygame.draw.rect(DISPLAYSURF, RED, (750,450,100,50))
+        if 1100 + 100 > mouse[0] > 1100 and 450 + 50 > mouse[1] > 450:
+            pygame.draw.rect(DISPLAYSURF, RED, (1100,450,100,50))
             if click[0] == 1:
                 time.sleep(1)
                 webbrowser.open_new("file://" + os.path.realpath("Manual.pdf"))
         else:
-            pygame.draw.rect(DISPLAYSURF, ANDERSROOD, (750,450,100,50))
+            pygame.draw.rect(DISPLAYSURF, ANDERSROOD, (1100,450,100,50))
 
 
         textSurf, textRect = text_object("Info",tekst)
-        textRect.center= ((750+(100/2)), (450 +(50/2)))
+        textRect.center= ((1100+(100/2)), (450 +(50/2)))
         display.blit(textSurf,textRect)
 
         textSurf, textRect = text_object("Quit",tekst)
-        textRect.center= ((750+(100/2)), (520 +(50/2)))
+        textRect.center= ((1100+(100/2)), (520 +(50/2)))
         display.blit(textSurf,textRect)
 
 
