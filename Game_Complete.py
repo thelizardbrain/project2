@@ -5,9 +5,9 @@ import time
 import random
 pygame.init()
 
-pygame.mixer.music.load("test1.mp4")
-pygame.mixer.music.play(-1, 0.0)
-pygame.mixer.music.set_volume(0.5)
+#pygame.mixer.music.load("test1.mp4")
+#pygame.mixer.music.play(-1, 0.0)
+#pygame.mixer.music.set_volume(0.5)
 
 display = pygame.display.set_mode((800, 600))   # basis framework
 caption = pygame.display.set_caption('Survivor')
@@ -25,6 +25,11 @@ black = (0, 0, 0)
 white = (255, 255, 255)
 red = (255, 20, 0)
 dark_red = (150, 0, 0)
+
+P1color = (0,   102,   205)
+P2color = (102,   204, 0)
+P3color = (201, 57, 57)
+P4color = (255, 255, 102)
 
 class Button:
         def __init__(self, screen_rect):
@@ -155,6 +160,14 @@ def gameboard_4():
     fightx3 = 950
     fighty3 = 600
 
+    def text(text, textc, size, x, y):
+        font = pygame.font.Font(None, size)
+        text = font.render(text, 1, (textc))
+        textpos = text.get_rect()
+        textpos.x = x
+        textpos.y = y
+        DISPLAYSURF.blit(text, textpos)
+
     def text_object(text,font):
         textSurface = font.render(text, True, white)
         return textSurface, textSurface.get_rect()
@@ -206,6 +219,12 @@ def gameboard_4():
                     if turn == 'playerOne':
                         DISPLAYSURF.blit(pygame.transform.scale(blauwscore, (350, 450)), (0, 300))
                         DISPLAYSURF.blit(pygame.transform.scale(hudpion3, (100, 100)), (750, 0))
+                        P1color = (0,   102,   205)
+                        hp1 = 100
+                        cpnt1 = 15
+                        text("Mike Tysen ", P1color, 30, 20, 20)
+                        text("HP:       "+ str(hp1), white, 30, 20, 40)
+                        text("cpnt:         "+ str(cpnt1), white, 30, 20, 60)
                         if bDirection == 'right':
                             for i in list[:grand]:
                                 if bPx == 950:
@@ -251,6 +270,12 @@ def gameboard_4():
                     elif turn == 'playerTwo':
                         DISPLAYSURF.blit(pygame.transform.scale(roodscore, (350, 450)), (0, 300))
                         DISPLAYSURF.blit(pygame.transform.scale(hudpion2, (100, 100)), (750, 0))
+                        hp2 = 100
+                        cpnt2 = 15
+                        P2color = (102,   204, 0)
+                        text("Badr Heri ", P2color, 30, 20, 90)
+                        text("HP:       " + str(hp2), white, 30, 20, 110)
+                        text("cpnt:         " + str(cpnt2), white, 30, 20, 130)
                         if rDirection == 'right':
                             for i in list[:grand]:
                                 if rPx == 950:
@@ -296,6 +321,12 @@ def gameboard_4():
                     elif turn == 'playerFour':
                         DISPLAYSURF.blit(pygame.transform.scale(geelscore, (350, 450)), (0, 300))
                         DISPLAYSURF.blit(pygame.transform.scale(hudpion1, (100, 100)), (750, 0))
+                        hp4 = 100
+                        cpnt4 = 15
+                        P4color = (255, 255, 102)
+                        text("Manny Pecquiao ", P4color, 30, 20, 160)
+                        text("HP:       " + str(hp4), white, 30, 20, 180)
+                        text("cpnt:         " + str(cpnt4), white, 30, 20, 200)
                         if gDirection == 'right':
                             for i in list[:grand]:
                                 if gPx == 950:
@@ -341,6 +372,13 @@ def gameboard_4():
                     elif turn == 'playerThree':
                         DISPLAYSURF.blit(pygame.transform.scale(groenscore, (350, 450)), (0, 300))
                         DISPLAYSURF.blit(pygame.transform.scale(hudpion4, (100, 100)), (750, 0))
+                        hp3 = 100
+                        cpnt3 = 15
+                        P3color = (201, 57, 57)
+                        text("Rocky Belboa ", P3color, 30, 20, 230)
+                        text("HP:       " + str(hp3), white, 30, 20, 250)
+                        text("cpnt:         " + str(cpnt3), white, 30, 20, 270)
+
                         if grDirection == 'right':
                             for i in list[:grand]:
                                 if grPx == 950:
