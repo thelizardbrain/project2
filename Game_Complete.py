@@ -623,6 +623,7 @@ def gameboard_3():
                     grand = rand + 1
                     ggrand = grand + 1
 
+
                     if turn == 'playerOne':
                         DISPLAYSURF.blit(pygame.transform.scale(roodscore, (350, 450)), (0, 300))
                         DISPLAYSURF.blit(pygame.transform.scale(hudpion_rood, (100, 100)), (1000, 0))
