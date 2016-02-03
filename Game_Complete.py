@@ -3,7 +3,10 @@ import pygame, sys
 from pygame.locals import *
 import time
 import random
+from supercards import *
+from Winningscreen import *
 pygame.init()
+
 
 #pygame.mixer.music.load("test1.mp4")
 #pygame.mixer.music.play(-1, 0.0)
@@ -24,7 +27,6 @@ black = (0, 0, 0)
 white = (255, 255, 255)
 red = (255, 20, 0)
 dark_red = (150, 0, 0)
-
 
 class Button:
         def __init__(self, screen_rect):
@@ -73,6 +75,7 @@ def Hoekfight(x, y):
             Hoekfight(x, y)
 
 def gameboard_4():
+
 #constants representing colours
     YELLOW = (255, 255, 102)
     ANDERSGEEL = (204, 204, 0)
@@ -224,9 +227,7 @@ def gameboard_4():
 
 
     turn = 'playerOne'
-    DISPLAYSURF.blit(pygame.transform.scale(blauwscore, (350, 450)), (0, 300))
-    DISPLAYSURF.blit(pygame.transform.scale(hudpion_blauw, (100, 100)), (1000, 0))
-
+    DISPLAYSURF.blit(pygame.transform.scale(hudpion_blauw, (100, 100)), (200, 0))
 
     P1color = (0,   102,   205)
     player1 = Player(1, 30)
@@ -255,16 +256,46 @@ def gameboard_4():
     #def game(rPx, rPy, bPx, bPy, gPx, gPy, grPx, grPy):
     while True:
         for event in pygame.event.get():
-            if event.type == pygame.MOUSEBUTTONDOWN:
-            # User clicks the mouse. Get the position
-                pos = pygame.mouse.get_pos()
-            # Change the x/y screen coordinates to grid coordinates
-            # Color around the clicked tile
-                print("Click ", pos, "Grid coordinates: ", x, y)
             if event.type == QUIT:
                 pygame.quit()
                 sys.exit()
-            elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+            if hp1 > 0 and hp2 <= 0 and hp3 <=0 and hp4 <= 0:
+                winningscreen('P1 Mike Tysen WINS')
+            if hp1 <= 0 and hp2 > 0 and hp3 <= 0 and hp4 <= 0:
+                winningscreen('P2 Rocky Belboa WINS')
+            if hp1 <= 0 and hp2 <= 0 and hp3 > 0 and hp4 <= 0:
+                winningscreen('P3 Badr Heri WINS')
+            if hp1 <= 0 and hp2 <= 0 and hp3 <= 0 and hp4 > 0:
+                winningscreen('P4 Manny Pecquiao WINS')
+            if turn == 'playerOne':
+                if hp1 <= 0:
+                    bPx = 1500
+                    bPy = 1500
+                    DISPLAYSURF.blit(pygame.transform.scale(hudpion_rood, (100, 100)), (200, 80))
+                    DISPLAYSURF.blit(pygame.transform.scale(shade, (350, 80)), (0, 0))
+                    turn = 'playerTwo'
+            if turn == 'playerTwo':
+                if hp2 <= 0:
+                    rPx = 1500
+                    rPy = 1500
+                    DISPLAYSURF.blit(pygame.transform.scale(hudpion_groen, (100, 100)), (200, 160))
+                    DISPLAYSURF.blit(pygame.transform.scale(shade, (350, 80)), (0, 80))
+                    turn = 'playerThree'
+            if turn == 'playerThree':
+                if hp3 <= 0:
+                    grPx = 1500
+                    grPy = 1500
+                    DISPLAYSURF.blit(pygame.transform.scale(hudpion_geel, (100, 100)), (200, 220))
+                    DISPLAYSURF.blit(pygame.transform.scale(shade, (350, 70)), (0, 160))
+                    turn = 'playerFour'
+            if turn =='playerFour':
+                if hp4 <= 0:
+                    gPx = 1500
+                    gPy = 1500
+                    DISPLAYSURF.blit(pygame.transform.scale(hudpion_blauw, (100, 100)), (200, 0))
+                    DISPLAYSURF.blit(pygame.transform.scale(shade, (350, 80)), (0, 220))
+                    turn = 'playerOne'
+            if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                 if btn.rect.collidepoint(pygame.mouse.get_pos()):
                     list = [1, 2, 3, 4, 5, 6, 7]
                     rand = random.randint(0, 5)
@@ -273,8 +304,11 @@ def gameboard_4():
                     ggrand = grand + 1
 
                     if turn == 'playerOne':
-                        DISPLAYSURF.blit(pygame.transform.scale(roodscore, (350, 450)), (0, 300))
-                        DISPLAYSURF.blit(pygame.transform.scale(hudpion_rood, (100, 100)), (1000, 0))
+                        DISPLAYSURF.blit(pygame.transform.scale(shade, (100, 100)), (200, 0))
+                        DISPLAYSURF.blit(pygame.transform.scale(shade, (350, 450)), (0, 300))
+                        DISPLAYSURF.blit(pygame.transform.scale(hudpion_rood, (100, 100)), (200, 80))
+                        if hp2 <= 0:
+                            DISPLAYSURF.blit(pygame.transform.scale(shade, (100, 100)), (200, 160))
                         if bDirection == 'right':
                             for i in list[:grand]:
                                 if bPx == 950:
@@ -284,6 +318,298 @@ def gameboard_4():
                                     break
                                 else:
                                     bPx += 50
+                            if (bPx == fightx1 and bPy == fighty1) or (bPx == fightx3 and bPy == fighty2) or (bPx == fightx1 and bPy == fighty3) or (bPx == fightx2 and bPy == fighty2):
+                                super_list = ["John Cena", "Jason Statham", "Bruce Hee", "Jackie Chen", "Agua man", "Pariz Hilten", "Dexter", "Steve Urkel", "Ernold Schwarzenegger", "James Bend", "The Roch", "Chack Norris", "Vin Dieser", "Super Merio", "Steve Seagal", "Jet Ri", "Wesley Sniper", "Terry Crews"]
+                                super_random = random.randint(0, 17)
+                                print(super_list[super_random])
+                                if super_random == 0:
+                                    DISPLAYSURF.blit(pygame.transform.scale(John, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 10
+                                    elif rand == 1:
+                                        hp1 -= 6
+                                    elif rand == 2:
+                                        hp1 -= 25
+                                    elif rand == 3:
+                                        hp1 -= 7
+                                    elif rand == 4:
+                                        hp1 -= 8
+                                    elif rand == 5:
+                                        hp1 -= 11
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 1:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Jason, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 15
+                                    elif rand == 1:
+                                        hp1 -= 17
+                                    elif rand == 2:
+                                        hp1 -= 19
+                                    elif rand == 3:
+                                        hp1 -= 21
+                                    elif rand == 4:
+                                        hp1 -= 23
+                                    elif rand == 5:
+                                        hp1 -= 26
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 2:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Bruce, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 20
+                                    elif rand == 1:
+                                        hp1 -= 15
+                                    elif rand == 2:
+                                        hp1 -= 5
+                                    elif rand == 3:
+                                        hp1 -= 7
+                                    elif rand == 4:
+                                        hp1 -= 8
+                                    elif rand == 5:
+                                        hp1 -= 26
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 3:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Jackie, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 12
+                                    elif rand == 1:
+                                        hp1 -= 10
+                                    elif rand == 2:
+                                        hp1 -= 15
+                                    elif rand == 3:
+                                        hp1 -= 9
+                                    elif rand == 4:
+                                        hp1 -= 10
+                                    elif rand == 5:
+                                        hp1 -= 25
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 4:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Agua, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 12
+                                    elif rand == 1:
+                                        hp1 -= 15
+                                    elif rand == 2:
+                                        hp1 -= 9
+                                    elif rand == 3:
+                                        hp1 -= 7
+                                    elif rand == 4:
+                                        hp1 -= 7
+                                    elif rand == 5:
+                                        hp1 -= 13
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 5:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Pariz, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 12
+                                    elif rand == 1:
+                                        hp1 -= 8
+                                    elif rand == 2:
+                                        hp1 -= 7
+                                    elif rand == 3:
+                                        hp1 -= 15
+                                    elif rand == 4:
+                                        hp1 -= 13
+                                    elif rand == 5:
+                                        hp1 -= 9
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 6:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Dexter, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 9
+                                    elif rand == 1:
+                                        hp1 -= 8
+                                    elif rand == 2:
+                                        hp1 -= 7
+                                    elif rand == 3:
+                                        hp1 -= 15
+                                    elif rand == 4:
+                                        hp1 -= 13
+                                    elif rand == 5:
+                                        hp1 -= 9
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 7:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Steve_Urkel, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 10
+                                    elif rand == 1:
+                                        hp1 -= 5
+                                    elif rand == 2:
+                                        hp1 -= 12
+                                    elif rand == 3:
+                                        hp1 -= 11
+                                    elif rand == 4:
+                                        hp1 -= 15
+                                    elif rand == 5:
+                                        hp1 -= 8
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 8:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Ernold, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 25
+                                    elif rand == 1:
+                                        hp1 -= 25
+                                    elif rand == 2:
+                                        hp1 -= 20
+                                    elif rand == 3:
+                                        hp1 -= 15
+                                    elif rand == 4:
+                                        hp1 -= 15
+                                    elif rand == 5:
+                                        hp1 -= 10
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 9:
+                                    DISPLAYSURF.blit(pygame.transform.scale(James, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 25
+                                    elif rand == 1:
+                                        hp1 -= 15
+                                    elif rand == 2:
+                                        hp1 -= 15
+                                    elif rand == 3:
+                                        hp1 -= 7
+                                    elif rand == 4:
+                                        hp1 -= 20
+                                    elif rand == 5:
+                                        hp1 -= 25
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 10:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Roch, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 13
+                                    elif rand == 1:
+                                        hp1 -= 28
+                                    elif rand == 2:
+                                        hp1 -= 30
+                                    elif rand == 3:
+                                        hp1 -= 17
+                                    elif rand == 4:
+                                        hp1 -= 10
+                                    elif rand == 5:
+                                        hp1 -= 7
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 11:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Chack, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 15
+                                    elif rand == 1:
+                                        hp1 -= 28
+                                    elif rand == 2:
+                                        hp1 -= 27
+                                    elif rand == 3:
+                                        hp1 -= 25
+                                    elif rand == 4:
+                                        hp1 -= 29
+                                    elif rand == 5:
+                                        hp1 -= 30
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 12:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Vin, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 20
+                                    elif rand == 1:
+                                        hp1 -= 25
+                                    elif rand == 2:
+                                        hp1 -= 30
+                                    elif rand == 3:
+                                        hp1 -= 25
+                                    elif rand == 4:
+                                        hp1 -= 20
+                                    elif rand == 5:
+                                        hp1 -= 15
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 13:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Merio, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 10
+                                    elif rand == 1:
+                                        hp1 -= 10
+                                    elif rand == 2:
+                                        hp1 -= 30
+                                    elif rand == 3:
+                                        hp1 -= 30
+                                    elif rand == 4:
+                                        hp1 -= 15
+                                    elif rand == 5:
+                                        hp1 -= 15
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 14:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Steve_Seagal, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 10
+                                    elif rand == 1:
+                                        hp1 -= 15
+                                    elif rand == 2:
+                                        hp1 -= 12
+                                    elif rand == 3:
+                                        hp1 -= 11
+                                    elif rand == 4:
+                                        hp1 -= 25
+                                    elif rand == 5:
+                                        hp1 -= 20
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 15:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Jet, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 10
+                                    elif rand == 1:
+                                        hp1 -= 30
+                                    elif rand == 2:
+                                        hp1 -= 12
+                                    elif rand == 3:
+                                        hp1 -= 25
+                                    elif rand == 4:
+                                        hp1 -= 14
+                                    elif rand == 5:
+                                        hp1 -= 23
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 16:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Wesley, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 10
+                                    elif rand == 1:
+                                        hp1 -= 12
+                                    elif rand == 2:
+                                        hp1 -= 14
+                                    elif rand == 3:
+                                        hp1 -= 16
+                                    elif rand == 4:
+                                        hp1 -= 14
+                                    elif rand == 5:
+                                        hp1 -= 12
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 17:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Terry, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 10
+                                    elif rand == 1:
+                                        hp1 -= 15
+                                    elif rand == 2:
+                                        hp1 -= 25
+                                    elif rand == 3:
+                                        hp1 -= 20
+                                    elif rand == 4:
+                                        hp1 -= 15
+                                    elif rand == 5:
+                                        hp1 -= 10
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
                             turn = 'playerTwo'
                         elif bDirection == 'down':
                             for i in list[:grand]:
@@ -294,6 +620,298 @@ def gameboard_4():
                                     break
                                 else:
                                     bPy += 50
+                            if (bPx == fightx1 and bPy == fighty1) or (bPx == fightx3 and bPy == fighty2) or (bPx == fightx1 and bPy == fighty3) or (bPx == fightx2 and bPy == fighty2):
+                                super_list = ["John Cena", "Jason Statham", "Bruce Hee", "Jackie Chen", "Agua man", "Pariz Hilten", "Dexter", "Steve Urkel", "Ernold Schwarzenegger", "James Bend", "The Roch", "Chack Norris", "Vin Dieser", "Super Merio", "Steve Seagal", "Jet Ri", "Wesley Sniper", "Terry Crews"]
+                                super_random = random.randint(0, 17)
+                                print(super_list[super_random])
+                                if super_random == 0:
+                                    DISPLAYSURF.blit(pygame.transform.scale(John, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 10
+                                    elif rand == 1:
+                                        hp1 -= 6
+                                    elif rand == 2:
+                                        hp1 -= 25
+                                    elif rand == 3:
+                                        hp1 -= 7
+                                    elif rand == 4:
+                                        hp1 -= 8
+                                    elif rand == 5:
+                                        hp1 -= 11
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 1:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Jason, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 15
+                                    elif rand == 1:
+                                        hp1 -= 17
+                                    elif rand == 2:
+                                        hp1 -= 19
+                                    elif rand == 3:
+                                        hp1 -= 21
+                                    elif rand == 4:
+                                        hp1 -= 23
+                                    elif rand == 5:
+                                        hp1 -= 26
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 2:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Bruce, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 20
+                                    elif rand == 1:
+                                        hp1 -= 15
+                                    elif rand == 2:
+                                        hp1 -= 5
+                                    elif rand == 3:
+                                        hp1 -= 7
+                                    elif rand == 4:
+                                        hp1 -= 8
+                                    elif rand == 5:
+                                        hp1 -= 26
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 3:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Jackie, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 12
+                                    elif rand == 1:
+                                        hp1 -= 10
+                                    elif rand == 2:
+                                        hp1 -= 15
+                                    elif rand == 3:
+                                        hp1 -= 9
+                                    elif rand == 4:
+                                        hp1 -= 10
+                                    elif rand == 5:
+                                        hp1 -= 25
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 4:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Agua, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 12
+                                    elif rand == 1:
+                                        hp1 -= 15
+                                    elif rand == 2:
+                                        hp1 -= 9
+                                    elif rand == 3:
+                                        hp1 -= 7
+                                    elif rand == 4:
+                                        hp1 -= 7
+                                    elif rand == 5:
+                                        hp1 -= 13
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 5:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Pariz, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 12
+                                    elif rand == 1:
+                                        hp1 -= 8
+                                    elif rand == 2:
+                                        hp1 -= 7
+                                    elif rand == 3:
+                                        hp1 -= 15
+                                    elif rand == 4:
+                                        hp1 -= 13
+                                    elif rand == 5:
+                                        hp1 -= 9
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 6:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Dexter, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 9
+                                    elif rand == 1:
+                                        hp1 -= 8
+                                    elif rand == 2:
+                                        hp1 -= 7
+                                    elif rand == 3:
+                                        hp1 -= 15
+                                    elif rand == 4:
+                                        hp1 -= 13
+                                    elif rand == 5:
+                                        hp1 -= 9
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 7:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Steve_Urkel, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 10
+                                    elif rand == 1:
+                                        hp1 -= 5
+                                    elif rand == 2:
+                                        hp1 -= 12
+                                    elif rand == 3:
+                                        hp1 -= 11
+                                    elif rand == 4:
+                                        hp1 -= 15
+                                    elif rand == 5:
+                                        hp1 -= 8
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 8:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Ernold, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 25
+                                    elif rand == 1:
+                                        hp1 -= 25
+                                    elif rand == 2:
+                                        hp1 -= 20
+                                    elif rand == 3:
+                                        hp1 -= 15
+                                    elif rand == 4:
+                                        hp1 -= 15
+                                    elif rand == 5:
+                                        hp1 -= 10
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 9:
+                                    DISPLAYSURF.blit(pygame.transform.scale(James, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 25
+                                    elif rand == 1:
+                                        hp1 -= 15
+                                    elif rand == 2:
+                                        hp1 -= 15
+                                    elif rand == 3:
+                                        hp1 -= 7
+                                    elif rand == 4:
+                                        hp1 -= 20
+                                    elif rand == 5:
+                                        hp1 -= 25
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 10:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Roch, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 13
+                                    elif rand == 1:
+                                        hp1 -= 28
+                                    elif rand == 2:
+                                        hp1 -= 30
+                                    elif rand == 3:
+                                        hp1 -= 17
+                                    elif rand == 4:
+                                        hp1 -= 10
+                                    elif rand == 5:
+                                        hp1 -= 7
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 11:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Chack, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 15
+                                    elif rand == 1:
+                                        hp1 -= 28
+                                    elif rand == 2:
+                                        hp1 -= 27
+                                    elif rand == 3:
+                                        hp1 -= 25
+                                    elif rand == 4:
+                                        hp1 -= 29
+                                    elif rand == 5:
+                                        hp1 -= 30
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 12:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Vin, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 20
+                                    elif rand == 1:
+                                        hp1 -= 25
+                                    elif rand == 2:
+                                        hp1 -= 30
+                                    elif rand == 3:
+                                        hp1 -= 25
+                                    elif rand == 4:
+                                        hp1 -= 20
+                                    elif rand == 5:
+                                        hp1 -= 15
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 13:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Merio, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 10
+                                    elif rand == 1:
+                                        hp1 -= 10
+                                    elif rand == 2:
+                                        hp1 -= 30
+                                    elif rand == 3:
+                                        hp1 -= 30
+                                    elif rand == 4:
+                                        hp1 -= 15
+                                    elif rand == 5:
+                                        hp1 -= 15
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 14:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Steve_Seagal, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 10
+                                    elif rand == 1:
+                                        hp1 -= 15
+                                    elif rand == 2:
+                                        hp1 -= 12
+                                    elif rand == 3:
+                                        hp1 -= 11
+                                    elif rand == 4:
+                                        hp1 -= 25
+                                    elif rand == 5:
+                                        hp1 -= 20
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 15:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Jet, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 10
+                                    elif rand == 1:
+                                        hp1 -= 30
+                                    elif rand == 2:
+                                        hp1 -= 12
+                                    elif rand == 3:
+                                        hp1 -= 25
+                                    elif rand == 4:
+                                        hp1 -= 14
+                                    elif rand == 5:
+                                        hp1 -= 23
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 16:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Wesley, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 10
+                                    elif rand == 1:
+                                        hp1 -= 12
+                                    elif rand == 2:
+                                        hp1 -= 14
+                                    elif rand == 3:
+                                        hp1 -= 16
+                                    elif rand == 4:
+                                        hp1 -= 14
+                                    elif rand == 5:
+                                        hp1 -= 12
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 17:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Terry, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 10
+                                    elif rand == 1:
+                                        hp1 -= 15
+                                    elif rand == 2:
+                                        hp1 -= 25
+                                    elif rand == 3:
+                                        hp1 -= 20
+                                    elif rand == 4:
+                                        hp1 -= 15
+                                    elif rand == 5:
+                                        hp1 -= 10
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
                             turn = 'playerTwo'
                         elif bDirection == 'left':
                             for i in list[:grand]:
@@ -304,6 +922,298 @@ def gameboard_4():
                                     break
                                 else:
                                     bPx -= 50
+                            if (bPx == fightx1 and bPy == fighty1) or (bPx == fightx3 and bPy == fighty2) or (bPx == fightx1 and bPy == fighty3) or (bPx == fightx2 and bPy == fighty2):
+                                super_list = ["John Cena", "Jason Statham", "Bruce Hee", "Jackie Chen", "Agua man", "Pariz Hilten", "Dexter", "Steve Urkel", "Ernold Schwarzenegger", "James Bend", "The Roch", "Chack Norris", "Vin Dieser", "Super Merio", "Steve Seagal", "Jet Ri", "Wesley Sniper", "Terry Crews"]
+                                super_random = random.randint(0, 17)
+                                print(super_list[super_random])
+                                if super_random == 0:
+                                    DISPLAYSURF.blit(pygame.transform.scale(John, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 10
+                                    elif rand == 1:
+                                        hp1 -= 6
+                                    elif rand == 2:
+                                        hp1 -= 25
+                                    elif rand == 3:
+                                        hp1 -= 7
+                                    elif rand == 4:
+                                        hp1 -= 8
+                                    elif rand == 5:
+                                        hp1 -= 11
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 1:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Jason, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 15
+                                    elif rand == 1:
+                                        hp1 -= 17
+                                    elif rand == 2:
+                                        hp1 -= 19
+                                    elif rand == 3:
+                                        hp1 -= 21
+                                    elif rand == 4:
+                                        hp1 -= 23
+                                    elif rand == 5:
+                                        hp1 -= 26
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 2:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Bruce, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 20
+                                    elif rand == 1:
+                                        hp1 -= 15
+                                    elif rand == 2:
+                                        hp1 -= 5
+                                    elif rand == 3:
+                                        hp1 -= 7
+                                    elif rand == 4:
+                                        hp1 -= 8
+                                    elif rand == 5:
+                                        hp1 -= 26
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 3:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Jackie, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 12
+                                    elif rand == 1:
+                                        hp1 -= 10
+                                    elif rand == 2:
+                                        hp1 -= 15
+                                    elif rand == 3:
+                                        hp1 -= 9
+                                    elif rand == 4:
+                                        hp1 -= 10
+                                    elif rand == 5:
+                                        hp1 -= 25
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 4:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Agua, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 12
+                                    elif rand == 1:
+                                        hp1 -= 15
+                                    elif rand == 2:
+                                        hp1 -= 9
+                                    elif rand == 3:
+                                        hp1 -= 7
+                                    elif rand == 4:
+                                        hp1 -= 7
+                                    elif rand == 5:
+                                        hp1 -= 13
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 5:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Pariz, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 12
+                                    elif rand == 1:
+                                        hp1 -= 8
+                                    elif rand == 2:
+                                        hp1 -= 7
+                                    elif rand == 3:
+                                        hp1 -= 15
+                                    elif rand == 4:
+                                        hp1 -= 13
+                                    elif rand == 5:
+                                        hp1 -= 9
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 6:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Dexter, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 9
+                                    elif rand == 1:
+                                        hp1 -= 8
+                                    elif rand == 2:
+                                        hp1 -= 7
+                                    elif rand == 3:
+                                        hp1 -= 15
+                                    elif rand == 4:
+                                        hp1 -= 13
+                                    elif rand == 5:
+                                        hp1 -= 9
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 7:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Steve_Urkel, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 10
+                                    elif rand == 1:
+                                        hp1 -= 5
+                                    elif rand == 2:
+                                        hp1 -= 12
+                                    elif rand == 3:
+                                        hp1 -= 11
+                                    elif rand == 4:
+                                        hp1 -= 15
+                                    elif rand == 5:
+                                        hp1 -= 8
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 8:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Ernold, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 25
+                                    elif rand == 1:
+                                        hp1 -= 25
+                                    elif rand == 2:
+                                        hp1 -= 20
+                                    elif rand == 3:
+                                        hp1 -= 15
+                                    elif rand == 4:
+                                        hp1 -= 15
+                                    elif rand == 5:
+                                        hp1 -= 10
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 9:
+                                    DISPLAYSURF.blit(pygame.transform.scale(James, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 25
+                                    elif rand == 1:
+                                        hp1 -= 15
+                                    elif rand == 2:
+                                        hp1 -= 15
+                                    elif rand == 3:
+                                        hp1 -= 7
+                                    elif rand == 4:
+                                        hp1 -= 20
+                                    elif rand == 5:
+                                        hp1 -= 25
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 10:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Roch, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 13
+                                    elif rand == 1:
+                                        hp1 -= 28
+                                    elif rand == 2:
+                                        hp1 -= 30
+                                    elif rand == 3:
+                                        hp1 -= 17
+                                    elif rand == 4:
+                                        hp1 -= 10
+                                    elif rand == 5:
+                                        hp1 -= 7
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 11:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Chack, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 15
+                                    elif rand == 1:
+                                        hp1 -= 28
+                                    elif rand == 2:
+                                        hp1 -= 27
+                                    elif rand == 3:
+                                        hp1 -= 25
+                                    elif rand == 4:
+                                        hp1 -= 29
+                                    elif rand == 5:
+                                        hp1 -= 30
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 12:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Vin, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 20
+                                    elif rand == 1:
+                                        hp1 -= 25
+                                    elif rand == 2:
+                                        hp1 -= 30
+                                    elif rand == 3:
+                                        hp1 -= 25
+                                    elif rand == 4:
+                                        hp1 -= 20
+                                    elif rand == 5:
+                                        hp1 -= 15
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 13:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Merio, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 10
+                                    elif rand == 1:
+                                        hp1 -= 10
+                                    elif rand == 2:
+                                        hp1 -= 30
+                                    elif rand == 3:
+                                        hp1 -= 30
+                                    elif rand == 4:
+                                        hp1 -= 15
+                                    elif rand == 5:
+                                        hp1 -= 15
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 14:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Steve_Seagal, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 10
+                                    elif rand == 1:
+                                        hp1 -= 15
+                                    elif rand == 2:
+                                        hp1 -= 12
+                                    elif rand == 3:
+                                        hp1 -= 11
+                                    elif rand == 4:
+                                        hp1 -= 25
+                                    elif rand == 5:
+                                        hp1 -= 20
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 15:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Jet, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 10
+                                    elif rand == 1:
+                                        hp1 -= 30
+                                    elif rand == 2:
+                                        hp1 -= 12
+                                    elif rand == 3:
+                                        hp1 -= 25
+                                    elif rand == 4:
+                                        hp1 -= 14
+                                    elif rand == 5:
+                                        hp1 -= 23
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 16:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Wesley, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 10
+                                    elif rand == 1:
+                                        hp1 -= 12
+                                    elif rand == 2:
+                                        hp1 -= 14
+                                    elif rand == 3:
+                                        hp1 -= 16
+                                    elif rand == 4:
+                                        hp1 -= 14
+                                    elif rand == 5:
+                                        hp1 -= 12
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 17:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Terry, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 10
+                                    elif rand == 1:
+                                        hp1 -= 15
+                                    elif rand == 2:
+                                        hp1 -= 25
+                                    elif rand == 3:
+                                        hp1 -= 20
+                                    elif rand == 4:
+                                        hp1 -= 15
+                                    elif rand == 5:
+                                        hp1 -= 10
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
                             turn = 'playerTwo'
                         elif bDirection == 'up':
                             for i in list[:grand]:
@@ -314,6 +1224,299 @@ def gameboard_4():
                                     break
                                 else:
                                     bPy -= 50
+                            if (bPx == fightx1 and bPy == fighty1) or (bPx == fightx3 and bPy == fighty2) or (bPx == fightx1 and bPy == fighty3) or (bPx == fightx2 and bPy == fighty2):
+                                super_list = ["John Cena", "Jason Statham", "Bruce Hee", "Jackie Chen", "Agua man", "Pariz Hilten", "Dexter", "Steve Urkel", "Ernold Schwarzenegger", "James Bend", "The Roch", "Chack Norris", "Vin Dieser", "Super Merio", "Steve Seagal", "Jet Ri", "Wesley Sniper", "Terry Crews"]
+                                super_random = random.randint(0, 17)
+                                print(super_list[super_random])
+                                if super_random == 0:
+                                    DISPLAYSURF.blit(pygame.transform.scale(John, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 10
+                                    elif rand == 1:
+                                        hp1 -= 6
+                                    elif rand == 2:
+                                        hp1 -= 25
+                                    elif rand == 3:
+                                        hp1 -= 7
+                                    elif rand == 4:
+                                        hp1 -= 8
+                                    elif rand == 5:
+                                        hp1 -= 11
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 1:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Jason, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 15
+                                    elif rand == 1:
+                                        hp1 -= 17
+                                    elif rand == 2:
+                                        hp1 -= 19
+                                    elif rand == 3:
+                                        hp1 -= 21
+                                    elif rand == 4:
+                                        hp1 -= 23
+                                    elif rand == 5:
+                                        hp1 -= 26
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 2:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Bruce, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 20
+                                    elif rand == 1:
+                                        hp1 -= 15
+                                    elif rand == 2:
+                                        hp1 -= 5
+                                    elif rand == 3:
+                                        hp1 -= 7
+                                    elif rand == 4:
+                                        hp1 -= 8
+                                    elif rand == 5:
+                                        hp1 -= 26
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 3:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Jackie, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 12
+                                    elif rand == 1:
+                                        hp1 -= 10
+                                    elif rand == 2:
+                                        hp1 -= 15
+                                    elif rand == 3:
+                                        hp1 -= 9
+                                    elif rand == 4:
+                                        hp1 -= 10
+                                    elif rand == 5:
+                                        hp1 -= 25
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 4:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Agua, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 12
+                                    elif rand == 1:
+                                        hp1 -= 15
+                                    elif rand == 2:
+                                        hp1 -= 9
+                                    elif rand == 3:
+                                        hp1 -= 7
+                                    elif rand == 4:
+                                        hp1 -= 7
+                                    elif rand == 5:
+                                        hp1 -= 13
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 5:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Pariz, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 12
+                                    elif rand == 1:
+                                        hp1 -= 8
+                                    elif rand == 2:
+                                        hp1 -= 7
+                                    elif rand == 3:
+                                        hp1 -= 15
+                                    elif rand == 4:
+                                        hp1 -= 13
+                                    elif rand == 5:
+                                        hp1 -= 9
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 6:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Dexter, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 9
+                                    elif rand == 1:
+                                        hp1 -= 8
+                                    elif rand == 2:
+                                        hp1 -= 7
+                                    elif rand == 3:
+                                        hp1 -= 15
+                                    elif rand == 4:
+                                        hp1 -= 13
+                                    elif rand == 5:
+                                        hp1 -= 9
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 7:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Steve_Urkel, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 10
+                                    elif rand == 1:
+                                        hp1 -= 5
+                                    elif rand == 2:
+                                        hp1 -= 12
+                                    elif rand == 3:
+                                        hp1 -= 11
+                                    elif rand == 4:
+                                        hp1 -= 15
+                                    elif rand == 5:
+                                        hp1 -= 8
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 8:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Ernold, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 25
+                                    elif rand == 1:
+                                        hp1 -= 25
+                                    elif rand == 2:
+                                        hp1 -= 20
+                                    elif rand == 3:
+                                        hp1 -= 15
+                                    elif rand == 4:
+                                        hp1 -= 15
+                                    elif rand == 5:
+                                        hp1 -= 10
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 9:
+                                    DISPLAYSURF.blit(pygame.transform.scale(James, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 25
+                                    elif rand == 1:
+                                        hp1 -= 15
+                                    elif rand == 2:
+                                        hp1 -= 15
+                                    elif rand == 3:
+                                        hp1 -= 7
+                                    elif rand == 4:
+                                        hp1 -= 20
+                                    elif rand == 5:
+                                        hp1 -= 25
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 10:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Roch, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 13
+                                    elif rand == 1:
+                                        hp1 -= 28
+                                    elif rand == 2:
+                                        hp1 -= 30
+                                    elif rand == 3:
+                                        hp1 -= 17
+                                    elif rand == 4:
+                                        hp1 -= 10
+                                    elif rand == 5:
+                                        hp1 -= 7
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 11:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Chack, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 15
+                                    elif rand == 1:
+                                        hp1 -= 28
+                                    elif rand == 2:
+                                        hp1 -= 27
+                                    elif rand == 3:
+                                        hp1 -= 25
+                                    elif rand == 4:
+                                        hp1 -= 29
+                                    elif rand == 5:
+                                        hp1 -= 30
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 12:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Vin, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 20
+                                    elif rand == 1:
+                                        hp1 -= 25
+                                    elif rand == 2:
+                                        hp1 -= 30
+                                    elif rand == 3:
+                                        hp1 -= 25
+                                    elif rand == 4:
+                                        hp1 -= 20
+                                    elif rand == 5:
+                                        hp1 -= 15
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 13:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Merio, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 10
+                                    elif rand == 1:
+                                        hp1 -= 10
+                                    elif rand == 2:
+                                        hp1 -= 30
+                                    elif rand == 3:
+                                        hp1 -= 30
+                                    elif rand == 4:
+                                        hp1 -= 15
+                                    elif rand == 5:
+                                        hp1 -= 15
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 14:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Steve_Seagal, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 10
+                                    elif rand == 1:
+                                        hp1 -= 15
+                                    elif rand == 2:
+                                        hp1 -= 12
+                                    elif rand == 3:
+                                        hp1 -= 11
+                                    elif rand == 4:
+                                        hp1 -= 25
+                                    elif rand == 5:
+                                        hp1 -= 20
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 15:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Jet, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 10
+                                    elif rand == 1:
+                                        hp1 -= 30
+                                    elif rand == 2:
+                                        hp1 -= 12
+                                    elif rand == 3:
+                                        hp1 -= 25
+                                    elif rand == 4:
+                                        hp1 -= 14
+                                    elif rand == 5:
+                                        hp1 -= 23
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 16:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Wesley, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 10
+                                    elif rand == 1:
+                                        hp1 -= 12
+                                    elif rand == 2:
+                                        hp1 -= 14
+                                    elif rand == 3:
+                                        hp1 -= 16
+                                    elif rand == 4:
+                                        hp1 -= 14
+                                    elif rand == 5:
+                                        hp1 -= 12
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 17:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Terry, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 10
+                                    elif rand == 1:
+                                        hp1 -= 15
+                                    elif rand == 2:
+                                        hp1 -= 25
+                                    elif rand == 3:
+                                        hp1 -= 20
+                                    elif rand == 4:
+                                        hp1 -= 15
+                                    elif rand == 5:
+                                        hp1 -= 10
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                            turn = 'playerTwo'
                         if 100 <= bPy <= 200 and 900 <= bPx <= 1000:
                             Hoekfight(player1.hp, player2.hp)
                         elif 900 <= bPx <= 1000 and 550 <= bPy <= 650:
@@ -328,9 +1531,13 @@ def gameboard_4():
                         DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
                         text("HP:       " + str(player1.hp), white, 30, 20, 40)
                         turn = "playerTwo"
+
                     elif turn == 'playerTwo':
-                        DISPLAYSURF.blit(pygame.transform.scale(groenscore, (350, 450)), (0, 300))
-                        DISPLAYSURF.blit(pygame.transform.scale(hudpion_groen, (100, 100)), (1000, 0))
+                        DISPLAYSURF.blit(pygame.transform.scale(shade, (350, 450)), (0, 300))
+                        DISPLAYSURF.blit(pygame.transform.scale(shade, (100, 100)), (200, 80))
+                        DISPLAYSURF.blit(pygame.transform.scale(hudpion_groen, (100, 100)), (200, 160))
+                        if hp3 <= 0:
+                            DISPLAYSURF.blit(pygame.transform.scale(shade, (100, 100)), (200, 160))
                         if rDirection == 'right':
                             for i in list[:grand]:
                                 if rPx == 950:
@@ -340,6 +1547,298 @@ def gameboard_4():
                                     break
                                 else:
                                     rPx += 50
+                            if (rPx == fightx1 and rPy == fighty1) or (rPx == fightx3 and rPy == fighty2) or (rPx == fightx1 and rPy == fighty3) or (rPx == fightx2 and rPy == fighty2):
+                                super_list = ["John Cena", "Jason Statham", "Bruce Hee", "Jackie Chen", "Agua man", "Pariz Hilten", "Dexter", " Steve Urkel", "Ernold Schwarzenegger", "James Bend", "The Roch", "Chack Norris", "Vin Dieser", "Super Merio", "Steve Seagal", "Jet Ri", "Wesley Sniper", "Terry Crews"]
+                                super_random = random.randint(0, 17)
+                                print(super_list[super_random])
+                                if super_random == 0:
+                                    DISPLAYSURF.blit(pygame.transform.scale(John, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 10
+                                    elif rand == 1:
+                                        hp2 -= 6
+                                    elif rand == 2:
+                                        hp2 -= 25
+                                    elif rand == 3:
+                                        hp2 -= 7
+                                    elif rand == 4:
+                                        hp2 -= 8
+                                    elif rand == 5:
+                                        hp2 -= 11
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 1:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Jason, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 15
+                                    elif rand == 1:
+                                        hp2 -= 17
+                                    elif rand == 2:
+                                        hp2 -= 19
+                                    elif rand == 3:
+                                        hp2 -= 21
+                                    elif rand == 4:
+                                        hp2 -= 23
+                                    elif rand == 5:
+                                        hp2 -= 26
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 2:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Bruce, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 20
+                                    elif rand == 1:
+                                        hp2 -= 15
+                                    elif rand == 2:
+                                        hp2 -= 5
+                                    elif rand == 3:
+                                        hp2 -= 7
+                                    elif rand == 4:
+                                        hp2 -= 8
+                                    elif rand == 5:
+                                        hp2 -= 26
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 3:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Jackie, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 12
+                                    elif rand == 1:
+                                        hp2 -= 10
+                                    elif rand == 2:
+                                        hp2 -= 15
+                                    elif rand == 3:
+                                        hp2 -= 9
+                                    elif rand == 4:
+                                        hp2 -= 10
+                                    elif rand == 5:
+                                        hp2 -= 25
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 4:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Agua, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 12
+                                    elif rand == 1:
+                                        hp2 -= 15
+                                    elif rand == 2:
+                                        hp2 -= 9
+                                    elif rand == 3:
+                                        hp2 -= 7
+                                    elif rand == 4:
+                                        hp2 -= 7
+                                    elif rand == 5:
+                                        hp2 -= 13
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 5:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Pariz, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 12
+                                    elif rand == 1:
+                                        hp2 -= 8
+                                    elif rand == 2:
+                                        hp2 -= 7
+                                    elif rand == 3:
+                                        hp2 -= 15
+                                    elif rand == 4:
+                                        hp2 -= 13
+                                    elif rand == 5:
+                                        hp2 -= 9
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 6:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Dexter, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 9
+                                    elif rand == 1:
+                                        hp2 -= 8
+                                    elif rand == 2:
+                                        hp2 -= 7
+                                    elif rand == 3:
+                                        hp2 -= 15
+                                    elif rand == 4:
+                                        hp2 -= 13
+                                    elif rand == 5:
+                                        hp2 -= 9
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 7:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Steve_Urkel, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 10
+                                    elif rand == 1:
+                                        hp2 -= 5
+                                    elif rand == 2:
+                                        hp2 -= 12
+                                    elif rand == 3:
+                                        hp2 -= 11
+                                    elif rand == 4:
+                                        hp2 -= 15
+                                    elif rand == 5:
+                                        hp2 -= 8
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 8:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Ernold, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 25
+                                    elif rand == 1:
+                                        hp2 -= 25
+                                    elif rand == 2:
+                                        hp2 -= 20
+                                    elif rand == 3:
+                                        hp2 -= 15
+                                    elif rand == 4:
+                                        hp2 -= 15
+                                    elif rand == 5:
+                                        hp2 -= 10
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 9:
+                                    DISPLAYSURF.blit(pygame.transform.scale(James, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 25
+                                    elif rand == 1:
+                                        hp2 -= 15
+                                    elif rand == 2:
+                                        hp2 -= 15
+                                    elif rand == 3:
+                                        hp2 -= 7
+                                    elif rand == 4:
+                                        hp2 -= 20
+                                    elif rand == 5:
+                                        hp2 -= 25
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 10:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Roch, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 13
+                                    elif rand == 1:
+                                        hp2 -= 28
+                                    elif rand == 2:
+                                        hp2 -= 30
+                                    elif rand == 3:
+                                        hp2 -= 17
+                                    elif rand == 4:
+                                        hp2 -= 10
+                                    elif rand == 5:
+                                        hp2 -= 7
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 11:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Chack, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 15
+                                    elif rand == 1:
+                                        hp2 -= 28
+                                    elif rand == 2:
+                                        hp2 -= 27
+                                    elif rand == 3:
+                                        hp2 -= 25
+                                    elif rand == 4:
+                                        hp2 -= 29
+                                    elif rand == 5:
+                                        hp2 -= 30
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 12:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Vin, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 20
+                                    elif rand == 1:
+                                        hp2 -= 25
+                                    elif rand == 2:
+                                        hp2 -= 30
+                                    elif rand == 3:
+                                        hp2 -= 25
+                                    elif rand == 4:
+                                        hp2 -= 20
+                                    elif rand == 5:
+                                        hp2 -= 15
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 13:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Merio, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 10
+                                    elif rand == 1:
+                                        hp2 -= 10
+                                    elif rand == 2:
+                                        hp2 -= 30
+                                    elif rand == 3:
+                                        hp2 -= 30
+                                    elif rand == 4:
+                                        hp2 -= 15
+                                    elif rand == 5:
+                                        hp2 -= 15
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 14:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Steve_Seagal, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 10
+                                    elif rand == 1:
+                                        hp2 -= 15
+                                    elif rand == 2:
+                                        hp2 -= 12
+                                    elif rand == 3:
+                                        hp2 -= 11
+                                    elif rand == 4:
+                                        hp2 -= 25
+                                    elif rand == 5:
+                                        hp2 -= 20
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 15:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Jet, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 10
+                                    elif rand == 1:
+                                        hp2 -= 30
+                                    elif rand == 2:
+                                        hp2 -= 12
+                                    elif rand == 3:
+                                        hp2 -= 25
+                                    elif rand == 4:
+                                        hp2 -= 14
+                                    elif rand == 5:
+                                        hp2 -= 23
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 16:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Wesley, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 10
+                                    elif rand == 1:
+                                        hp2 -= 12
+                                    elif rand == 2:
+                                        hp2 -= 14
+                                    elif rand == 3:
+                                        hp2 -= 16
+                                    elif rand == 4:
+                                        hp2 -= 14
+                                    elif rand == 5:
+                                        hp2 -= 12
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 17:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Terry, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 10
+                                    elif rand == 1:
+                                        hp2 -= 15
+                                    elif rand == 2:
+                                        hp2 -= 25
+                                    elif rand == 3:
+                                        hp2 -= 20
+                                    elif rand == 4:
+                                        hp2 -= 15
+                                    elif rand == 5:
+                                        hp2 -= 10
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
                             turn = 'playerThree'
                         elif rDirection == 'down':
                             for i in list[:grand]:
@@ -350,6 +1849,298 @@ def gameboard_4():
                                     break
                                 else:
                                     rPy += 50
+                            if (rPx == fightx1 and rPy == fighty1) or (rPx == fightx3 and rPy == fighty2) or (rPx == fightx1 and rPy == fighty3) or (rPx == fightx2 and rPy == fighty2):
+                                super_list = ["John Cena", "Jason Statham", "Bruce Hee", "Jackie Chen", "Agua man", "Pariz Hilten", "Dexter", "Steve Urkel", "Ernold Schwarzenegger", "James Bend", "The Roch", "Chack Norris", "Vin Dieser", "Super Merio", "Steve Seagal", "Jet Ri", "Wesley Sniper", "Terry Crews"]
+                                super_random = random.randint(0, 17)
+                                print(super_list[super_random])
+                                if super_random == 0:
+                                    DISPLAYSURF.blit(pygame.transform.scale(John, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 10
+                                    elif rand == 1:
+                                        hp2 -= 6
+                                    elif rand == 2:
+                                        hp2 -= 25
+                                    elif rand == 3:
+                                        hp2 -= 7
+                                    elif rand == 4:
+                                        hp2 -= 8
+                                    elif rand == 5:
+                                        hp2 -= 11
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 1:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Jason, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 15
+                                    elif rand == 1:
+                                        hp2 -= 17
+                                    elif rand == 2:
+                                        hp2 -= 19
+                                    elif rand == 3:
+                                        hp2 -= 21
+                                    elif rand == 4:
+                                        hp2 -= 23
+                                    elif rand == 5:
+                                        hp2 -= 26
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 2:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Bruce, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 20
+                                    elif rand == 1:
+                                        hp2 -= 15
+                                    elif rand == 2:
+                                        hp2 -= 5
+                                    elif rand == 3:
+                                        hp2 -= 7
+                                    elif rand == 4:
+                                        hp2 -= 8
+                                    elif rand == 5:
+                                        hp2 -= 26
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 3:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Jackie, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 12
+                                    elif rand == 1:
+                                        hp2 -= 10
+                                    elif rand == 2:
+                                        hp2 -= 15
+                                    elif rand == 3:
+                                        hp2 -= 9
+                                    elif rand == 4:
+                                        hp2 -= 10
+                                    elif rand == 5:
+                                        hp2 -= 25
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 4:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Agua, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 12
+                                    elif rand == 1:
+                                        hp2 -= 15
+                                    elif rand == 2:
+                                        hp2 -= 9
+                                    elif rand == 3:
+                                        hp2 -= 7
+                                    elif rand == 4:
+                                        hp2 -= 7
+                                    elif rand == 5:
+                                        hp2 -= 13
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 5:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Pariz, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 12
+                                    elif rand == 1:
+                                        hp2 -= 8
+                                    elif rand == 2:
+                                        hp2 -= 7
+                                    elif rand == 3:
+                                        hp2 -= 15
+                                    elif rand == 4:
+                                        hp2 -= 13
+                                    elif rand == 5:
+                                        hp2 -= 9
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 6:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Dexter, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 9
+                                    elif rand == 1:
+                                        hp2 -= 8
+                                    elif rand == 2:
+                                        hp2 -= 7
+                                    elif rand == 3:
+                                        hp2 -= 15
+                                    elif rand == 4:
+                                        hp2 -= 13
+                                    elif rand == 5:
+                                        hp2 -= 9
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 7:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Steve_Urkel, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 10
+                                    elif rand == 1:
+                                        hp2 -= 5
+                                    elif rand == 2:
+                                        hp2 -= 12
+                                    elif rand == 3:
+                                        hp2 -= 11
+                                    elif rand == 4:
+                                        hp2 -= 15
+                                    elif rand == 5:
+                                        hp2 -= 8
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 8:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Ernold, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 25
+                                    elif rand == 1:
+                                        hp2 -= 25
+                                    elif rand == 2:
+                                        hp2 -= 20
+                                    elif rand == 3:
+                                        hp2 -= 15
+                                    elif rand == 4:
+                                        hp2 -= 15
+                                    elif rand == 5:
+                                        hp2 -= 10
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 9:
+                                    DISPLAYSURF.blit(pygame.transform.scale(James, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 25
+                                    elif rand == 1:
+                                        hp2 -= 15
+                                    elif rand == 2:
+                                        hp2 -= 15
+                                    elif rand == 3:
+                                        hp2 -= 7
+                                    elif rand == 4:
+                                        hp2 -= 20
+                                    elif rand == 5:
+                                        hp2 -= 25
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 10:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Roch, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 13
+                                    elif rand == 1:
+                                        hp2 -= 28
+                                    elif rand == 2:
+                                        hp2 -= 30
+                                    elif rand == 3:
+                                        hp2 -= 17
+                                    elif rand == 4:
+                                        hp2 -= 10
+                                    elif rand == 5:
+                                        hp2 -= 7
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 11:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Chack, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 15
+                                    elif rand == 1:
+                                        hp2 -= 28
+                                    elif rand == 2:
+                                        hp2 -= 27
+                                    elif rand == 3:
+                                        hp2 -= 25
+                                    elif rand == 4:
+                                        hp2 -= 29
+                                    elif rand == 5:
+                                        hp2 -= 30
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 12:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Vin, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 20
+                                    elif rand == 1:
+                                        hp2 -= 25
+                                    elif rand == 2:
+                                        hp2 -= 30
+                                    elif rand == 3:
+                                        hp2 -= 25
+                                    elif rand == 4:
+                                        hp2 -= 20
+                                    elif rand == 5:
+                                        hp2 -= 15
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 13:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Merio, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 10
+                                    elif rand == 1:
+                                        hp2 -= 10
+                                    elif rand == 2:
+                                        hp2 -= 30
+                                    elif rand == 3:
+                                        hp2 -= 30
+                                    elif rand == 4:
+                                        hp2 -= 15
+                                    elif rand == 5:
+                                        hp2 -= 15
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 14:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Steve_Seagal, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 10
+                                    elif rand == 1:
+                                        hp2 -= 15
+                                    elif rand == 2:
+                                        hp2 -= 12
+                                    elif rand == 3:
+                                        hp2 -= 11
+                                    elif rand == 4:
+                                        hp2 -= 25
+                                    elif rand == 5:
+                                        hp2 -= 20
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 15:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Jet, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 10
+                                    elif rand == 1:
+                                        hp2 -= 30
+                                    elif rand == 2:
+                                        hp2 -= 12
+                                    elif rand == 3:
+                                        hp2 -= 25
+                                    elif rand == 4:
+                                        hp2 -= 14
+                                    elif rand == 5:
+                                        hp2 -= 23
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 16:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Wesley, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 10
+                                    elif rand == 1:
+                                        hp2 -= 12
+                                    elif rand == 2:
+                                        hp2 -= 14
+                                    elif rand == 3:
+                                        hp2 -= 16
+                                    elif rand == 4:
+                                        hp2 -= 14
+                                    elif rand == 5:
+                                        hp2 -= 12
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 17:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Terry, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 10
+                                    elif rand == 1:
+                                        hp2 -= 15
+                                    elif rand == 2:
+                                        hp2 -= 25
+                                    elif rand == 3:
+                                        hp2 -= 20
+                                    elif rand == 4:
+                                        hp2 -= 15
+                                    elif rand == 5:
+                                        hp2 -= 10
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
                             turn = 'playerThree'
                         elif rDirection == 'left':
                             for i in list[:grand]:
@@ -360,6 +2151,298 @@ def gameboard_4():
                                     break
                                 else:
                                     rPx -= 50
+                            if (rPx == fightx1 and rPy == fighty1) or (rPx == fightx3 and rPy == fighty2) or (rPx == fightx1 and rPy == fighty3) or (rPx == fightx2 and rPy == fighty2):
+                                super_list = ["John Cena", "Jason Statham", "Bruce Hee", "Jackie Chen", "Agua man", "Pariz Hilten", "Dexter", "Steve Urkel", "Ernold Schwarzenegger", "James Bend", "The Roch", "Chack Norris", "Vin Dieser", "Super Merio", "Steve Seagal", "Jet Ri", "Wesley Sniper", "Terry Crews"]
+                                super_random = random.randint(0, 17)
+                                print(super_list[super_random])
+                                if super_random == 0:
+                                    DISPLAYSURF.blit(pygame.transform.scale(John, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 10
+                                    elif rand == 1:
+                                        hp2 -= 6
+                                    elif rand == 2:
+                                        hp2 -= 25
+                                    elif rand == 3:
+                                        hp2 -= 7
+                                    elif rand == 4:
+                                        hp2 -= 8
+                                    elif rand == 5:
+                                        hp2 -= 11
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 1:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Jason, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 15
+                                    elif rand == 1:
+                                        hp2 -= 17
+                                    elif rand == 2:
+                                        hp2 -= 19
+                                    elif rand == 3:
+                                        hp2 -= 21
+                                    elif rand == 4:
+                                        hp2 -= 23
+                                    elif rand == 5:
+                                        hp2 -= 26
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 2:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Bruce, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 20
+                                    elif rand == 1:
+                                        hp2 -= 15
+                                    elif rand == 2:
+                                        hp2 -= 5
+                                    elif rand == 3:
+                                        hp2 -= 7
+                                    elif rand == 4:
+                                        hp2 -= 8
+                                    elif rand == 5:
+                                        hp2 -= 26
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 3:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Jackie, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 12
+                                    elif rand == 1:
+                                        hp2 -= 10
+                                    elif rand == 2:
+                                        hp2 -= 15
+                                    elif rand == 3:
+                                        hp2 -= 9
+                                    elif rand == 4:
+                                        hp2 -= 10
+                                    elif rand == 5:
+                                        hp2 -= 25
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 4:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Agua, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 12
+                                    elif rand == 1:
+                                        hp2 -= 15
+                                    elif rand == 2:
+                                        hp2 -= 9
+                                    elif rand == 3:
+                                        hp2 -= 7
+                                    elif rand == 4:
+                                        hp2 -= 7
+                                    elif rand == 5:
+                                        hp2 -= 13
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 5:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Pariz, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 12
+                                    elif rand == 1:
+                                        hp2 -= 8
+                                    elif rand == 2:
+                                        hp2 -= 7
+                                    elif rand == 3:
+                                        hp2 -= 15
+                                    elif rand == 4:
+                                        hp2 -= 13
+                                    elif rand == 5:
+                                        hp2 -= 9
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 6:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Dexter, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 9
+                                    elif rand == 1:
+                                        hp2 -= 8
+                                    elif rand == 2:
+                                        hp2 -= 7
+                                    elif rand == 3:
+                                        hp2 -= 15
+                                    elif rand == 4:
+                                        hp2 -= 13
+                                    elif rand == 5:
+                                        hp2 -= 9
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 7:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Steve_Urkel, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 10
+                                    elif rand == 1:
+                                        hp2 -= 5
+                                    elif rand == 2:
+                                        hp2 -= 12
+                                    elif rand == 3:
+                                        hp2 -= 11
+                                    elif rand == 4:
+                                        hp2 -= 15
+                                    elif rand == 5:
+                                        hp2 -= 8
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 8:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Ernold, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 25
+                                    elif rand == 1:
+                                        hp2 -= 25
+                                    elif rand == 2:
+                                        hp2 -= 20
+                                    elif rand == 3:
+                                        hp2 -= 15
+                                    elif rand == 4:
+                                        hp2 -= 15
+                                    elif rand == 5:
+                                        hp2 -= 10
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 9:
+                                    DISPLAYSURF.blit(pygame.transform.scale(James, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 25
+                                    elif rand == 1:
+                                        hp2 -= 15
+                                    elif rand == 2:
+                                        hp2 -= 15
+                                    elif rand == 3:
+                                        hp2 -= 7
+                                    elif rand == 4:
+                                        hp2 -= 20
+                                    elif rand == 5:
+                                        hp2 -= 25
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 10:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Roch, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 13
+                                    elif rand == 1:
+                                        hp2 -= 28
+                                    elif rand == 2:
+                                        hp2 -= 30
+                                    elif rand == 3:
+                                        hp2 -= 17
+                                    elif rand == 4:
+                                        hp2 -= 10
+                                    elif rand == 5:
+                                        hp2 -= 7
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 11:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Chack, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 15
+                                    elif rand == 1:
+                                        hp2 -= 28
+                                    elif rand == 2:
+                                        hp2 -= 27
+                                    elif rand == 3:
+                                        hp2 -= 25
+                                    elif rand == 4:
+                                        hp2 -= 29
+                                    elif rand == 5:
+                                        hp2 -= 30
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 12:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Vin, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 20
+                                    elif rand == 1:
+                                        hp2 -= 25
+                                    elif rand == 2:
+                                        hp2 -= 30
+                                    elif rand == 3:
+                                        hp2 -= 25
+                                    elif rand == 4:
+                                        hp2 -= 20
+                                    elif rand == 5:
+                                        hp2 -= 15
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 13:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Merio, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 10
+                                    elif rand == 1:
+                                        hp2 -= 10
+                                    elif rand == 2:
+                                        hp2 -= 30
+                                    elif rand == 3:
+                                        hp2 -= 30
+                                    elif rand == 4:
+                                        hp2 -= 15
+                                    elif rand == 5:
+                                        hp2 -= 15
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 14:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Steve_Seagal, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 10
+                                    elif rand == 1:
+                                        hp2 -= 15
+                                    elif rand == 2:
+                                        hp2 -= 12
+                                    elif rand == 3:
+                                        hp2 -= 11
+                                    elif rand == 4:
+                                        hp2 -= 25
+                                    elif rand == 5:
+                                        hp2 -= 20
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 15:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Jet, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 10
+                                    elif rand == 1:
+                                        hp2 -= 30
+                                    elif rand == 2:
+                                        hp2 -= 12
+                                    elif rand == 3:
+                                        hp2 -= 25
+                                    elif rand == 4:
+                                        hp2 -= 14
+                                    elif rand == 5:
+                                        hp2 -= 23
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 16:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Wesley, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 10
+                                    elif rand == 1:
+                                        hp2 -= 12
+                                    elif rand == 2:
+                                        hp2 -= 14
+                                    elif rand == 3:
+                                        hp2 -= 16
+                                    elif rand == 4:
+                                        hp2 -= 14
+                                    elif rand == 5:
+                                        hp2 -= 12
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 17:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Terry, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 10
+                                    elif rand == 1:
+                                        hp2 -= 15
+                                    elif rand == 2:
+                                        hp2 -= 25
+                                    elif rand == 3:
+                                        hp2 -= 20
+                                    elif rand == 4:
+                                        hp2 -= 15
+                                    elif rand == 5:
+                                        hp2 -= 10
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
                             turn = 'playerThree'
                         elif rDirection == 'up':
                             for i in list[:grand]:
@@ -370,6 +2453,299 @@ def gameboard_4():
                                     break
                                 else:
                                     rPy -= 50
+                            if (rPx == fightx1 and rPy == fighty1) or (rPx == fightx3 and rPy == fighty2) or (rPx == fightx1 and rPy == fighty3) or (rPx == fightx2 and rPy == fighty2):
+                                super_list = ["John Cena", "Jason Statham", "Bruce Hee", "Jackie Chen", "Agua man", "Pariz Hilten", "Dexter", "Steve Urkel", "Ernold Schwarzenegger", "James Bend", "The Roch", "Chack Norris", "Vin Dieser", "Super Merio", "Steve Seagal", "Jet Ri", "Wesley Sniper", "Terry Crews"]
+                                super_random = random.randint(0, 17)
+                                print(super_list[super_random])
+                                if super_random == 0:
+                                    DISPLAYSURF.blit(pygame.transform.scale(John, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 10
+                                    elif rand == 1:
+                                        hp2 -= 6
+                                    elif rand == 2:
+                                        hp2 -= 25
+                                    elif rand == 3:
+                                        hp2 -= 7
+                                    elif rand == 4:
+                                        hp2 -= 8
+                                    elif rand == 5:
+                                        hp2 -= 11
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 1:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Jason, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 15
+                                    elif rand == 1:
+                                        hp2 -= 17
+                                    elif rand == 2:
+                                        hp2 -= 19
+                                    elif rand == 3:
+                                        hp2 -= 21
+                                    elif rand == 4:
+                                        hp2 -= 23
+                                    elif rand == 5:
+                                        hp2 -= 26
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 2:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Bruce, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 20
+                                    elif rand == 1:
+                                        hp2 -= 15
+                                    elif rand == 2:
+                                        hp2 -= 5
+                                    elif rand == 3:
+                                        hp2 -= 7
+                                    elif rand == 4:
+                                        hp2 -= 8
+                                    elif rand == 5:
+                                        hp2 -= 26
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 3:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Jackie, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 12
+                                    elif rand == 1:
+                                        hp2 -= 10
+                                    elif rand == 2:
+                                        hp2 -= 15
+                                    elif rand == 3:
+                                        hp2 -= 9
+                                    elif rand == 4:
+                                        hp2 -= 10
+                                    elif rand == 5:
+                                        hp2 -= 25
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 4:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Agua, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 12
+                                    elif rand == 1:
+                                        hp2 -= 15
+                                    elif rand == 2:
+                                        hp2 -= 9
+                                    elif rand == 3:
+                                        hp2 -= 7
+                                    elif rand == 4:
+                                        hp2 -= 7
+                                    elif rand == 5:
+                                        hp2 -= 13
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 5:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Pariz, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 12
+                                    elif rand == 1:
+                                        hp2 -= 8
+                                    elif rand == 2:
+                                        hp2 -= 7
+                                    elif rand == 3:
+                                        hp2 -= 15
+                                    elif rand == 4:
+                                        hp2 -= 13
+                                    elif rand == 5:
+                                        hp2 -= 9
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 6:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Dexter, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 9
+                                    elif rand == 1:
+                                        hp2 -= 8
+                                    elif rand == 2:
+                                        hp2 -= 7
+                                    elif rand == 3:
+                                        hp2 -= 15
+                                    elif rand == 4:
+                                        hp2 -= 13
+                                    elif rand == 5:
+                                        hp2 -= 9
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 7:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Steve_Urkel, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 10
+                                    elif rand == 1:
+                                        hp2 -= 5
+                                    elif rand == 2:
+                                        hp2 -= 12
+                                    elif rand == 3:
+                                        hp2 -= 11
+                                    elif rand == 4:
+                                        hp2 -= 15
+                                    elif rand == 5:
+                                        hp2 -= 8
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 8:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Ernold, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 25
+                                    elif rand == 1:
+                                        hp2 -= 25
+                                    elif rand == 2:
+                                        hp2 -= 20
+                                    elif rand == 3:
+                                        hp2 -= 15
+                                    elif rand == 4:
+                                        hp2 -= 15
+                                    elif rand == 5:
+                                        hp2 -= 10
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 9:
+                                    DISPLAYSURF.blit(pygame.transform.scale(James, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 25
+                                    elif rand == 1:
+                                        hp2 -= 15
+                                    elif rand == 2:
+                                        hp2 -= 15
+                                    elif rand == 3:
+                                        hp2 -= 7
+                                    elif rand == 4:
+                                        hp2 -= 20
+                                    elif rand == 5:
+                                        hp2 -= 25
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 10:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Roch, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 13
+                                    elif rand == 1:
+                                        hp2 -= 28
+                                    elif rand == 2:
+                                        hp2 -= 30
+                                    elif rand == 3:
+                                        hp2 -= 17
+                                    elif rand == 4:
+                                        hp2 -= 10
+                                    elif rand == 5:
+                                        hp2 -= 7
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 11:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Chack, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 15
+                                    elif rand == 1:
+                                        hp2 -= 28
+                                    elif rand == 2:
+                                        hp2 -= 27
+                                    elif rand == 3:
+                                        hp2 -= 25
+                                    elif rand == 4:
+                                        hp2 -= 29
+                                    elif rand == 5:
+                                        hp2 -= 30
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 12:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Vin, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 20
+                                    elif rand == 1:
+                                        hp2 -= 25
+                                    elif rand == 2:
+                                        hp2 -= 30
+                                    elif rand == 3:
+                                        hp2 -= 25
+                                    elif rand == 4:
+                                        hp2 -= 20
+                                    elif rand == 5:
+                                        hp2 -= 15
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 13:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Merio, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 10
+                                    elif rand == 1:
+                                        hp2 -= 10
+                                    elif rand == 2:
+                                        hp2 -= 30
+                                    elif rand == 3:
+                                        hp2 -= 30
+                                    elif rand == 4:
+                                        hp2 -= 15
+                                    elif rand == 5:
+                                        hp2 -= 15
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 14:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Steve_Seagal, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 10
+                                    elif rand == 1:
+                                        hp2 -= 15
+                                    elif rand == 2:
+                                        hp2 -= 12
+                                    elif rand == 3:
+                                        hp2 -= 11
+                                    elif rand == 4:
+                                        hp2 -= 25
+                                    elif rand == 5:
+                                        hp2 -= 20
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 15:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Jet, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 10
+                                    elif rand == 1:
+                                        hp2 -= 30
+                                    elif rand == 2:
+                                        hp2 -= 12
+                                    elif rand == 3:
+                                        hp2 -= 25
+                                    elif rand == 4:
+                                        hp2 -= 14
+                                    elif rand == 5:
+                                        hp2 -= 23
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 16:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Wesley, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 10
+                                    elif rand == 1:
+                                        hp2 -= 12
+                                    elif rand == 2:
+                                        hp2 -= 14
+                                    elif rand == 3:
+                                        hp2 -= 16
+                                    elif rand == 4:
+                                        hp2 -= 14
+                                    elif rand == 5:
+                                        hp2 -= 12
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 17:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Terry, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 10
+                                    elif rand == 1:
+                                        hp2 -= 15
+                                    elif rand == 2:
+                                        hp2 -= 25
+                                    elif rand == 3:
+                                        hp2 -= 20
+                                    elif rand == 4:
+                                        hp2 -= 15
+                                    elif rand == 5:
+                                        hp2 -= 10
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                            turn = 'playerThree'
                         if 100 <= rPy <= 200 and 900 <= rPx <= 1000:
                             if player2.hp < 46:
                                 player2.hp += 5
@@ -386,9 +2762,1246 @@ def gameboard_4():
                         turn = 'playerThree'
 
 
+
+                    elif turn == 'playerThree':
+                        DISPLAYSURF.blit(pygame.transform.scale(shade, (350, 450)), (0, 300))
+                        DISPLAYSURF.blit(pygame.transform.scale(shade, (100, 100)), (200, 160))
+                        DISPLAYSURF.blit(pygame.transform.scale(hudpion_geel, (100, 100)), (200, 220))
+                        if hp4 <= 0:
+                            DISPLAYSURF.blit(pygame.transform.scale(shade, (100, 100)), (200, 220))
+                        if grDirection == 'right':
+                            for i in list[:grand]:
+                                if grPx == 950:
+                                    grDirection = 'down'
+                                    for n in list[i:ggrand]:
+                                        grPy += 50
+                                    break
+                                else:
+                                    grPx += 50
+                            if (grPx == fightx1 and grPy == fighty1) or (grPx == fightx3 and grPy == fighty2) or (grPx == fightx1 and grPy == fighty3) or (grPx == fightx2 and grPy == fighty2):
+                                super_list = ["John Cena", "Jason Statham", "Bruce Hee", "Jackie Chen", "Agua man", "Pariz Hilten", "Dexter", "Steve Urkel", "Ernold Schwarzenegger", "James Bend", "The Roch", "Chack Norris", "Vin Dieser", "Super Merio", "Steve Seagal", "Jet Ri", "Wesley Sniper", "Terry Crews"]
+                                super_random = random.randint(0, 17)
+                                print(super_list[super_random])
+                                if super_random == 0:
+                                    DISPLAYSURF.blit(pygame.transform.scale(John, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp3 -= 10
+                                    elif rand == 1:
+                                        hp3 -= 6
+                                    elif rand == 2:
+                                        hp3 -= 25
+                                    elif rand == 3:
+                                        hp3 -= 7
+                                    elif rand == 4:
+                                        hp3 -= 8
+                                    elif rand == 5:
+                                        hp3 -= 11
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 180))
+                                    text("HP:       " + str(hp3), white, 30, 20, 180)
+                                elif super_random == 1:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Jason, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp3 -= 15
+                                    elif rand == 1:
+                                        hp3 -= 17
+                                    elif rand == 2:
+                                        hp3 -= 19
+                                    elif rand == 3:
+                                        hp3 -= 21
+                                    elif rand == 4:
+                                        hp3 -= 23
+                                    elif rand == 5:
+                                        hp3 -= 26
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 180))
+                                    text("HP:       " + str(hp3), white, 30, 20, 180)
+                                elif super_random == 2:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Bruce, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp3 -= 20
+                                    elif rand == 1:
+                                        hp3 -= 15
+                                    elif rand == 2:
+                                        hp3 -= 5
+                                    elif rand == 3:
+                                        hp3 -= 7
+                                    elif rand == 4:
+                                        hp3 -= 8
+                                    elif rand == 5:
+                                        hp3 -= 26
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 180))
+                                    text("HP:       " + str(hp3), white, 30, 20, 180)
+                                elif super_random == 3:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Jackie, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp3 -= 12
+                                    elif rand == 1:
+                                        hp3 -= 10
+                                    elif rand == 2:
+                                        hp3 -= 15
+                                    elif rand == 3:
+                                        hp3 -= 9
+                                    elif rand == 4:
+                                        hp3 -= 10
+                                    elif rand == 5:
+                                        hp3 -= 25
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 180))
+                                    text("HP:       " + str(hp3), white, 30, 20, 180)
+                                elif super_random == 4:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Agua, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp3 -= 12
+                                    elif rand == 1:
+                                        hp3 -= 15
+                                    elif rand == 2:
+                                        hp3 -= 9
+                                    elif rand == 3:
+                                        hp3 -= 7
+                                    elif rand == 4:
+                                        hp3 -= 7
+                                    elif rand == 5:
+                                        hp3 -= 13
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 180))
+                                    text("HP:       " + str(hp3), white, 30, 20, 180)
+                                elif super_random == 5:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Pariz, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp3 -= 12
+                                    elif rand == 1:
+                                        hp3 -= 8
+                                    elif rand == 2:
+                                        hp3 -= 7
+                                    elif rand == 3:
+                                        hp3 -= 15
+                                    elif rand == 4:
+                                        hp3 -= 13
+                                    elif rand == 5:
+                                        hp3 -= 9
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 180))
+                                    text("HP:       " + str(hp3), white, 30, 20, 180)
+                                elif super_random == 6:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Dexter, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp3 -= 9
+                                    elif rand == 1:
+                                        hp3 -= 8
+                                    elif rand == 2:
+                                        hp3 -= 7
+                                    elif rand == 3:
+                                        hp3 -= 15
+                                    elif rand == 4:
+                                        hp3 -= 13
+                                    elif rand == 5:
+                                        hp3 -= 9
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 180))
+                                    text("HP:       " + str(hp3), white, 30, 20, 180)
+                                elif super_random == 7:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Steve_Urkel, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp3 -= 10
+                                    elif rand == 1:
+                                        hp3 -= 5
+                                    elif rand == 2:
+                                        hp3 -= 12
+                                    elif rand == 3:
+                                        hp3 -= 11
+                                    elif rand == 4:
+                                        hp3 -= 15
+                                    elif rand == 5:
+                                        hp3 -= 8
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 180))
+                                    text("HP:       " + str(hp3), white, 30, 20, 180)
+                                elif super_random == 8:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Ernold, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp3 -= 25
+                                    elif rand == 1:
+                                        hp3 -= 25
+                                    elif rand == 2:
+                                        hp3 -= 20
+                                    elif rand == 3:
+                                        hp3 -= 15
+                                    elif rand == 4:
+                                        hp3 -= 15
+                                    elif rand == 5:
+                                        hp3 -= 10
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 180))
+                                    text("HP:       " + str(hp3), white, 30, 20, 180)
+                                elif super_random == 9:
+                                    DISPLAYSURF.blit(pygame.transform.scale(James, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp3 -= 25
+                                    elif rand == 1:
+                                        hp3 -= 15
+                                    elif rand == 2:
+                                        hp3 -= 15
+                                    elif rand == 3:
+                                        hp3 -= 7
+                                    elif rand == 4:
+                                        hp3 -= 20
+                                    elif rand == 5:
+                                        hp3 -= 25
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 180))
+                                    text("HP:       " + str(hp3), white, 30, 20, 180)
+                                elif super_random == 10:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Roch, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp3 -= 13
+                                    elif rand == 1:
+                                        hp3 -= 28
+                                    elif rand == 2:
+                                        hp3 -= 30
+                                    elif rand == 3:
+                                        hp3 -= 17
+                                    elif rand == 4:
+                                        hp3 -= 10
+                                    elif rand == 5:
+                                        hp3 -= 7
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 180))
+                                    text("HP:       " + str(hp3), white, 30, 20, 180)
+                                elif super_random == 11:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Chack, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp3 -= 15
+                                    elif rand == 1:
+                                        hp3 -= 28
+                                    elif rand == 2:
+                                        hp3 -= 27
+                                    elif rand == 3:
+                                        hp3 -= 25
+                                    elif rand == 4:
+                                        hp3 -= 29
+                                    elif rand == 5:
+                                        hp3 -= 30
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 180))
+                                    text("HP:       " + str(hp3), white, 30, 20, 180)
+                                elif super_random == 12:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Vin, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp3 -= 20
+                                    elif rand == 1:
+                                        hp3 -= 25
+                                    elif rand == 2:
+                                        hp3 -= 30
+                                    elif rand == 3:
+                                        hp3 -= 25
+                                    elif rand == 4:
+                                        hp3 -= 20
+                                    elif rand == 5:
+                                        hp3 -= 15
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 180))
+                                    text("HP:       " + str(hp3), white, 30, 20, 180)
+                                elif super_random == 13:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Merio, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp3 -= 10
+                                    elif rand == 1:
+                                        hp3 -= 10
+                                    elif rand == 2:
+                                        hp3 -= 30
+                                    elif rand == 3:
+                                        hp3 -= 30
+                                    elif rand == 4:
+                                        hp3 -= 15
+                                    elif rand == 5:
+                                        hp3 -= 15
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 180))
+                                    text("HP:       " + str(hp3), white, 30, 20, 180)
+                                elif super_random == 14:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Steve_Seagal, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp3 -= 10
+                                    elif rand == 1:
+                                        hp3 -= 15
+                                    elif rand == 2:
+                                        hp3 -= 12
+                                    elif rand == 3:
+                                        hp3 -= 11
+                                    elif rand == 4:
+                                        hp3 -= 25
+                                    elif rand == 5:
+                                        hp3 -= 20
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 180))
+                                    text("HP:       " + str(hp3), white, 30, 20, 180)
+                                elif super_random == 15:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Jet, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp3 -= 10
+                                    elif rand == 1:
+                                        hp3 -= 30
+                                    elif rand == 2:
+                                        hp3 -= 12
+                                    elif rand == 3:
+                                        hp3 -= 25
+                                    elif rand == 4:
+                                        hp3 -= 14
+                                    elif rand == 5:
+                                        hp3 -= 23
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 180))
+                                    text("HP:       " + str(hp3), white, 30, 20, 180)
+                                elif super_random == 16:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Wesley, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp3 -= 10
+                                    elif rand == 1:
+                                        hp3 -= 12
+                                    elif rand == 2:
+                                        hp3 -= 14
+                                    elif rand == 3:
+                                        hp3 -= 16
+                                    elif rand == 4:
+                                        hp3 -= 14
+                                    elif rand == 5:
+                                        hp3 -= 12
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 180))
+                                    text("HP:       " + str(hp3), white, 30, 20, 180)
+                                elif super_random == 17:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Terry, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp3 -= 10
+                                    elif rand == 1:
+                                        hp3 -= 15
+                                    elif rand == 2:
+                                        hp3 -= 25
+                                    elif rand == 3:
+                                        hp3 -= 20
+                                    elif rand == 4:
+                                        hp3 -= 15
+                                    elif rand == 5:
+                                        hp3 -= 10
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 180))
+                                    text("HP:       " + str(hp3), white, 30, 20, 180)
+                            turn = 'playerFour'
+
+                        elif grDirection == 'down':
+                            for i in list[:grand]:
+                                if grPy == 600:
+                                    grDirection = 'left'
+                                    for n in list[i:ggrand]:
+                                        grPx -= 50
+                                    break
+                                else:
+                                    grPy += 50
+                            if (grPx == fightx1 and grPy == fighty1) or (grPx == fightx3 and grPy == fighty2) or (grPx == fightx1 and grPy == fighty3) or (grPx == fightx2 and grPy == fighty2):
+                                super_list = ["John Cena", "Jason Statham", "Bruce Hee", "Jackie Chen", "Agua man", "Pariz Hilten", "Dexter", "Steve Urkel", "Ernold Schwarzenegger", "James Bend", "The Roch", "Chack Norris", "Vin Dieser", "Super Merio", "Steve Seagal", "Jet Ri", "Wesley Sniper", "Terry Crews"]
+                                super_random = random.randint(0, 17)
+                                print(super_list[super_random])
+                                if super_random == 0:
+                                    DISPLAYSURF.blit(pygame.transform.scale(John, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp3 -= 10
+                                    elif rand == 1:
+                                        hp3 -= 6
+                                    elif rand == 2:
+                                        hp3 -= 25
+                                    elif rand == 3:
+                                        hp3 -= 7
+                                    elif rand == 4:
+                                        hp3 -= 8
+                                    elif rand == 5:
+                                        hp3 -= 11
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 180))
+                                    text("HP:       " + str(hp3), white, 30, 20, 180)
+                                elif super_random == 1:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Jason, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp3 -= 15
+                                    elif rand == 1:
+                                        hp3 -= 17
+                                    elif rand == 2:
+                                        hp3 -= 19
+                                    elif rand == 3:
+                                        hp3 -= 21
+                                    elif rand == 4:
+                                        hp3 -= 23
+                                    elif rand == 5:
+                                        hp3 -= 26
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 180))
+                                    text("HP:       " + str(hp3), white, 30, 20, 180)
+                                elif super_random == 2:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Bruce, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp3 -= 20
+                                    elif rand == 1:
+                                        hp3 -= 15
+                                    elif rand == 2:
+                                        hp3 -= 5
+                                    elif rand == 3:
+                                        hp3 -= 7
+                                    elif rand == 4:
+                                        hp3 -= 8
+                                    elif rand == 5:
+                                        hp3 -= 26
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 180))
+                                    text("HP:       " + str(hp3), white, 30, 20, 180)
+                                elif super_random == 3:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Jackie, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp3 -= 12
+                                    elif rand == 1:
+                                        hp3 -= 10
+                                    elif rand == 2:
+                                        hp3 -= 15
+                                    elif rand == 3:
+                                        hp3 -= 9
+                                    elif rand == 4:
+                                        hp3 -= 10
+                                    elif rand == 5:
+                                        hp3 -= 25
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 180))
+                                    text("HP:       " + str(hp3), white, 30, 20, 180)
+                                elif super_random == 4:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Agua, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp3 -= 12
+                                    elif rand == 1:
+                                        hp3 -= 15
+                                    elif rand == 2:
+                                        hp3 -= 9
+                                    elif rand == 3:
+                                        hp3 -= 7
+                                    elif rand == 4:
+                                        hp3 -= 7
+                                    elif rand == 5:
+                                        hp3 -= 13
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 180))
+                                    text("HP:       " + str(hp3), white, 30, 20, 180)
+                                elif super_random == 5:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Pariz, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp3 -= 12
+                                    elif rand == 1:
+                                        hp3 -= 8
+                                    elif rand == 2:
+                                        hp3 -= 7
+                                    elif rand == 3:
+                                        hp3 -= 15
+                                    elif rand == 4:
+                                        hp3 -= 13
+                                    elif rand == 5:
+                                        hp3 -= 9
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 180))
+                                    text("HP:       " + str(hp3), white, 30, 20, 180)
+                                elif super_random == 6:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Dexter, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp3 -= 9
+                                    elif rand == 1:
+                                        hp3 -= 8
+                                    elif rand == 2:
+                                        hp3 -= 7
+                                    elif rand == 3:
+                                        hp3 -= 15
+                                    elif rand == 4:
+                                        hp3 -= 13
+                                    elif rand == 5:
+                                        hp3 -= 9
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 180))
+                                    text("HP:       " + str(hp3), white, 30, 20, 180)
+                                elif super_random == 7:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Steve_Urkel, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp3 -= 10
+                                    elif rand == 1:
+                                        hp3 -= 5
+                                    elif rand == 2:
+                                        hp3 -= 12
+                                    elif rand == 3:
+                                        hp3 -= 11
+                                    elif rand == 4:
+                                        hp3 -= 15
+                                    elif rand == 5:
+                                        hp3 -= 8
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 180))
+                                    text("HP:       " + str(hp3), white, 30, 20, 180)
+                                elif super_random == 8:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Ernold, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp3 -= 25
+                                    elif rand == 1:
+                                        hp3 -= 25
+                                    elif rand == 2:
+                                        hp3 -= 20
+                                    elif rand == 3:
+                                        hp3 -= 15
+                                    elif rand == 4:
+                                        hp3 -= 15
+                                    elif rand == 5:
+                                        hp3 -= 10
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 180))
+                                    text("HP:       " + str(hp3), white, 30, 20, 180)
+                                elif super_random == 9:
+                                    DISPLAYSURF.blit(pygame.transform.scale(James, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp3 -= 25
+                                    elif rand == 1:
+                                        hp3 -= 15
+                                    elif rand == 2:
+                                        hp3 -= 15
+                                    elif rand == 3:
+                                        hp3 -= 7
+                                    elif rand == 4:
+                                        hp3 -= 20
+                                    elif rand == 5:
+                                        hp3 -= 25
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 180))
+                                    text("HP:       " + str(hp3), white, 30, 20, 180)
+                                elif super_random == 10:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Roch, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp3 -= 13
+                                    elif rand == 1:
+                                        hp3 -= 28
+                                    elif rand == 2:
+                                        hp3 -= 30
+                                    elif rand == 3:
+                                        hp3 -= 17
+                                    elif rand == 4:
+                                        hp3 -= 10
+                                    elif rand == 5:
+                                        hp3 -= 7
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 180))
+                                    text("HP:       " + str(hp3), white, 30, 20, 180)
+                                elif super_random == 11:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Chack, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp3 -= 15
+                                    elif rand == 1:
+                                        hp3 -= 28
+                                    elif rand == 2:
+                                        hp3 -= 27
+                                    elif rand == 3:
+                                        hp3 -= 25
+                                    elif rand == 4:
+                                        hp3 -= 29
+                                    elif rand == 5:
+                                        hp3 -= 30
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 180))
+                                    text("HP:       " + str(hp3), white, 30, 20, 180)
+                                elif super_random == 12:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Vin, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp3 -= 20
+                                    elif rand == 1:
+                                        hp3 -= 25
+                                    elif rand == 2:
+                                        hp3 -= 30
+                                    elif rand == 3:
+                                        hp3 -= 25
+                                    elif rand == 4:
+                                        hp3 -= 20
+                                    elif rand == 5:
+                                        hp3 -= 15
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 180))
+                                    text("HP:       " + str(hp3), white, 30, 20, 180)
+                                elif super_random == 13:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Merio, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp3 -= 10
+                                    elif rand == 1:
+                                        hp3 -= 10
+                                    elif rand == 2:
+                                        hp3 -= 30
+                                    elif rand == 3:
+                                        hp3 -= 30
+                                    elif rand == 4:
+                                        hp3 -= 15
+                                    elif rand == 5:
+                                        hp3 -= 15
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 180))
+                                    text("HP:       " + str(hp3), white, 30, 20, 180)
+                                elif super_random == 14:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Steve_Seagal, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp3 -= 10
+                                    elif rand == 1:
+                                        hp3 -= 15
+                                    elif rand == 2:
+                                        hp3 -= 12
+                                    elif rand == 3:
+                                        hp3 -= 11
+                                    elif rand == 4:
+                                        hp3 -= 25
+                                    elif rand == 5:
+                                        hp3 -= 20
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 180))
+                                    text("HP:       " + str(hp3), white, 30, 20, 180)
+                                elif super_random == 15:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Jet, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp3 -= 10
+                                    elif rand == 1:
+                                        hp3 -= 30
+                                    elif rand == 2:
+                                        hp3 -= 12
+                                    elif rand == 3:
+                                        hp3 -= 25
+                                    elif rand == 4:
+                                        hp3 -= 14
+                                    elif rand == 5:
+                                        hp3 -= 23
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 180))
+                                    text("HP:       " + str(hp3), white, 30, 20, 180)
+                                elif super_random == 16:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Wesley, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp3 -= 10
+                                    elif rand == 1:
+                                        hp3 -= 12
+                                    elif rand == 2:
+                                        hp3 -= 14
+                                    elif rand == 3:
+                                        hp3 -= 16
+                                    elif rand == 4:
+                                        hp3 -= 14
+                                    elif rand == 5:
+                                        hp3 -= 12
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 180))
+                                    text("HP:       " + str(hp3), white, 30, 20, 180)
+                                elif super_random == 17:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Terry, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp3 -= 10
+                                    elif rand == 1:
+                                        hp3 -= 15
+                                    elif rand == 2:
+                                        hp3 -= 25
+                                    elif rand == 3:
+                                        hp3 -= 20
+                                    elif rand == 4:
+                                        hp3 -= 15
+                                    elif rand == 5:
+                                        hp3 -= 10
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 180))
+                                    text("HP:       " + str(hp3), white, 30, 20, 180)
+                            turn = 'playerFour'
+
+                        elif grDirection == 'left':
+                            for i in list[:grand]:
+                                if grPx == 450:
+                                    grDirection = 'up'
+                                    for n in list[i:ggrand]:
+                                        grPy -= 50
+                                    break
+                                else:
+                                    grPx -= 50
+                            if (grPx == fightx1 and grPy == fighty1) or (grPx == fightx3 and grPy == fighty2) or (grPx == fightx1 and grPy == fighty3) or (grPx == fightx2 and grPy == fighty2):
+                                super_list = ["John Cena", "Jason Statham", "Bruce Hee", "Jackie Chen", "Agua man", "Pariz Hilten", "Dexter", "Steve Urkel", "Ernold Schwarzenegger", "James Bend", "The Roch", "Chack Norris", "Vin Dieser", "Super Merio", "Steve Seagal", "Jet Ri", "Wesley Sniper", "Terry Crews"]
+                                super_random = random.randint(0, 17)
+                                print(super_list[super_random])
+                                if super_random == 0:
+                                    DISPLAYSURF.blit(pygame.transform.scale(John, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp3 -= 10
+                                    elif rand == 1:
+                                        hp3 -= 6
+                                    elif rand == 2:
+                                        hp3 -= 25
+                                    elif rand == 3:
+                                        hp3 -= 7
+                                    elif rand == 4:
+                                        hp3 -= 8
+                                    elif rand == 5:
+                                        hp3 -= 11
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 180))
+                                    text("HP:       " + str(hp3), white, 30, 20, 180)
+                                elif super_random == 1:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Jason, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp3 -= 15
+                                    elif rand == 1:
+                                        hp3 -= 17
+                                    elif rand == 2:
+                                        hp3 -= 19
+                                    elif rand == 3:
+                                        hp3 -= 21
+                                    elif rand == 4:
+                                        hp3 -= 23
+                                    elif rand == 5:
+                                        hp3 -= 26
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 180))
+                                    text("HP:       " + str(hp3), white, 30, 20, 180)
+                                elif super_random == 2:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Bruce, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp3 -= 20
+                                    elif rand == 1:
+                                        hp3 -= 15
+                                    elif rand == 2:
+                                        hp3 -= 5
+                                    elif rand == 3:
+                                        hp3 -= 7
+                                    elif rand == 4:
+                                        hp3 -= 8
+                                    elif rand == 5:
+                                        hp3 -= 26
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 180))
+                                    text("HP:       " + str(hp3), white, 30, 20, 180)
+                                elif super_random == 3:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Jackie, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp3 -= 12
+                                    elif rand == 1:
+                                        hp3 -= 10
+                                    elif rand == 2:
+                                        hp3 -= 15
+                                    elif rand == 3:
+                                        hp3 -= 9
+                                    elif rand == 4:
+                                        hp3 -= 10
+                                    elif rand == 5:
+                                        hp3 -= 25
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 180))
+                                    text("HP:       " + str(hp3), white, 30, 20, 180)
+                                elif super_random == 4:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Agua, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp3 -= 12
+                                    elif rand == 1:
+                                        hp3 -= 15
+                                    elif rand == 2:
+                                        hp3 -= 9
+                                    elif rand == 3:
+                                        hp3 -= 7
+                                    elif rand == 4:
+                                        hp3 -= 7
+                                    elif rand == 5:
+                                        hp3 -= 13
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 180))
+                                    text("HP:       " + str(hp3), white, 30, 20, 180)
+                                elif super_random == 5:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Pariz, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp3 -= 12
+                                    elif rand == 1:
+                                        hp3 -= 8
+                                    elif rand == 2:
+                                        hp3 -= 7
+                                    elif rand == 3:
+                                        hp3 -= 15
+                                    elif rand == 4:
+                                        hp3 -= 13
+                                    elif rand == 5:
+                                        hp3 -= 9
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 180))
+                                    text("HP:       " + str(hp3), white, 30, 20, 180)
+                                elif super_random == 6:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Dexter, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp3 -= 9
+                                    elif rand == 1:
+                                        hp3 -= 8
+                                    elif rand == 2:
+                                        hp3 -= 7
+                                    elif rand == 3:
+                                        hp3 -= 15
+                                    elif rand == 4:
+                                        hp3 -= 13
+                                    elif rand == 5:
+                                        hp3 -= 9
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 180))
+                                    text("HP:       " + str(hp3), white, 30, 20, 180)
+                                elif super_random == 7:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Steve_Urkel, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp3 -= 10
+                                    elif rand == 1:
+                                        hp3 -= 5
+                                    elif rand == 2:
+                                        hp3 -= 12
+                                    elif rand == 3:
+                                        hp3 -= 11
+                                    elif rand == 4:
+                                        hp3 -= 15
+                                    elif rand == 5:
+                                        hp3 -= 8
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 180))
+                                    text("HP:       " + str(hp3), white, 30, 20, 180)
+                                elif super_random == 8:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Ernold, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp3 -= 25
+                                    elif rand == 1:
+                                        hp3 -= 25
+                                    elif rand == 2:
+                                        hp3 -= 20
+                                    elif rand == 3:
+                                        hp3 -= 15
+                                    elif rand == 4:
+                                        hp3 -= 15
+                                    elif rand == 5:
+                                        hp3 -= 10
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 180))
+                                    text("HP:       " + str(hp3), white, 30, 20, 180)
+                                elif super_random == 9:
+                                    DISPLAYSURF.blit(pygame.transform.scale(James, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp3 -= 25
+                                    elif rand == 1:
+                                        hp3 -= 15
+                                    elif rand == 2:
+                                        hp3 -= 15
+                                    elif rand == 3:
+                                        hp3 -= 7
+                                    elif rand == 4:
+                                        hp3 -= 20
+                                    elif rand == 5:
+                                        hp3 -= 25
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 180))
+                                    text("HP:       " + str(hp3), white, 30, 20, 180)
+                                elif super_random == 10:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Roch, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp3 -= 13
+                                    elif rand == 1:
+                                        hp3 -= 28
+                                    elif rand == 2:
+                                        hp3 -= 30
+                                    elif rand == 3:
+                                        hp3 -= 17
+                                    elif rand == 4:
+                                        hp3 -= 10
+                                    elif rand == 5:
+                                        hp3 -= 7
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 180))
+                                    text("HP:       " + str(hp3), white, 30, 20, 180)
+                                elif super_random == 11:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Chack, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp3 -= 15
+                                    elif rand == 1:
+                                        hp3 -= 28
+                                    elif rand == 2:
+                                        hp3 -= 27
+                                    elif rand == 3:
+                                        hp3 -= 25
+                                    elif rand == 4:
+                                        hp3 -= 29
+                                    elif rand == 5:
+                                        hp3 -= 30
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 180))
+                                    text("HP:       " + str(hp3), white, 30, 20, 180)
+                                elif super_random == 12:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Vin, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp3 -= 20
+                                    elif rand == 1:
+                                        hp3 -= 25
+                                    elif rand == 2:
+                                        hp3 -= 30
+                                    elif rand == 3:
+                                        hp3 -= 25
+                                    elif rand == 4:
+                                        hp3 -= 20
+                                    elif rand == 5:
+                                        hp3 -= 15
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 180))
+                                    text("HP:       " + str(hp3), white, 30, 20, 180)
+                                elif super_random == 13:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Merio, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp3 -= 10
+                                    elif rand == 1:
+                                        hp3 -= 10
+                                    elif rand == 2:
+                                        hp3 -= 30
+                                    elif rand == 3:
+                                        hp3 -= 30
+                                    elif rand == 4:
+                                        hp3 -= 15
+                                    elif rand == 5:
+                                        hp3 -= 15
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 180))
+                                    text("HP:       " + str(hp3), white, 30, 20, 180)
+                                elif super_random == 14:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Steve_Seagal, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp3 -= 10
+                                    elif rand == 1:
+                                        hp3 -= 15
+                                    elif rand == 2:
+                                        hp3 -= 12
+                                    elif rand == 3:
+                                        hp3 -= 11
+                                    elif rand == 4:
+                                        hp3 -= 25
+                                    elif rand == 5:
+                                        hp3 -= 20
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 180))
+                                    text("HP:       " + str(hp3), white, 30, 20, 180)
+                                elif super_random == 15:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Jet, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp3 -= 10
+                                    elif rand == 1:
+                                        hp3 -= 30
+                                    elif rand == 2:
+                                        hp3 -= 12
+                                    elif rand == 3:
+                                        hp3 -= 25
+                                    elif rand == 4:
+                                        hp3 -= 14
+                                    elif rand == 5:
+                                        hp3 -= 23
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 180))
+                                    text("HP:       " + str(hp3), white, 30, 20, 180)
+                                elif super_random == 16:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Wesley, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp3 -= 10
+                                    elif rand == 1:
+                                        hp3 -= 12
+                                    elif rand == 2:
+                                        hp3 -= 14
+                                    elif rand == 3:
+                                        hp3 -= 16
+                                    elif rand == 4:
+                                        hp3 -= 14
+                                    elif rand == 5:
+                                        hp3 -= 12
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 180))
+                                    text("HP:       " + str(hp3), white, 30, 20, 180)
+                                elif super_random == 17:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Terry, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp3 -= 10
+                                    elif rand == 1:
+                                        hp3 -= 15
+                                    elif rand == 2:
+                                        hp3 -= 25
+                                    elif rand == 3:
+                                        hp3 -= 20
+                                    elif rand == 4:
+                                        hp3 -= 15
+                                    elif rand == 5:
+                                        hp3 -= 10
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 180))
+                                    text("HP:       " + str(hp3), white, 30, 20, 180)
+                            turn = 'playerFour'
+
+                        elif grDirection == 'up':
+                            for i in list[:grand]:
+                                if grPy == 100:
+                                    grDirection = 'right'
+                                    for n in list[i:ggrand]:
+                                        grPx += 50
+                                    break
+                                else:
+                                    grPy -= 50
+                            if (grPx == fightx1 and grPy == fighty1) or (grPx == fightx3 and grPy == fighty2) or (grPx == fightx1 and grPy == fighty3) or (grPx == fightx2 and grPy == fighty2):
+                                super_list = ["John Cena", "Jason Statham", "Bruce Hee", "Jackie Chen", "Agua man", "Pariz Hilten", "Dexter", "Steve Urkel", "Ernold Schwarzenegger", "James Bend", "The Roch", "Chack Norris", "Vin Dieser", "Super Merio", "Steve Seagal", "Jet Ri", "Wesley Sniper", "Terry Crews"]
+                                super_random = random.randint(0, 17)
+                                print(super_list[super_random])
+                                if super_random == 0:
+                                    DISPLAYSURF.blit(pygame.transform.scale(John, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp3 -= 10
+                                    elif rand == 1:
+                                        hp3 -= 6
+                                    elif rand == 2:
+                                        hp3 -= 25
+                                    elif rand == 3:
+                                        hp3 -= 7
+                                    elif rand == 4:
+                                        hp3 -= 8
+                                    elif rand == 5:
+                                        hp3 -= 11
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 180))
+                                    text("HP:       " + str(hp3), white, 30, 20, 180)
+                                elif super_random == 1:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Jason, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp3 -= 15
+                                    elif rand == 1:
+                                        hp3 -= 17
+                                    elif rand == 2:
+                                        hp3 -= 19
+                                    elif rand == 3:
+                                        hp3 -= 21
+                                    elif rand == 4:
+                                        hp3 -= 23
+                                    elif rand == 5:
+                                        hp3 -= 26
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 180))
+                                    text("HP:       " + str(hp3), white, 30, 20, 180)
+                                elif super_random == 2:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Bruce, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp3 -= 20
+                                    elif rand == 1:
+                                        hp3 -= 15
+                                    elif rand == 2:
+                                        hp3 -= 5
+                                    elif rand == 3:
+                                        hp3 -= 7
+                                    elif rand == 4:
+                                        hp3 -= 8
+                                    elif rand == 5:
+                                        hp3 -= 26
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 180))
+                                    text("HP:       " + str(hp3), white, 30, 20, 180)
+                                elif super_random == 3:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Jackie, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp3 -= 12
+                                    elif rand == 1:
+                                        hp3 -= 10
+                                    elif rand == 2:
+                                        hp3 -= 15
+                                    elif rand == 3:
+                                        hp3 -= 9
+                                    elif rand == 4:
+                                        hp3 -= 10
+                                    elif rand == 5:
+                                        hp3 -= 25
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 180))
+                                    text("HP:       " + str(hp3), white, 30, 20, 180)
+                                elif super_random == 4:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Agua, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp3 -= 12
+                                    elif rand == 1:
+                                        hp3 -= 15
+                                    elif rand == 2:
+                                        hp3 -= 9
+                                    elif rand == 3:
+                                        hp3 -= 7
+                                    elif rand == 4:
+                                        hp3 -= 7
+                                    elif rand == 5:
+                                        hp3 -= 13
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 180))
+                                    text("HP:       " + str(hp3), white, 30, 20, 180)
+                                elif super_random == 5:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Pariz, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp3 -= 12
+                                    elif rand == 1:
+                                        hp3 -= 8
+                                    elif rand == 2:
+                                        hp3 -= 7
+                                    elif rand == 3:
+                                        hp3 -= 15
+                                    elif rand == 4:
+                                        hp3 -= 13
+                                    elif rand == 5:
+                                        hp3 -= 9
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 180))
+                                    text("HP:       " + str(hp3), white, 30, 20, 180)
+                                elif super_random == 6:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Dexter, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp3 -= 9
+                                    elif rand == 1:
+                                        hp3 -= 8
+                                    elif rand == 2:
+                                        hp3 -= 7
+                                    elif rand == 3:
+                                        hp3 -= 15
+                                    elif rand == 4:
+                                        hp3 -= 13
+                                    elif rand == 5:
+                                        hp3 -= 9
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 180))
+                                    text("HP:       " + str(hp3), white, 30, 20, 180)
+                                elif super_random == 7:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Steve_Urkel, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp3 -= 10
+                                    elif rand == 1:
+                                        hp3 -= 5
+                                    elif rand == 2:
+                                        hp3 -= 12
+                                    elif rand == 3:
+                                        hp3 -= 11
+                                    elif rand == 4:
+                                        hp3 -= 15
+                                    elif rand == 5:
+                                        hp3 -= 8
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 180))
+                                    text("HP:       " + str(hp3), white, 30, 20, 180)
+                                elif super_random == 8:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Ernold, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp3 -= 25
+                                    elif rand == 1:
+                                        hp3 -= 25
+                                    elif rand == 2:
+                                        hp3 -= 20
+                                    elif rand == 3:
+                                        hp3 -= 15
+                                    elif rand == 4:
+                                        hp3 -= 15
+                                    elif rand == 5:
+                                        hp3 -= 10
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 180))
+                                    text("HP:       " + str(hp3), white, 30, 20, 180)
+                                elif super_random == 9:
+                                    DISPLAYSURF.blit(pygame.transform.scale(James, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp3 -= 25
+                                    elif rand == 1:
+                                        hp3 -= 15
+                                    elif rand == 2:
+                                        hp3 -= 15
+                                    elif rand == 3:
+                                        hp3 -= 7
+                                    elif rand == 4:
+                                        hp3 -= 20
+                                    elif rand == 5:
+                                        hp3 -= 25
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 180))
+                                    text("HP:       " + str(hp3), white, 30, 20, 180)
+                                elif super_random == 10:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Roch, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp3 -= 13
+                                    elif rand == 1:
+                                        hp3 -= 28
+                                    elif rand == 2:
+                                        hp3 -= 30
+                                    elif rand == 3:
+                                        hp3 -= 17
+                                    elif rand == 4:
+                                        hp3 -= 10
+                                    elif rand == 5:
+                                        hp3 -= 7
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 180))
+                                    text("HP:       " + str(hp3), white, 30, 20, 180)
+                                elif super_random == 11:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Chack, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp3 -= 15
+                                    elif rand == 1:
+                                        hp3 -= 28
+                                    elif rand == 2:
+                                        hp3 -= 27
+                                    elif rand == 3:
+                                        hp3 -= 25
+                                    elif rand == 4:
+                                        hp3 -= 29
+                                    elif rand == 5:
+                                        hp3 -= 30
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 180))
+                                    text("HP:       " + str(hp3), white, 30, 20, 180)
+                                elif super_random == 12:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Vin, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp3 -= 20
+                                    elif rand == 1:
+                                        hp3 -= 25
+                                    elif rand == 2:
+                                        hp3 -= 30
+                                    elif rand == 3:
+                                        hp3 -= 25
+                                    elif rand == 4:
+                                        hp3 -= 20
+                                    elif rand == 5:
+                                        hp3 -= 15
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 180))
+                                    text("HP:       " + str(hp3), white, 30, 20, 180)
+                                elif super_random == 13:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Merio, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp3 -= 10
+                                    elif rand == 1:
+                                        hp3 -= 10
+                                    elif rand == 2:
+                                        hp3 -= 30
+                                    elif rand == 3:
+                                        hp3 -= 30
+                                    elif rand == 4:
+                                        hp3 -= 15
+                                    elif rand == 5:
+                                        hp3 -= 15
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 180))
+                                    text("HP:       " + str(hp3), white, 30, 20, 180)
+                                elif super_random == 14:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Steve_Seagal, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp3 -= 10
+                                    elif rand == 1:
+                                        hp3 -= 15
+                                    elif rand == 2:
+                                        hp3 -= 12
+                                    elif rand == 3:
+                                        hp3 -= 11
+                                    elif rand == 4:
+                                        hp3 -= 25
+                                    elif rand == 5:
+                                        hp3 -= 20
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 180))
+                                    text("HP:       " + str(hp3), white, 30, 20, 180)
+                                elif super_random == 15:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Jet, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp3 -= 10
+                                    elif rand == 1:
+                                        hp3 -= 30
+                                    elif rand == 2:
+                                        hp3 -= 12
+                                    elif rand == 3:
+                                        hp3 -= 25
+                                    elif rand == 4:
+                                        hp3 -= 14
+                                    elif rand == 5:
+                                        hp3 -= 23
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 180))
+                                    text("HP:       " + str(hp3), white, 30, 20, 180)
+                                elif super_random == 16:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Wesley, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp3 -= 10
+                                    elif rand == 1:
+                                        hp3 -= 12
+                                    elif rand == 2:
+                                        hp3 -= 14
+                                    elif rand == 3:
+                                        hp3 -= 16
+                                    elif rand == 4:
+                                        hp3 -= 14
+                                    elif rand == 5:
+                                        hp3 -= 12
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 180))
+                                    text("HP:       " + str(hp3), white, 30, 20, 180)
+                                elif super_random == 17:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Terry, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp3 -= 10
+                                    elif rand == 1:
+                                        hp3 -= 15
+                                    elif rand == 2:
+                                        hp3 -= 25
+                                    elif rand == 3:
+                                        hp3 -= 20
+                                    elif rand == 4:
+                                        hp3 -= 15
+                                    elif rand == 5:
+                                        hp3 -= 10
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 180))
+                                    text("HP:       " + str(hp3), white, 30, 20, 180)
+                            turn = 'playerFour'
+                        if 100 <= grPy <= 200 and 900 <= grPx <= 1000:
+                            Hoekfight(player3.hp, player2.hp)
+                        elif 550 <= grPy <= 650 and 900 <= grPx <= 1000:
+                            if player3.hp < 46:
+                                player3.hp += 5
+                            else:
+                                player3.hp = 50
+                        elif 550 <= grPy <= 650 and 450 <= grPx <= 550:
+                            Hoekfight(player3.hp, player4.hp)
+                        elif 100 <= grPy <= 200 and 450 <= grPx <= 550:
+                            Hoekfight(player3.hp, player1.hp)
+                        DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 180))
+                        text("HP:       " + str(player3.hp), white, 30, 20, 180)
+                        turn = 'playerFour'
+
+
                     elif turn == 'playerFour':
-                        DISPLAYSURF.blit(pygame.transform.scale(blauwscore, (350, 450)), (0, 300))
-                        DISPLAYSURF.blit(pygame.transform.scale(hudpion_blauw, (100, 100)), (1000, 0))
+                        DISPLAYSURF.blit(pygame.transform.scale(shade, (350, 450)), (0, 300))
+                        DISPLAYSURF.blit(pygame.transform.scale(shade, (100, 100)), (200, 220))
+                        DISPLAYSURF.blit(pygame.transform.scale(hudpion_blauw, (100, 100)), (200, 0))
+                        if hp1 <= 0:
+                            DISPLAYSURF.blit(pygame.transform.scale(shade, (100, 100)), (200, 0))
                         if gDirection == 'right':
                             for i in list[:grand]:
                                 if gPx == 950:
@@ -398,7 +4011,300 @@ def gameboard_4():
                                     break
                                 else:
                                    gPx += 50
+                            if (gPx == fightx1 and gPy == fighty1) or (gPx == fightx3 and gPy == fighty2) or (gPx == fightx1 and gPy == fighty3) or (gPx == fightx2 and gPy == fighty2):
+                                super_list = ["John Cena", "Jason Statham", "Bruce Hee", "Jackie Chen", "Agua man", "Pariz Hilten", "Dexter", "Steve Urkel", "Ernold Schwarzenegger", "James Bend", "The Roch", "Chack Norris", "Vin Dieser", "Super Merio", "Steve Seagal", "Jet Ri", "Wesley Sniper", "Terry Crews"]
+                                super_random = random.randint(0, 17)
+                                print(super_list[super_random])
+                                if super_random == 0:
+                                    DISPLAYSURF.blit(pygame.transform.scale(John, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp4 -= 10
+                                    elif rand == 1:
+                                        hp4 -= 6
+                                    elif rand == 2:
+                                        hp4 -= 25
+                                    elif rand == 3:
+                                        hp4 -= 7
+                                    elif rand == 4:
+                                        hp4 -= 8
+                                    elif rand == 5:
+                                        hp4 -= 11
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 250))
+                                    text("HP:       " + str(hp4), white, 30, 20, 250)
+                                elif super_random == 1:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Jason, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp4 -= 15
+                                    elif rand == 1:
+                                        hp4 -= 17
+                                    elif rand == 2:
+                                        hp4 -= 19
+                                    elif rand == 3:
+                                        hp4 -= 21
+                                    elif rand == 4:
+                                        hp4 -= 23
+                                    elif rand == 5:
+                                        hp4 -= 26
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 250))
+                                    text("HP:       " + str(hp4), white, 30, 20, 250)
+                                elif super_random == 2:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Bruce, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp4 -= 20
+                                    elif rand == 1:
+                                        hp4 -= 15
+                                    elif rand == 2:
+                                        hp4 -= 5
+                                    elif rand == 3:
+                                        hp4 -= 7
+                                    elif rand == 4:
+                                        hp4 -= 8
+                                    elif rand == 5:
+                                        hp4 -= 26
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 250))
+                                    text("HP:       " + str(hp4), white, 30, 20, 250)
+                                elif super_random == 3:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Jackie, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp4 -= 12
+                                    elif rand == 1:
+                                        hp4 -= 10
+                                    elif rand == 2:
+                                        hp4 -= 15
+                                    elif rand == 3:
+                                        hp4 -= 9
+                                    elif rand == 4:
+                                        hp4 -= 10
+                                    elif rand == 5:
+                                        hp4 -= 25
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 250))
+                                    text("HP:       " + str(hp4), white, 30, 20, 250)
+                                elif super_random == 4:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Agua, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp4 -= 12
+                                    elif rand == 1:
+                                        hp4 -= 15
+                                    elif rand == 2:
+                                        hp4 -= 9
+                                    elif rand == 3:
+                                        hp4 -= 7
+                                    elif rand == 4:
+                                        hp4 -= 7
+                                    elif rand == 5:
+                                        hp4 -= 13
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 250))
+                                    text("HP:       " + str(hp4), white, 30, 20, 250)
+                                elif super_random == 5:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Pariz, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp4 -= 12
+                                    elif rand == 1:
+                                        hp4 -= 8
+                                    elif rand == 2:
+                                        hp4 -= 7
+                                    elif rand == 3:
+                                        hp4 -= 15
+                                    elif rand == 4:
+                                        hp4 -= 13
+                                    elif rand == 5:
+                                        hp4 -= 9
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 250))
+                                    text("HP:       " + str(hp4), white, 30, 20, 250)
+                                elif super_random == 6:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Dexter, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp4 -= 9
+                                    elif rand == 1:
+                                        hp4 -= 8
+                                    elif rand == 2:
+                                        hp4 -= 7
+                                    elif rand == 3:
+                                        hp4 -= 15
+                                    elif rand == 4:
+                                        hp4 -= 13
+                                    elif rand == 5:
+                                        hp4 -= 9
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 250))
+                                    text("HP:       " + str(hp4), white, 30, 20, 250)
+                                elif super_random == 7:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Steve_Urkel, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp4 -= 10
+                                    elif rand == 1:
+                                        hp4 -= 5
+                                    elif rand == 2:
+                                        hp4 -= 12
+                                    elif rand == 3:
+                                        hp4 -= 11
+                                    elif rand == 4:
+                                        hp4 -= 15
+                                    elif rand == 5:
+                                        hp4 -= 8
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 250))
+                                    text("HP:       " + str(hp4), white, 30, 20, 250)
+                                elif super_random == 8:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Ernold, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp4 -= 25
+                                    elif rand == 1:
+                                        hp4 -= 25
+                                    elif rand == 2:
+                                        hp4 -= 20
+                                    elif rand == 3:
+                                        hp4 -= 15
+                                    elif rand == 4:
+                                        hp4 -= 15
+                                    elif rand == 5:
+                                        hp4 -= 10
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 250))
+                                    text("HP:       " + str(hp4), white, 30, 20, 250)
+                                elif super_random == 9:
+                                    DISPLAYSURF.blit(pygame.transform.scale(James, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp4 -= 25
+                                    elif rand == 1:
+                                        hp4 -= 15
+                                    elif rand == 2:
+                                        hp4 -= 15
+                                    elif rand == 3:
+                                        hp4 -= 7
+                                    elif rand == 4:
+                                        hp4 -= 20
+                                    elif rand == 5:
+                                        hp4 -= 25
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 250))
+                                    text("HP:       " + str(hp4), white, 30, 20, 250)
+                                elif super_random == 10:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Roch, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp4 -= 13
+                                    elif rand == 1:
+                                        hp4 -= 28
+                                    elif rand == 2:
+                                        hp4 -= 30
+                                    elif rand == 3:
+                                        hp4 -= 17
+                                    elif rand == 4:
+                                        hp4 -= 10
+                                    elif rand == 5:
+                                        hp4 -= 7
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 250))
+                                    text("HP:       " + str(hp4), white, 30, 20, 250)
+                                elif super_random == 11:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Chack, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp4 -= 15
+                                    elif rand == 1:
+                                        hp4 -= 28
+                                    elif rand == 2:
+                                        hp4 -= 27
+                                    elif rand == 3:
+                                        hp4 -= 25
+                                    elif rand == 4:
+                                        hp4 -= 29
+                                    elif rand == 5:
+                                        hp4 -= 30
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 250))
+                                    text("HP:       " + str(hp4), white, 30, 20, 250)
+                                elif super_random == 12:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Vin, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp4 -= 20
+                                    elif rand == 1:
+                                        hp4 -= 25
+                                    elif rand == 2:
+                                        hp4 -= 30
+                                    elif rand == 3:
+                                        hp4 -= 25
+                                    elif rand == 4:
+                                        hp4 -= 20
+                                    elif rand == 5:
+                                        hp4 -= 15
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 250))
+                                    text("HP:       " + str(hp4), white, 30, 20, 250)
+                                elif super_random == 13:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Merio, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp4 -= 10
+                                    elif rand == 1:
+                                        hp4 -= 10
+                                    elif rand == 2:
+                                        hp4 -= 30
+                                    elif rand == 3:
+                                        hp4 -= 30
+                                    elif rand == 4:
+                                        hp4 -= 15
+                                    elif rand == 5:
+                                        hp4 -= 15
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 250))
+                                    text("HP:       " + str(hp4), white, 30, 20, 250)
+                                elif super_random == 14:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Steve_Seagal, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp4 -= 10
+                                    elif rand == 1:
+                                        hp4 -= 15
+                                    elif rand == 2:
+                                        hp4 -= 12
+                                    elif rand == 3:
+                                        hp4 -= 11
+                                    elif rand == 4:
+                                        hp4 -= 25
+                                    elif rand == 5:
+                                        hp4 -= 20
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 250))
+                                    text("HP:       " + str(hp4), white, 30, 20, 250)
+                                elif super_random == 15:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Jet, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp4 -= 10
+                                    elif rand == 1:
+                                        hp4 -= 30
+                                    elif rand == 2:
+                                        hp4 -= 12
+                                    elif rand == 3:
+                                        hp4 -= 25
+                                    elif rand == 4:
+                                        hp4 -= 14
+                                    elif rand == 5:
+                                        hp4 -= 23
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 250))
+                                    text("HP:       " + str(hp4), white, 30, 20, 250)
+                                elif super_random == 16:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Wesley, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp4 -= 10
+                                    elif rand == 1:
+                                        hp4 -= 12
+                                    elif rand == 2:
+                                        hp4 -= 14
+                                    elif rand == 3:
+                                        hp4 -= 16
+                                    elif rand == 4:
+                                        hp4 -= 14
+                                    elif rand == 5:
+                                        hp4 -= 12
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 250))
+                                    text("HP:       " + str(hp4), white, 30, 20, 250)
+                                elif super_random == 17:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Terry, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp4 -= 10
+                                    elif rand == 1:
+                                        hp4 -= 15
+                                    elif rand == 2:
+                                        hp4 -= 25
+                                    elif rand == 3:
+                                        hp4 -= 20
+                                    elif rand == 4:
+                                        hp4 -= 15
+                                    elif rand == 5:
+                                        hp4 -= 10
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 250))
+                                    text("HP:       " + str(hp4), white, 30, 20, 250)
                             turn = 'playerOne'
+
                         elif gDirection == 'down':
                             for i in list[:grand]:
                                 if gPy == 600:
@@ -408,7 +4314,300 @@ def gameboard_4():
                                     break
                                 else:
                                     gPy += 50
+                            if (gPx == fightx1 and gPy == fighty1) or (gPx == fightx3 and gPy == fighty2) or (gPx == fightx1 and gPy == fighty3) or (gPx == fightx2 and gPy == fighty2):
+                                super_list = ["John Cena", "Jason Statham", "Bruce Hee", "Jackie Chen", "Agua man", "Pariz Hilten", "Dexter", "Steve Urkel", "Ernold Schwarzenegger", "James Bend", "The Roch", "Chack Norris", "Vin Dieser", "Super Merio", "Steve Seagal", "Jet Ri", "Wesley Sniper", "Terry Crews"]
+                                super_random = random.randint(0, 17)
+                                print(super_list[super_random])
+                                if super_random == 0:
+                                    DISPLAYSURF.blit(pygame.transform.scale(John, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp4 -= 10
+                                    elif rand == 1:
+                                        hp4 -= 6
+                                    elif rand == 2:
+                                        hp4 -= 25
+                                    elif rand == 3:
+                                        hp4 -= 7
+                                    elif rand == 4:
+                                        hp4 -= 8
+                                    elif rand == 5:
+                                        hp4 -= 11
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 250))
+                                    text("HP:       " + str(hp4), white, 30, 20, 250)
+                                elif super_random == 1:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Jason, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp4 -= 15
+                                    elif rand == 1:
+                                        hp4 -= 17
+                                    elif rand == 2:
+                                        hp4 -= 19
+                                    elif rand == 3:
+                                        hp4 -= 21
+                                    elif rand == 4:
+                                        hp4 -= 23
+                                    elif rand == 5:
+                                        hp4 -= 26
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 250))
+                                    text("HP:       " + str(hp4), white, 30, 20, 250)
+                                elif super_random == 2:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Bruce, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp4 -= 20
+                                    elif rand == 1:
+                                        hp4 -= 15
+                                    elif rand == 2:
+                                        hp4 -= 5
+                                    elif rand == 3:
+                                        hp4 -= 7
+                                    elif rand == 4:
+                                        hp4 -= 8
+                                    elif rand == 5:
+                                        hp4 -= 26
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 250))
+                                    text("HP:       " + str(hp4), white, 30, 20, 250)
+                                elif super_random == 3:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Jackie, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp4 -= 12
+                                    elif rand == 1:
+                                        hp4 -= 10
+                                    elif rand == 2:
+                                        hp4 -= 15
+                                    elif rand == 3:
+                                        hp4 -= 9
+                                    elif rand == 4:
+                                        hp4 -= 10
+                                    elif rand == 5:
+                                        hp4 -= 25
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 250))
+                                    text("HP:       " + str(hp4), white, 30, 20, 250)
+                                elif super_random == 4:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Agua, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp4 -= 12
+                                    elif rand == 1:
+                                        hp4 -= 15
+                                    elif rand == 2:
+                                        hp4 -= 9
+                                    elif rand == 3:
+                                        hp4 -= 7
+                                    elif rand == 4:
+                                        hp4 -= 7
+                                    elif rand == 5:
+                                        hp4 -= 13
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 250))
+                                    text("HP:       " + str(hp4), white, 30, 20, 250)
+                                elif super_random == 5:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Pariz, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp4 -= 12
+                                    elif rand == 1:
+                                        hp4 -= 8
+                                    elif rand == 2:
+                                        hp4 -= 7
+                                    elif rand == 3:
+                                        hp4 -= 15
+                                    elif rand == 4:
+                                        hp4 -= 13
+                                    elif rand == 5:
+                                        hp4 -= 9
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 250))
+                                    text("HP:       " + str(hp4), white, 30, 20, 250)
+                                elif super_random == 6:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Dexter, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp4 -= 9
+                                    elif rand == 1:
+                                        hp4 -= 8
+                                    elif rand == 2:
+                                        hp4 -= 7
+                                    elif rand == 3:
+                                        hp4 -= 15
+                                    elif rand == 4:
+                                        hp4 -= 13
+                                    elif rand == 5:
+                                        hp4 -= 9
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 250))
+                                    text("HP:       " + str(hp4), white, 30, 20, 250)
+                                elif super_random == 7:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Steve_Urkel, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp4 -= 10
+                                    elif rand == 1:
+                                        hp4 -= 5
+                                    elif rand == 2:
+                                        hp4 -= 12
+                                    elif rand == 3:
+                                        hp4 -= 11
+                                    elif rand == 4:
+                                        hp4 -= 15
+                                    elif rand == 5:
+                                        hp4 -= 8
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 250))
+                                    text("HP:       " + str(hp4), white, 30, 20, 250)
+                                elif super_random == 8:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Ernold, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp4 -= 25
+                                    elif rand == 1:
+                                        hp4 -= 25
+                                    elif rand == 2:
+                                        hp4 -= 20
+                                    elif rand == 3:
+                                        hp4 -= 15
+                                    elif rand == 4:
+                                        hp4 -= 15
+                                    elif rand == 5:
+                                        hp4 -= 10
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 250))
+                                    text("HP:       " + str(hp4), white, 30, 20, 250)
+                                elif super_random == 9:
+                                    DISPLAYSURF.blit(pygame.transform.scale(James, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp4 -= 25
+                                    elif rand == 1:
+                                        hp4 -= 15
+                                    elif rand == 2:
+                                        hp4 -= 15
+                                    elif rand == 3:
+                                        hp4 -= 7
+                                    elif rand == 4:
+                                        hp4 -= 20
+                                    elif rand == 5:
+                                        hp4 -= 25
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 250))
+                                    text("HP:       " + str(hp4), white, 30, 20, 250)
+                                elif super_random == 10:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Roch, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp4 -= 13
+                                    elif rand == 1:
+                                        hp4 -= 28
+                                    elif rand == 2:
+                                        hp4 -= 30
+                                    elif rand == 3:
+                                        hp4 -= 17
+                                    elif rand == 4:
+                                        hp4 -= 10
+                                    elif rand == 5:
+                                        hp4 -= 7
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 250))
+                                    text("HP:       " + str(hp4), white, 30, 20, 250)
+                                elif super_random == 11:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Chack, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp4 -= 15
+                                    elif rand == 1:
+                                        hp4 -= 28
+                                    elif rand == 2:
+                                        hp4 -= 27
+                                    elif rand == 3:
+                                        hp4 -= 25
+                                    elif rand == 4:
+                                        hp4 -= 29
+                                    elif rand == 5:
+                                        hp4 -= 30
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 250))
+                                    text("HP:       " + str(hp4), white, 30, 20, 250)
+                                elif super_random == 12:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Vin, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp4 -= 20
+                                    elif rand == 1:
+                                        hp4 -= 25
+                                    elif rand == 2:
+                                        hp4 -= 30
+                                    elif rand == 3:
+                                        hp4 -= 25
+                                    elif rand == 4:
+                                        hp4 -= 20
+                                    elif rand == 5:
+                                        hp4 -= 15
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 250))
+                                    text("HP:       " + str(hp4), white, 30, 20, 250)
+                                elif super_random == 13:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Merio, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp4 -= 10
+                                    elif rand == 1:
+                                        hp4 -= 10
+                                    elif rand == 2:
+                                        hp4 -= 30
+                                    elif rand == 3:
+                                        hp4 -= 30
+                                    elif rand == 4:
+                                        hp4 -= 15
+                                    elif rand == 5:
+                                        hp4 -= 15
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 250))
+                                    text("HP:       " + str(hp4), white, 30, 20, 250)
+                                elif super_random == 14:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Steve_Seagal, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp4 -= 10
+                                    elif rand == 1:
+                                        hp4 -= 15
+                                    elif rand == 2:
+                                        hp4 -= 12
+                                    elif rand == 3:
+                                        hp4 -= 11
+                                    elif rand == 4:
+                                        hp4 -= 25
+                                    elif rand == 5:
+                                        hp4 -= 20
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 250))
+                                    text("HP:       " + str(hp4), white, 30, 20, 250)
+                                elif super_random == 15:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Jet, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp4 -= 10
+                                    elif rand == 1:
+                                        hp4 -= 30
+                                    elif rand == 2:
+                                        hp4 -= 12
+                                    elif rand == 3:
+                                        hp4 -= 25
+                                    elif rand == 4:
+                                        hp4 -= 14
+                                    elif rand == 5:
+                                        hp4 -= 23
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 250))
+                                    text("HP:       " + str(hp4), white, 30, 20, 250)
+                                elif super_random == 16:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Wesley, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp4 -= 10
+                                    elif rand == 1:
+                                        hp4 -= 12
+                                    elif rand == 2:
+                                        hp4 -= 14
+                                    elif rand == 3:
+                                        hp4 -= 16
+                                    elif rand == 4:
+                                        hp4 -= 14
+                                    elif rand == 5:
+                                        hp4 -= 12
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 250))
+                                    text("HP:       " + str(hp4), white, 30, 20, 250)
+                                elif super_random == 17:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Terry, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp4 -= 10
+                                    elif rand == 1:
+                                        hp4 -= 15
+                                    elif rand == 2:
+                                        hp4 -= 25
+                                    elif rand == 3:
+                                        hp4 -= 20
+                                    elif rand == 4:
+                                        hp4 -= 15
+                                    elif rand == 5:
+                                        hp4 -= 10
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 250))
+                                    text("HP:       " + str(hp4), white, 30, 20, 250)
                             turn = 'playerOne'
+
                         elif gDirection == 'left':
                             for i in list[:grand]:
                                 if gPx == 450:
@@ -418,7 +4617,300 @@ def gameboard_4():
                                     break
                                 else:
                                     gPx -= 50
+                            if (gPx == fightx1 and gPy == fighty1) or (gPx == fightx3 and gPy == fighty2) or (gPx == fightx1 and gPy == fighty3) or (gPx == fightx2 and gPy == fighty2):
+                                super_list = ["John Cena", "Jason Statham", "Bruce Hee", "Jackie Chen", "Agua man", "Pariz Hilten", "Dexter", "Steve Urkel", "Ernold Schwarzenegger", "James Bend", "The Roch", "Chack Norris", "Vin Dieser", "Super Merio", "Steve Seagal", "Jet Ri", "Wesley Sniper", "Terry Crews"]
+                                super_random = random.randint(0, 17)
+                                print(super_list[super_random])
+                                if super_random == 0:
+                                    DISPLAYSURF.blit(pygame.transform.scale(John, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp4 -= 10
+                                    elif rand == 1:
+                                        hp4 -= 6
+                                    elif rand == 2:
+                                        hp4 -= 25
+                                    elif rand == 3:
+                                        hp4 -= 7
+                                    elif rand == 4:
+                                        hp4 -= 8
+                                    elif rand == 5:
+                                        hp4 -= 11
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 250))
+                                    text("HP:       " + str(hp4), white, 30, 20, 250)
+                                elif super_random == 1:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Jason, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp4 -= 15
+                                    elif rand == 1:
+                                        hp4 -= 17
+                                    elif rand == 2:
+                                        hp4 -= 19
+                                    elif rand == 3:
+                                        hp4 -= 21
+                                    elif rand == 4:
+                                        hp4 -= 23
+                                    elif rand == 5:
+                                        hp4 -= 26
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 250))
+                                    text("HP:       " + str(hp4), white, 30, 20, 250)
+                                elif super_random == 2:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Bruce, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp4 -= 20
+                                    elif rand == 1:
+                                        hp4 -= 15
+                                    elif rand == 2:
+                                        hp4 -= 5
+                                    elif rand == 3:
+                                        hp4 -= 7
+                                    elif rand == 4:
+                                        hp4 -= 8
+                                    elif rand == 5:
+                                        hp4 -= 26
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 250))
+                                    text("HP:       " + str(hp4), white, 30, 20, 250)
+                                elif super_random == 3:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Jackie, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp4 -= 12
+                                    elif rand == 1:
+                                        hp4 -= 10
+                                    elif rand == 2:
+                                        hp4 -= 15
+                                    elif rand == 3:
+                                        hp4 -= 9
+                                    elif rand == 4:
+                                        hp4 -= 10
+                                    elif rand == 5:
+                                        hp4 -= 25
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 250))
+                                    text("HP:       " + str(hp4), white, 30, 20, 250)
+                                elif super_random == 4:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Agua, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp4 -= 12
+                                    elif rand == 1:
+                                        hp4 -= 15
+                                    elif rand == 2:
+                                        hp4 -= 9
+                                    elif rand == 3:
+                                        hp4 -= 7
+                                    elif rand == 4:
+                                        hp4 -= 7
+                                    elif rand == 5:
+                                        hp4 -= 13
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 250))
+                                    text("HP:       " + str(hp4), white, 30, 20, 250)
+                                elif super_random == 5:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Pariz, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp4 -= 12
+                                    elif rand == 1:
+                                        hp4 -= 8
+                                    elif rand == 2:
+                                        hp4 -= 7
+                                    elif rand == 3:
+                                        hp4 -= 15
+                                    elif rand == 4:
+                                        hp4 -= 13
+                                    elif rand == 5:
+                                        hp4 -= 9
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 250))
+                                    text("HP:       " + str(hp4), white, 30, 20, 250)
+                                elif super_random == 6:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Dexter, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp4 -= 9
+                                    elif rand == 1:
+                                        hp4 -= 8
+                                    elif rand == 2:
+                                        hp4 -= 7
+                                    elif rand == 3:
+                                        hp4 -= 15
+                                    elif rand == 4:
+                                        hp4 -= 13
+                                    elif rand == 5:
+                                        hp4 -= 9
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 250))
+                                    text("HP:       " + str(hp4), white, 30, 20, 250)
+                                elif super_random == 7:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Steve_Urkel, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp4 -= 10
+                                    elif rand == 1:
+                                        hp4 -= 5
+                                    elif rand == 2:
+                                        hp4 -= 12
+                                    elif rand == 3:
+                                        hp4 -= 11
+                                    elif rand == 4:
+                                        hp4 -= 15
+                                    elif rand == 5:
+                                        hp4 -= 8
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 250))
+                                    text("HP:       " + str(hp4), white, 30, 20, 250)
+                                elif super_random == 8:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Ernold, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp4 -= 25
+                                    elif rand == 1:
+                                        hp4 -= 25
+                                    elif rand == 2:
+                                        hp4 -= 20
+                                    elif rand == 3:
+                                        hp4 -= 15
+                                    elif rand == 4:
+                                        hp4 -= 15
+                                    elif rand == 5:
+                                        hp4 -= 10
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 250))
+                                    text("HP:       " + str(hp4), white, 30, 20, 250)
+                                elif super_random == 9:
+                                    DISPLAYSURF.blit(pygame.transform.scale(James, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp4 -= 25
+                                    elif rand == 1:
+                                        hp4 -= 15
+                                    elif rand == 2:
+                                        hp4 -= 15
+                                    elif rand == 3:
+                                        hp4 -= 7
+                                    elif rand == 4:
+                                        hp4 -= 20
+                                    elif rand == 5:
+                                        hp4 -= 25
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 250))
+                                    text("HP:       " + str(hp4), white, 30, 20, 250)
+                                elif super_random == 10:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Roch, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp4 -= 13
+                                    elif rand == 1:
+                                        hp4 -= 28
+                                    elif rand == 2:
+                                        hp4 -= 30
+                                    elif rand == 3:
+                                        hp4 -= 17
+                                    elif rand == 4:
+                                        hp4 -= 10
+                                    elif rand == 5:
+                                        hp4 -= 7
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 250))
+                                    text("HP:       " + str(hp4), white, 30, 20, 250)
+                                elif super_random == 11:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Chack, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp4 -= 15
+                                    elif rand == 1:
+                                        hp4 -= 28
+                                    elif rand == 2:
+                                        hp4 -= 27
+                                    elif rand == 3:
+                                        hp4 -= 25
+                                    elif rand == 4:
+                                        hp4 -= 29
+                                    elif rand == 5:
+                                        hp4 -= 30
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 250))
+                                    text("HP:       " + str(hp4), white, 30, 20, 250)
+                                elif super_random == 12:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Vin, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp4 -= 20
+                                    elif rand == 1:
+                                        hp4 -= 25
+                                    elif rand == 2:
+                                        hp4 -= 30
+                                    elif rand == 3:
+                                        hp4 -= 25
+                                    elif rand == 4:
+                                        hp4 -= 20
+                                    elif rand == 5:
+                                        hp4 -= 15
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 250))
+                                    text("HP:       " + str(hp4), white, 30, 20, 250)
+                                elif super_random == 13:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Merio, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp4 -= 10
+                                    elif rand == 1:
+                                        hp4 -= 10
+                                    elif rand == 2:
+                                        hp4 -= 30
+                                    elif rand == 3:
+                                        hp4 -= 30
+                                    elif rand == 4:
+                                        hp4 -= 15
+                                    elif rand == 5:
+                                        hp4 -= 15
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 250))
+                                    text("HP:       " + str(hp4), white, 30, 20, 250)
+                                elif super_random == 14:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Steve_Seagal, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp4 -= 10
+                                    elif rand == 1:
+                                        hp4 -= 15
+                                    elif rand == 2:
+                                        hp4 -= 12
+                                    elif rand == 3:
+                                        hp4 -= 11
+                                    elif rand == 4:
+                                        hp4 -= 25
+                                    elif rand == 5:
+                                        hp4 -= 20
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 250))
+                                    text("HP:       " + str(hp4), white, 30, 20, 250)
+                                elif super_random == 15:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Jet, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp4 -= 10
+                                    elif rand == 1:
+                                        hp4 -= 30
+                                    elif rand == 2:
+                                        hp4 -= 12
+                                    elif rand == 3:
+                                        hp4 -= 25
+                                    elif rand == 4:
+                                        hp4 -= 14
+                                    elif rand == 5:
+                                        hp4 -= 23
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 250))
+                                    text("HP:       " + str(hp4), white, 30, 20, 250)
+                                elif super_random == 16:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Wesley, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp4 -= 10
+                                    elif rand == 1:
+                                        hp4 -= 12
+                                    elif rand == 2:
+                                        hp4 -= 14
+                                    elif rand == 3:
+                                        hp4 -= 16
+                                    elif rand == 4:
+                                        hp4 -= 14
+                                    elif rand == 5:
+                                        hp4 -= 12
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 250))
+                                    text("HP:       " + str(hp4), white, 30, 20, 250)
+                                elif super_random == 17:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Terry, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp4 -= 10
+                                    elif rand == 1:
+                                        hp4 -= 15
+                                    elif rand == 2:
+                                        hp4 -= 25
+                                    elif rand == 3:
+                                        hp4 -= 20
+                                    elif rand == 4:
+                                        hp4 -= 15
+                                    elif rand == 5:
+                                        hp4 -= 10
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 250))
+                                    text("HP:       " + str(hp4), white, 30, 20, 250)
                             turn = 'playerOne'
+
                         elif gDirection == 'up':
                             for i in list[:grand]:
                                 if gPy == 100:
@@ -428,6 +4920,299 @@ def gameboard_4():
                                     break
                                 else:
                                     gPy -= 50
+                            if (gPx == fightx1 and gPy == fighty1) or (gPx == fightx3 and gPy == fighty2) or (gPx == fightx1 and gPy == fighty3) or (gPx == fightx2 and gPy == fighty2):
+                                super_list = ["John Cena", "Jason Statham", "Bruce Hee", "Jackie Chen", "Agua man", "Pariz Hilten", "Dexter", "Steve Urkel", "Ernold Schwarzenegger", "James Bend", "The Roch", "Chack Norris", "Vin Dieser", "Super Merio", "Steve Seagal", "Jet Ri", "Wesley Sniper", "Terry Crews"]
+                                super_random = random.randint(0, 17)
+                                print(super_list[super_random])
+                                if super_random == 0:
+                                    DISPLAYSURF.blit(pygame.transform.scale(John, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp4 -= 10
+                                    elif rand == 1:
+                                        hp4 -= 6
+                                    elif rand == 2:
+                                        hp4 -= 25
+                                    elif rand == 3:
+                                        hp4 -= 7
+                                    elif rand == 4:
+                                        hp4 -= 8
+                                    elif rand == 5:
+                                        hp4 -= 11
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 250))
+                                    text("HP:       " + str(hp4), white, 30, 20, 250)
+                                elif super_random == 1:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Jason, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp4 -= 15
+                                    elif rand == 1:
+                                        hp4 -= 17
+                                    elif rand == 2:
+                                        hp4 -= 19
+                                    elif rand == 3:
+                                        hp4 -= 21
+                                    elif rand == 4:
+                                        hp4 -= 23
+                                    elif rand == 5:
+                                        hp4 -= 26
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 250))
+                                    text("HP:       " + str(hp4), white, 30, 20, 250)
+                                elif super_random == 2:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Bruce, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp4 -= 20
+                                    elif rand == 1:
+                                        hp4 -= 15
+                                    elif rand == 2:
+                                        hp4 -= 5
+                                    elif rand == 3:
+                                        hp4 -= 7
+                                    elif rand == 4:
+                                        hp4 -= 8
+                                    elif rand == 5:
+                                        hp4 -= 26
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 250))
+                                    text("HP:       " + str(hp4), white, 30, 20, 250)
+                                elif super_random == 3:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Jackie, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp4 -= 12
+                                    elif rand == 1:
+                                        hp4 -= 10
+                                    elif rand == 2:
+                                        hp4 -= 15
+                                    elif rand == 3:
+                                        hp4 -= 9
+                                    elif rand == 4:
+                                        hp4 -= 10
+                                    elif rand == 5:
+                                        hp4 -= 25
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 250))
+                                    text("HP:       " + str(hp4), white, 30, 20, 250)
+                                elif super_random == 4:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Agua, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp4 -= 12
+                                    elif rand == 1:
+                                        hp4 -= 15
+                                    elif rand == 2:
+                                        hp4 -= 9
+                                    elif rand == 3:
+                                        hp4 -= 7
+                                    elif rand == 4:
+                                        hp4 -= 7
+                                    elif rand == 5:
+                                        hp4 -= 13
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 250))
+                                    text("HP:       " + str(hp4), white, 30, 20, 250)
+                                elif super_random == 5:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Pariz, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp4 -= 12
+                                    elif rand == 1:
+                                        hp4 -= 8
+                                    elif rand == 2:
+                                        hp4 -= 7
+                                    elif rand == 3:
+                                        hp4 -= 15
+                                    elif rand == 4:
+                                        hp4 -= 13
+                                    elif rand == 5:
+                                        hp4 -= 9
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 250))
+                                    text("HP:       " + str(hp4), white, 30, 20, 250)
+                                elif super_random == 6:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Dexter, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp4 -= 9
+                                    elif rand == 1:
+                                        hp4 -= 8
+                                    elif rand == 2:
+                                        hp4 -= 7
+                                    elif rand == 3:
+                                        hp4 -= 15
+                                    elif rand == 4:
+                                        hp4 -= 13
+                                    elif rand == 5:
+                                        hp4 -= 9
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 250))
+                                    text("HP:       " + str(hp4), white, 30, 20, 250)
+                                elif super_random == 7:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Steve_Urkel, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp4 -= 10
+                                    elif rand == 1:
+                                        hp4 -= 5
+                                    elif rand == 2:
+                                        hp4 -= 12
+                                    elif rand == 3:
+                                        hp4 -= 11
+                                    elif rand == 4:
+                                        hp4 -= 15
+                                    elif rand == 5:
+                                        hp4 -= 8
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 250))
+                                    text("HP:       " + str(hp4), white, 30, 20, 250)
+                                elif super_random == 8:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Ernold, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp4 -= 25
+                                    elif rand == 1:
+                                        hp4 -= 25
+                                    elif rand == 2:
+                                        hp4 -= 20
+                                    elif rand == 3:
+                                        hp4 -= 15
+                                    elif rand == 4:
+                                        hp4 -= 15
+                                    elif rand == 5:
+                                        hp4 -= 10
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 250))
+                                    text("HP:       " + str(hp4), white, 30, 20, 250)
+                                elif super_random == 9:
+                                    DISPLAYSURF.blit(pygame.transform.scale(James, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp4 -= 25
+                                    elif rand == 1:
+                                        hp4 -= 15
+                                    elif rand == 2:
+                                        hp4 -= 15
+                                    elif rand == 3:
+                                        hp4 -= 7
+                                    elif rand == 4:
+                                        hp4 -= 20
+                                    elif rand == 5:
+                                        hp4 -= 25
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 250))
+                                    text("HP:       " + str(hp4), white, 30, 20, 250)
+                                elif super_random == 10:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Roch, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp4 -= 13
+                                    elif rand == 1:
+                                        hp4 -= 28
+                                    elif rand == 2:
+                                        hp4 -= 30
+                                    elif rand == 3:
+                                        hp4 -= 17
+                                    elif rand == 4:
+                                        hp4 -= 10
+                                    elif rand == 5:
+                                        hp4 -= 7
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 250))
+                                    text("HP:       " + str(hp4), white, 30, 20, 250)
+                                elif super_random == 11:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Chack, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp4 -= 15
+                                    elif rand == 1:
+                                        hp4 -= 28
+                                    elif rand == 2:
+                                        hp4 -= 27
+                                    elif rand == 3:
+                                        hp4 -= 25
+                                    elif rand == 4:
+                                        hp4 -= 29
+                                    elif rand == 5:
+                                        hp4 -= 30
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 250))
+                                    text("HP:       " + str(hp4), white, 30, 20, 250)
+                                elif super_random == 12:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Vin, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp4 -= 20
+                                    elif rand == 1:
+                                        hp4 -= 25
+                                    elif rand == 2:
+                                        hp4 -= 30
+                                    elif rand == 3:
+                                        hp4 -= 25
+                                    elif rand == 4:
+                                        hp4 -= 20
+                                    elif rand == 5:
+                                        hp4 -= 15
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 250))
+                                    text("HP:       " + str(hp4), white, 30, 20, 250)
+                                elif super_random == 13:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Merio, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp4 -= 10
+                                    elif rand == 1:
+                                        hp4 -= 10
+                                    elif rand == 2:
+                                        hp4 -= 30
+                                    elif rand == 3:
+                                        hp4 -= 30
+                                    elif rand == 4:
+                                        hp4 -= 15
+                                    elif rand == 5:
+                                        hp4 -= 15
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 250))
+                                    text("HP:       " + str(hp4), white, 30, 20, 250)
+                                elif super_random == 14:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Steve_Seagal, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp4 -= 10
+                                    elif rand == 1:
+                                        hp4 -= 15
+                                    elif rand == 2:
+                                        hp4 -= 12
+                                    elif rand == 3:
+                                        hp4 -= 11
+                                    elif rand == 4:
+                                        hp4 -= 25
+                                    elif rand == 5:
+                                        hp4 -= 20
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 250))
+                                    text("HP:       " + str(hp4), white, 30, 20, 250)
+                                elif super_random == 15:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Jet, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp4 -= 10
+                                    elif rand == 1:
+                                        hp4 -= 30
+                                    elif rand == 2:
+                                        hp4 -= 12
+                                    elif rand == 3:
+                                        hp4 -= 25
+                                    elif rand == 4:
+                                        hp4 -= 14
+                                    elif rand == 5:
+                                        hp4 -= 23
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 250))
+                                    text("HP:       " + str(hp4), white, 30, 20, 250)
+                                elif super_random == 16:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Wesley, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp4 -= 10
+                                    elif rand == 1:
+                                        hp4 -= 12
+                                    elif rand == 2:
+                                        hp4 -= 14
+                                    elif rand == 3:
+                                        hp4 -= 16
+                                    elif rand == 4:
+                                        hp4 -= 14
+                                    elif rand == 5:
+                                        hp4 -= 12
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 250))
+                                    text("HP:       " + str(hp4), white, 30, 20, 250)
+                                elif super_random == 17:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Terry, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp4 -= 10
+                                    elif rand == 1:
+                                        hp4 -= 15
+                                    elif rand == 2:
+                                        hp4 -= 25
+                                    elif rand == 3:
+                                        hp4 -= 20
+                                    elif rand == 4:
+                                        hp4 -= 15
+                                    elif rand == 5:
+                                        hp4 -= 10
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 250))
+                                    text("HP:       " + str(hp4), white, 30, 20, 250)
+                            turn = 'playerOne'
                         if 100 <= gPy <= 200 and 900 <= gPx <= 1000:
                             Hoekfight(player4.hp, player2.hp)
                         elif 550 <= gPy <= 650 and 900 <= gPx <= 1000:
@@ -444,62 +5229,6 @@ def gameboard_4():
                         turn = 'playerOne'
 
 
-                    elif turn == 'playerThree':
-                        DISPLAYSURF.blit(pygame.transform.scale(geelscore, (350, 450)), (0, 300))
-                        DISPLAYSURF.blit(pygame.transform.scale(hudpion_geel, (100, 100)), (1000, 0))
-                        if grDirection == 'right':
-                            for i in list[:grand]:
-                                if grPx == 950:
-                                    grDirection = 'down'
-                                    for n in list[i:ggrand]:
-                                        grPy += 50
-                                    break
-                                else:
-                                    grPx += 50
-                            turn = 'playerFour'
-                        elif grDirection == 'down':
-                            for i in list[:grand]:
-                                if grPy == 600:
-                                    grDirection = 'left'
-                                    for n in list[i:ggrand]:
-                                        grPx -= 50
-                                    break
-                                else:
-                                    grPy += 50
-                            turn = 'playerFour'
-                        elif grDirection == 'left':
-                            for i in list[:grand]:
-                                if grPx == 450:
-                                    grDirection = 'up'
-                                    for n in list[i:ggrand]:
-                                        grPy -= 50
-                                    break
-                                else:
-                                    grPx -= 50
-                            turn = 'playerFour'
-                        elif grDirection == 'up':
-                            for i in list[:grand]:
-                                if grPy == 100:
-                                    grDirection = 'right'
-                                    for n in list[i:ggrand]:
-                                        grPx += 50
-                                    break
-                                else:
-                                    grPy -= 50
-                        if 100 <= grPy <= 200 and 900 <= grPx <= 1000:
-                            Hoekfight(player3.hp, player2.hp)
-                        elif 550 <= grPy <= 650 and 900 <= grPx <= 1000:
-                            if player3.hp < 46:
-                                player3.hp += 5
-                            else:
-                                player3.hp = 50
-                        elif 550 <= grPy <= 650 and 450 <= grPx <= 550:
-                            Hoekfight(player3.hp, player4.hp)
-                        elif 100 <= grPy <= 200 and 450 <= grPx <= 550:
-                            Hoekfight(player3.hp, player1.hp)
-                        DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 180))
-                        text("HP:       " + str(player3.hp), white, 30, 20, 180)
-                        turn = 'playerFour'
 
         #loop through each row
         for row in range(MAPHEIGHT):
@@ -667,8 +5396,7 @@ def gameboard_3():
         display.blit(textSurf, textRect)
 
     turn = 'playerOne'
-    DISPLAYSURF.blit(pygame.transform.scale(blauwscore, (350, 450)), (0, 300))
-    DISPLAYSURF.blit(pygame.transform.scale(hudpion_blauw, (100, 100)), (1000, 0))
+    DISPLAYSURF.blit(pygame.transform.scale(hudpion_blauw, (100, 100)), (200, 0))
 
     P1color = (0,   102,   205)
     player1 = Player(1, 30)
@@ -691,7 +5419,34 @@ def gameboard_3():
             if event.type == QUIT:
                 pygame.quit()
                 sys.exit()
-            elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+            if hp1 > 0 and hp2 <= 0 and hp3 <=0:
+                winningscreen('P1 Mike Tysen WINS')
+            if hp1 <= 0 and hp2 > 0 and hp3 <= 0:
+                winningscreen('P2 Rocky Belboa WINS')
+            if hp1 <= 0 and hp2 <= 0 and hp3 > 0:
+                winningscreen('P3 Badr Heri WINS')
+            if turn == 'playerOne':
+                if hp1 <= 0:
+                    bPx = 1500
+                    bPy = 1500
+                    DISPLAYSURF.blit(pygame.transform.scale(hudpion_rood, (100, 100)), (200, 80))
+                    DISPLAYSURF.blit(pygame.transform.scale(shade, (350, 80)), (0, 0))
+                    turn = 'playerTwo'
+            if turn == 'playerTwo':
+                if hp2 <= 0:
+                    rPx = 1500
+                    rPy = 1500
+                    DISPLAYSURF.blit(pygame.transform.scale(hudpion_groen, (100, 100)), (200, 160))
+                    DISPLAYSURF.blit(pygame.transform.scale(shade, (350, 80)), (0, 80))
+                    turn = 'playerThree'
+            if turn == 'playerThree':
+                if hp3 <= 0:
+                    grPx = 1500
+                    grPy = 1500
+                    DISPLAYSURF.blit(pygame.transform.scale(hudpion_blauw, (100, 100)), (200, 0))
+                    DISPLAYSURF.blit(pygame.transform.scale(shade, (350, 70)), (0, 160))
+                    turn = 'playerOne'
+            if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                 if btn.rect.collidepoint(pygame.mouse.get_pos()):
                     list = [1,2,3,4,5,6,7]
                     rand = random.randint(0,5)
@@ -701,8 +5456,11 @@ def gameboard_3():
 
 
                     if turn == 'playerOne':
-                        DISPLAYSURF.blit(pygame.transform.scale(roodscore, (350, 450)), (0, 300))
-                        DISPLAYSURF.blit(pygame.transform.scale(hudpion_rood, (100, 100)), (1000, 0))
+                        DISPLAYSURF.blit(pygame.transform.scale(shade, (100, 100)), (200, 0))
+                        DISPLAYSURF.blit(pygame.transform.scale(shade, (350, 450)), (0, 300))
+                        DISPLAYSURF.blit(pygame.transform.scale(hudpion_rood, (100, 100)), (200, 80))
+                        if hp2 <= 0:
+                            DISPLAYSURF.blit(pygame.transform.scale(shade, (100, 100)), (200, 160))
                         if bDirection == 'right':
                             for i in list[:grand]:
                                 if bPx == 950:
@@ -712,6 +5470,298 @@ def gameboard_3():
                                     break
                                 else:
                                     bPx += 50
+                            if (bPx == fightx1 and bPy == fighty1) or (bPx == fightx3 and bPy == fighty2) or (bPx == fightx1 and bPy == fighty3) or (bPx == fightx2 and bPy == fighty2):
+                                super_list = ["John Cena", "Jason Statham", "Bruce Hee", "Jackie Chen", "Agua man", "Pariz Hilten", "Dexter", "Steve Urkel", "Ernold Schwarzenegger", "James Bend", "The Roch", "Chack Norris", "Vin Dieser", "Super Merio", "Steve Seagal", "Jet Ri", "Wesley Sniper", "Terry Crews"]
+                                super_random = random.randint(0, 17)
+                                print(super_list[super_random])
+                                if super_random == 0:
+                                    DISPLAYSURF.blit(pygame.transform.scale(John, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 10
+                                    elif rand == 1:
+                                        hp1 -= 6
+                                    elif rand == 2:
+                                        hp1 -= 25
+                                    elif rand == 3:
+                                        hp1 -= 7
+                                    elif rand == 4:
+                                        hp1 -= 8
+                                    elif rand == 5:
+                                        hp1 -= 11
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 1:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Jason, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 15
+                                    elif rand == 1:
+                                        hp1 -= 17
+                                    elif rand == 2:
+                                        hp1 -= 19
+                                    elif rand == 3:
+                                        hp1 -= 21
+                                    elif rand == 4:
+                                        hp1 -= 23
+                                    elif rand == 5:
+                                        hp1 -= 26
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 2:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Bruce, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 20
+                                    elif rand == 1:
+                                        hp1 -= 15
+                                    elif rand == 2:
+                                        hp1 -= 5
+                                    elif rand == 3:
+                                        hp1 -= 7
+                                    elif rand == 4:
+                                        hp1 -= 8
+                                    elif rand == 5:
+                                        hp1 -= 26
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 3:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Jackie, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 12
+                                    elif rand == 1:
+                                        hp1 -= 10
+                                    elif rand == 2:
+                                        hp1 -= 15
+                                    elif rand == 3:
+                                        hp1 -= 9
+                                    elif rand == 4:
+                                        hp1 -= 10
+                                    elif rand == 5:
+                                        hp1 -= 25
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 4:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Agua, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 12
+                                    elif rand == 1:
+                                        hp1 -= 15
+                                    elif rand == 2:
+                                        hp1 -= 9
+                                    elif rand == 3:
+                                        hp1 -= 7
+                                    elif rand == 4:
+                                        hp1 -= 7
+                                    elif rand == 5:
+                                        hp1 -= 13
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 5:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Pariz, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 12
+                                    elif rand == 1:
+                                        hp1 -= 8
+                                    elif rand == 2:
+                                        hp1 -= 7
+                                    elif rand == 3:
+                                        hp1 -= 15
+                                    elif rand == 4:
+                                        hp1 -= 13
+                                    elif rand == 5:
+                                        hp1 -= 9
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 6:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Dexter, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 9
+                                    elif rand == 1:
+                                        hp1 -= 8
+                                    elif rand == 2:
+                                        hp1 -= 7
+                                    elif rand == 3:
+                                        hp1 -= 15
+                                    elif rand == 4:
+                                        hp1 -= 13
+                                    elif rand == 5:
+                                        hp1 -= 9
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 7:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Steve_Urkel, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 10
+                                    elif rand == 1:
+                                        hp1 -= 5
+                                    elif rand == 2:
+                                        hp1 -= 12
+                                    elif rand == 3:
+                                        hp1 -= 11
+                                    elif rand == 4:
+                                        hp1 -= 15
+                                    elif rand == 5:
+                                        hp1 -= 8
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 8:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Ernold, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 25
+                                    elif rand == 1:
+                                        hp1 -= 25
+                                    elif rand == 2:
+                                        hp1 -= 20
+                                    elif rand == 3:
+                                        hp1 -= 15
+                                    elif rand == 4:
+                                        hp1 -= 15
+                                    elif rand == 5:
+                                        hp1 -= 10
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 9:
+                                    DISPLAYSURF.blit(pygame.transform.scale(James, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 25
+                                    elif rand == 1:
+                                        hp1 -= 15
+                                    elif rand == 2:
+                                        hp1 -= 15
+                                    elif rand == 3:
+                                        hp1 -= 7
+                                    elif rand == 4:
+                                        hp1 -= 20
+                                    elif rand == 5:
+                                        hp1 -= 25
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 10:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Roch, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 13
+                                    elif rand == 1:
+                                        hp1 -= 28
+                                    elif rand == 2:
+                                        hp1 -= 30
+                                    elif rand == 3:
+                                        hp1 -= 17
+                                    elif rand == 4:
+                                        hp1 -= 10
+                                    elif rand == 5:
+                                        hp1 -= 7
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 11:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Chack, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 15
+                                    elif rand == 1:
+                                        hp1 -= 28
+                                    elif rand == 2:
+                                        hp1 -= 27
+                                    elif rand == 3:
+                                        hp1 -= 25
+                                    elif rand == 4:
+                                        hp1 -= 29
+                                    elif rand == 5:
+                                        hp1 -= 30
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 12:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Vin, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 20
+                                    elif rand == 1:
+                                        hp1 -= 25
+                                    elif rand == 2:
+                                        hp1 -= 30
+                                    elif rand == 3:
+                                        hp1 -= 25
+                                    elif rand == 4:
+                                        hp1 -= 20
+                                    elif rand == 5:
+                                        hp1 -= 15
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 13:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Merio, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 10
+                                    elif rand == 1:
+                                        hp1 -= 10
+                                    elif rand == 2:
+                                        hp1 -= 30
+                                    elif rand == 3:
+                                        hp1 -= 30
+                                    elif rand == 4:
+                                        hp1 -= 15
+                                    elif rand == 5:
+                                        hp1 -= 15
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 14:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Steve_Seagal, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 10
+                                    elif rand == 1:
+                                        hp1 -= 15
+                                    elif rand == 2:
+                                        hp1 -= 12
+                                    elif rand == 3:
+                                        hp1 -= 11
+                                    elif rand == 4:
+                                        hp1 -= 25
+                                    elif rand == 5:
+                                        hp1 -= 20
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 15:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Jet, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 10
+                                    elif rand == 1:
+                                        hp1 -= 30
+                                    elif rand == 2:
+                                        hp1 -= 12
+                                    elif rand == 3:
+                                        hp1 -= 25
+                                    elif rand == 4:
+                                        hp1 -= 14
+                                    elif rand == 5:
+                                        hp1 -= 23
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 16:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Wesley, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 10
+                                    elif rand == 1:
+                                        hp1 -= 12
+                                    elif rand == 2:
+                                        hp1 -= 14
+                                    elif rand == 3:
+                                        hp1 -= 16
+                                    elif rand == 4:
+                                        hp1 -= 14
+                                    elif rand == 5:
+                                        hp1 -= 12
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 17:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Terry, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 10
+                                    elif rand == 1:
+                                        hp1 -= 15
+                                    elif rand == 2:
+                                        hp1 -= 25
+                                    elif rand == 3:
+                                        hp1 -= 20
+                                    elif rand == 4:
+                                        hp1 -= 15
+                                    elif rand == 5:
+                                        hp1 -= 10
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
                             turn = 'playerTwo'
                         elif bDirection == 'down':
                             for i in list[:grand]:
@@ -722,6 +5772,298 @@ def gameboard_3():
                                     break
                                 else:
                                     bPy += 50
+                            if (bPx == fightx1 and bPy == fighty1) or (bPx == fightx3 and bPy == fighty2) or (bPx == fightx1 and bPy == fighty3) or (bPx == fightx2 and bPy == fighty2):
+                                super_list = ["John Cena", "Jason Statham", "Bruce Hee", "Jackie Chen", "Agua man", "Pariz Hilten", "Dexter", "Steve Urkel", "Ernold Schwarzenegger", "James Bend", "The Roch", "Chack Norris", "Vin Dieser", "Super Merio", "Steve Seagal", "Jet Ri", "Wesley Sniper", "Terry Crews"]
+                                super_random = random.randint(0, 17)
+                                print(super_list[super_random])
+                                if super_random == 0:
+                                    DISPLAYSURF.blit(pygame.transform.scale(John, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 10
+                                    elif rand == 1:
+                                        hp1 -= 6
+                                    elif rand == 2:
+                                        hp1 -= 25
+                                    elif rand == 3:
+                                        hp1 -= 7
+                                    elif rand == 4:
+                                        hp1 -= 8
+                                    elif rand == 5:
+                                        hp1 -= 11
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 1:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Jason, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 15
+                                    elif rand == 1:
+                                        hp1 -= 17
+                                    elif rand == 2:
+                                        hp1 -= 19
+                                    elif rand == 3:
+                                        hp1 -= 21
+                                    elif rand == 4:
+                                        hp1 -= 23
+                                    elif rand == 5:
+                                        hp1 -= 26
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 2:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Bruce, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 20
+                                    elif rand == 1:
+                                        hp1 -= 15
+                                    elif rand == 2:
+                                        hp1 -= 5
+                                    elif rand == 3:
+                                        hp1 -= 7
+                                    elif rand == 4:
+                                        hp1 -= 8
+                                    elif rand == 5:
+                                        hp1 -= 26
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 3:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Jackie, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 12
+                                    elif rand == 1:
+                                        hp1 -= 10
+                                    elif rand == 2:
+                                        hp1 -= 15
+                                    elif rand == 3:
+                                        hp1 -= 9
+                                    elif rand == 4:
+                                        hp1 -= 10
+                                    elif rand == 5:
+                                        hp1 -= 25
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 4:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Agua, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 12
+                                    elif rand == 1:
+                                        hp1 -= 15
+                                    elif rand == 2:
+                                        hp1 -= 9
+                                    elif rand == 3:
+                                        hp1 -= 7
+                                    elif rand == 4:
+                                        hp1 -= 7
+                                    elif rand == 5:
+                                        hp1 -= 13
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 5:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Pariz, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 12
+                                    elif rand == 1:
+                                        hp1 -= 8
+                                    elif rand == 2:
+                                        hp1 -= 7
+                                    elif rand == 3:
+                                        hp1 -= 15
+                                    elif rand == 4:
+                                        hp1 -= 13
+                                    elif rand == 5:
+                                        hp1 -= 9
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 6:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Dexter, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 9
+                                    elif rand == 1:
+                                        hp1 -= 8
+                                    elif rand == 2:
+                                        hp1 -= 7
+                                    elif rand == 3:
+                                        hp1 -= 15
+                                    elif rand == 4:
+                                        hp1 -= 13
+                                    elif rand == 5:
+                                        hp1 -= 9
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 7:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Steve_Urkel, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 10
+                                    elif rand == 1:
+                                        hp1 -= 5
+                                    elif rand == 2:
+                                        hp1 -= 12
+                                    elif rand == 3:
+                                        hp1 -= 11
+                                    elif rand == 4:
+                                        hp1 -= 15
+                                    elif rand == 5:
+                                        hp1 -= 8
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 8:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Ernold, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 25
+                                    elif rand == 1:
+                                        hp1 -= 25
+                                    elif rand == 2:
+                                        hp1 -= 20
+                                    elif rand == 3:
+                                        hp1 -= 15
+                                    elif rand == 4:
+                                        hp1 -= 15
+                                    elif rand == 5:
+                                        hp1 -= 10
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 9:
+                                    DISPLAYSURF.blit(pygame.transform.scale(James, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 25
+                                    elif rand == 1:
+                                        hp1 -= 15
+                                    elif rand == 2:
+                                        hp1 -= 15
+                                    elif rand == 3:
+                                        hp1 -= 7
+                                    elif rand == 4:
+                                        hp1 -= 20
+                                    elif rand == 5:
+                                        hp1 -= 25
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 10:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Roch, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 13
+                                    elif rand == 1:
+                                        hp1 -= 28
+                                    elif rand == 2:
+                                        hp1 -= 30
+                                    elif rand == 3:
+                                        hp1 -= 17
+                                    elif rand == 4:
+                                        hp1 -= 10
+                                    elif rand == 5:
+                                        hp1 -= 7
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 11:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Chack, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 15
+                                    elif rand == 1:
+                                        hp1 -= 28
+                                    elif rand == 2:
+                                        hp1 -= 27
+                                    elif rand == 3:
+                                        hp1 -= 25
+                                    elif rand == 4:
+                                        hp1 -= 29
+                                    elif rand == 5:
+                                        hp1 -= 30
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 12:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Vin, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 20
+                                    elif rand == 1:
+                                        hp1 -= 25
+                                    elif rand == 2:
+                                        hp1 -= 30
+                                    elif rand == 3:
+                                        hp1 -= 25
+                                    elif rand == 4:
+                                        hp1 -= 20
+                                    elif rand == 5:
+                                        hp1 -= 15
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 13:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Merio, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 10
+                                    elif rand == 1:
+                                        hp1 -= 10
+                                    elif rand == 2:
+                                        hp1 -= 30
+                                    elif rand == 3:
+                                        hp1 -= 30
+                                    elif rand == 4:
+                                        hp1 -= 15
+                                    elif rand == 5:
+                                        hp1 -= 15
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 14:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Steve_Seagal, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 10
+                                    elif rand == 1:
+                                        hp1 -= 15
+                                    elif rand == 2:
+                                        hp1 -= 12
+                                    elif rand == 3:
+                                        hp1 -= 11
+                                    elif rand == 4:
+                                        hp1 -= 25
+                                    elif rand == 5:
+                                        hp1 -= 20
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 15:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Jet, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 10
+                                    elif rand == 1:
+                                        hp1 -= 30
+                                    elif rand == 2:
+                                        hp1 -= 12
+                                    elif rand == 3:
+                                        hp1 -= 25
+                                    elif rand == 4:
+                                        hp1 -= 14
+                                    elif rand == 5:
+                                        hp1 -= 23
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 16:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Wesley, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 10
+                                    elif rand == 1:
+                                        hp1 -= 12
+                                    elif rand == 2:
+                                        hp1 -= 14
+                                    elif rand == 3:
+                                        hp1 -= 16
+                                    elif rand == 4:
+                                        hp1 -= 14
+                                    elif rand == 5:
+                                        hp1 -= 12
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 17:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Terry, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 10
+                                    elif rand == 1:
+                                        hp1 -= 15
+                                    elif rand == 2:
+                                        hp1 -= 25
+                                    elif rand == 3:
+                                        hp1 -= 20
+                                    elif rand == 4:
+                                        hp1 -= 15
+                                    elif rand == 5:
+                                        hp1 -= 10
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
                             turn = 'playerTwo'
                         elif bDirection == 'left':
                             for i in list[:grand]:
@@ -732,6 +6074,298 @@ def gameboard_3():
                                     break
                                 else:
                                     bPx -= 50
+                            if (bPx == fightx1 and bPy == fighty1) or (bPx == fightx3 and bPy == fighty2) or (bPx == fightx1 and bPy == fighty3) or (bPx == fightx2 and bPy == fighty2):
+                                super_list = ["John Cena", "Jason Statham", "Bruce Hee", "Jackie Chen", "Agua man", "Pariz Hilten", "Dexter", "Steve Urkel", "Ernold Schwarzenegger", "James Bend", "The Roch", "Chack Norris", "Vin Dieser", "Super Merio", "Steve Seagal", "Jet Ri", "Wesley Sniper", "Terry Crews"]
+                                super_random = random.randint(0, 17)
+                                print(super_list[super_random])
+                                if super_random == 0:
+                                    DISPLAYSURF.blit(pygame.transform.scale(John, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 10
+                                    elif rand == 1:
+                                        hp1 -= 6
+                                    elif rand == 2:
+                                        hp1 -= 25
+                                    elif rand == 3:
+                                        hp1 -= 7
+                                    elif rand == 4:
+                                        hp1 -= 8
+                                    elif rand == 5:
+                                        hp1 -= 11
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 1:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Jason, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 15
+                                    elif rand == 1:
+                                        hp1 -= 17
+                                    elif rand == 2:
+                                        hp1 -= 19
+                                    elif rand == 3:
+                                        hp1 -= 21
+                                    elif rand == 4:
+                                        hp1 -= 23
+                                    elif rand == 5:
+                                        hp1 -= 26
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 2:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Bruce, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 20
+                                    elif rand == 1:
+                                        hp1 -= 15
+                                    elif rand == 2:
+                                        hp1 -= 5
+                                    elif rand == 3:
+                                        hp1 -= 7
+                                    elif rand == 4:
+                                        hp1 -= 8
+                                    elif rand == 5:
+                                        hp1 -= 26
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 3:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Jackie, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 12
+                                    elif rand == 1:
+                                        hp1 -= 10
+                                    elif rand == 2:
+                                        hp1 -= 15
+                                    elif rand == 3:
+                                        hp1 -= 9
+                                    elif rand == 4:
+                                        hp1 -= 10
+                                    elif rand == 5:
+                                        hp1 -= 25
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 4:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Agua, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 12
+                                    elif rand == 1:
+                                        hp1 -= 15
+                                    elif rand == 2:
+                                        hp1 -= 9
+                                    elif rand == 3:
+                                        hp1 -= 7
+                                    elif rand == 4:
+                                        hp1 -= 7
+                                    elif rand == 5:
+                                        hp1 -= 13
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 5:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Pariz, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 12
+                                    elif rand == 1:
+                                        hp1 -= 8
+                                    elif rand == 2:
+                                        hp1 -= 7
+                                    elif rand == 3:
+                                        hp1 -= 15
+                                    elif rand == 4:
+                                        hp1 -= 13
+                                    elif rand == 5:
+                                        hp1 -= 9
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 6:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Dexter, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 9
+                                    elif rand == 1:
+                                        hp1 -= 8
+                                    elif rand == 2:
+                                        hp1 -= 7
+                                    elif rand == 3:
+                                        hp1 -= 15
+                                    elif rand == 4:
+                                        hp1 -= 13
+                                    elif rand == 5:
+                                        hp1 -= 9
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 7:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Steve_Urkel, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 10
+                                    elif rand == 1:
+                                        hp1 -= 5
+                                    elif rand == 2:
+                                        hp1 -= 12
+                                    elif rand == 3:
+                                        hp1 -= 11
+                                    elif rand == 4:
+                                        hp1 -= 15
+                                    elif rand == 5:
+                                        hp1 -= 8
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 8:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Ernold, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 25
+                                    elif rand == 1:
+                                        hp1 -= 25
+                                    elif rand == 2:
+                                        hp1 -= 20
+                                    elif rand == 3:
+                                        hp1 -= 15
+                                    elif rand == 4:
+                                        hp1 -= 15
+                                    elif rand == 5:
+                                        hp1 -= 10
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 9:
+                                    DISPLAYSURF.blit(pygame.transform.scale(James, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 25
+                                    elif rand == 1:
+                                        hp1 -= 15
+                                    elif rand == 2:
+                                        hp1 -= 15
+                                    elif rand == 3:
+                                        hp1 -= 7
+                                    elif rand == 4:
+                                        hp1 -= 20
+                                    elif rand == 5:
+                                        hp1 -= 25
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 10:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Roch, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 13
+                                    elif rand == 1:
+                                        hp1 -= 28
+                                    elif rand == 2:
+                                        hp1 -= 30
+                                    elif rand == 3:
+                                        hp1 -= 17
+                                    elif rand == 4:
+                                        hp1 -= 10
+                                    elif rand == 5:
+                                        hp1 -= 7
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 11:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Chack, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 15
+                                    elif rand == 1:
+                                        hp1 -= 28
+                                    elif rand == 2:
+                                        hp1 -= 27
+                                    elif rand == 3:
+                                        hp1 -= 25
+                                    elif rand == 4:
+                                        hp1 -= 29
+                                    elif rand == 5:
+                                        hp1 -= 30
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 12:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Vin, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 20
+                                    elif rand == 1:
+                                        hp1 -= 25
+                                    elif rand == 2:
+                                        hp1 -= 30
+                                    elif rand == 3:
+                                        hp1 -= 25
+                                    elif rand == 4:
+                                        hp1 -= 20
+                                    elif rand == 5:
+                                        hp1 -= 15
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 13:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Merio, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 10
+                                    elif rand == 1:
+                                        hp1 -= 10
+                                    elif rand == 2:
+                                        hp1 -= 30
+                                    elif rand == 3:
+                                        hp1 -= 30
+                                    elif rand == 4:
+                                        hp1 -= 15
+                                    elif rand == 5:
+                                        hp1 -= 15
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 14:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Steve_Seagal, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 10
+                                    elif rand == 1:
+                                        hp1 -= 15
+                                    elif rand == 2:
+                                        hp1 -= 12
+                                    elif rand == 3:
+                                        hp1 -= 11
+                                    elif rand == 4:
+                                        hp1 -= 25
+                                    elif rand == 5:
+                                        hp1 -= 20
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 15:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Jet, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 10
+                                    elif rand == 1:
+                                        hp1 -= 30
+                                    elif rand == 2:
+                                        hp1 -= 12
+                                    elif rand == 3:
+                                        hp1 -= 25
+                                    elif rand == 4:
+                                        hp1 -= 14
+                                    elif rand == 5:
+                                        hp1 -= 23
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 16:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Wesley, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 10
+                                    elif rand == 1:
+                                        hp1 -= 12
+                                    elif rand == 2:
+                                        hp1 -= 14
+                                    elif rand == 3:
+                                        hp1 -= 16
+                                    elif rand == 4:
+                                        hp1 -= 14
+                                    elif rand == 5:
+                                        hp1 -= 12
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 17:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Terry, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 10
+                                    elif rand == 1:
+                                        hp1 -= 15
+                                    elif rand == 2:
+                                        hp1 -= 25
+                                    elif rand == 3:
+                                        hp1 -= 20
+                                    elif rand == 4:
+                                        hp1 -= 15
+                                    elif rand == 5:
+                                        hp1 -= 10
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
                             turn = 'playerTwo'
                         elif bDirection == 'up':
                             for i in list[:grand]:
@@ -742,6 +6376,299 @@ def gameboard_3():
                                     break
                                 else:
                                     bPy -= 50
+                            if (bPx == fightx1 and bPy == fighty1) or (bPx == fightx3 and bPy == fighty2) or (bPx == fightx1 and bPy == fighty3) or (bPx == fightx2 and bPy == fighty2):
+                                super_list = ["John Cena", "Jason Statham", "Bruce Hee", "Jackie Chen", "Agua man", "Pariz Hilten", "Dexter", "Steve Urkel", "Ernold Schwarzenegger", "James Bend", "The Roch", "Chack Norris", "Vin Dieser", "Super Merio", "Steve Seagal", "Jet Ri", "Wesley Sniper", "Terry Crews"]
+                                super_random = random.randint(0, 17)
+                                print(super_list[super_random])
+                                if super_random == 0:
+                                    DISPLAYSURF.blit(pygame.transform.scale(John, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 10
+                                    elif rand == 1:
+                                        hp1 -= 6
+                                    elif rand == 2:
+                                        hp1 -= 25
+                                    elif rand == 3:
+                                        hp1 -= 7
+                                    elif rand == 4:
+                                        hp1 -= 8
+                                    elif rand == 5:
+                                        hp1 -= 11
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 1:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Jason, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 15
+                                    elif rand == 1:
+                                        hp1 -= 17
+                                    elif rand == 2:
+                                        hp1 -= 19
+                                    elif rand == 3:
+                                        hp1 -= 21
+                                    elif rand == 4:
+                                        hp1 -= 23
+                                    elif rand == 5:
+                                        hp1 -= 26
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 2:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Bruce, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 20
+                                    elif rand == 1:
+                                        hp1 -= 15
+                                    elif rand == 2:
+                                        hp1 -= 5
+                                    elif rand == 3:
+                                        hp1 -= 7
+                                    elif rand == 4:
+                                        hp1 -= 8
+                                    elif rand == 5:
+                                        hp1 -= 26
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 3:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Jackie, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 12
+                                    elif rand == 1:
+                                        hp1 -= 10
+                                    elif rand == 2:
+                                        hp1 -= 15
+                                    elif rand == 3:
+                                        hp1 -= 9
+                                    elif rand == 4:
+                                        hp1 -= 10
+                                    elif rand == 5:
+                                        hp1 -= 25
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 4:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Agua, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 12
+                                    elif rand == 1:
+                                        hp1 -= 15
+                                    elif rand == 2:
+                                        hp1 -= 9
+                                    elif rand == 3:
+                                        hp1 -= 7
+                                    elif rand == 4:
+                                        hp1 -= 7
+                                    elif rand == 5:
+                                        hp1 -= 13
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 5:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Pariz, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 12
+                                    elif rand == 1:
+                                        hp1 -= 8
+                                    elif rand == 2:
+                                        hp1 -= 7
+                                    elif rand == 3:
+                                        hp1 -= 15
+                                    elif rand == 4:
+                                        hp1 -= 13
+                                    elif rand == 5:
+                                        hp1 -= 9
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 6:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Dexter, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 9
+                                    elif rand == 1:
+                                        hp1 -= 8
+                                    elif rand == 2:
+                                        hp1 -= 7
+                                    elif rand == 3:
+                                        hp1 -= 15
+                                    elif rand == 4:
+                                        hp1 -= 13
+                                    elif rand == 5:
+                                        hp1 -= 9
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 7:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Steve_Urkel, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 10
+                                    elif rand == 1:
+                                        hp1 -= 5
+                                    elif rand == 2:
+                                        hp1 -= 12
+                                    elif rand == 3:
+                                        hp1 -= 11
+                                    elif rand == 4:
+                                        hp1 -= 15
+                                    elif rand == 5:
+                                        hp1 -= 8
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 8:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Ernold, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 25
+                                    elif rand == 1:
+                                        hp1 -= 25
+                                    elif rand == 2:
+                                        hp1 -= 20
+                                    elif rand == 3:
+                                        hp1 -= 15
+                                    elif rand == 4:
+                                        hp1 -= 15
+                                    elif rand == 5:
+                                        hp1 -= 10
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 9:
+                                    DISPLAYSURF.blit(pygame.transform.scale(James, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 25
+                                    elif rand == 1:
+                                        hp1 -= 15
+                                    elif rand == 2:
+                                        hp1 -= 15
+                                    elif rand == 3:
+                                        hp1 -= 7
+                                    elif rand == 4:
+                                        hp1 -= 20
+                                    elif rand == 5:
+                                        hp1 -= 25
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 10:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Roch, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 13
+                                    elif rand == 1:
+                                        hp1 -= 28
+                                    elif rand == 2:
+                                        hp1 -= 30
+                                    elif rand == 3:
+                                        hp1 -= 17
+                                    elif rand == 4:
+                                        hp1 -= 10
+                                    elif rand == 5:
+                                        hp1 -= 7
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 11:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Chack, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 15
+                                    elif rand == 1:
+                                        hp1 -= 28
+                                    elif rand == 2:
+                                        hp1 -= 27
+                                    elif rand == 3:
+                                        hp1 -= 25
+                                    elif rand == 4:
+                                        hp1 -= 29
+                                    elif rand == 5:
+                                        hp1 -= 30
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 12:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Vin, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 20
+                                    elif rand == 1:
+                                        hp1 -= 25
+                                    elif rand == 2:
+                                        hp1 -= 30
+                                    elif rand == 3:
+                                        hp1 -= 25
+                                    elif rand == 4:
+                                        hp1 -= 20
+                                    elif rand == 5:
+                                        hp1 -= 15
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 13:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Merio, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 10
+                                    elif rand == 1:
+                                        hp1 -= 10
+                                    elif rand == 2:
+                                        hp1 -= 30
+                                    elif rand == 3:
+                                        hp1 -= 30
+                                    elif rand == 4:
+                                        hp1 -= 15
+                                    elif rand == 5:
+                                        hp1 -= 15
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 14:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Steve_Seagal, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 10
+                                    elif rand == 1:
+                                        hp1 -= 15
+                                    elif rand == 2:
+                                        hp1 -= 12
+                                    elif rand == 3:
+                                        hp1 -= 11
+                                    elif rand == 4:
+                                        hp1 -= 25
+                                    elif rand == 5:
+                                        hp1 -= 20
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 15:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Jet, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 10
+                                    elif rand == 1:
+                                        hp1 -= 30
+                                    elif rand == 2:
+                                        hp1 -= 12
+                                    elif rand == 3:
+                                        hp1 -= 25
+                                    elif rand == 4:
+                                        hp1 -= 14
+                                    elif rand == 5:
+                                        hp1 -= 23
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 16:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Wesley, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 10
+                                    elif rand == 1:
+                                        hp1 -= 12
+                                    elif rand == 2:
+                                        hp1 -= 14
+                                    elif rand == 3:
+                                        hp1 -= 16
+                                    elif rand == 4:
+                                        hp1 -= 14
+                                    elif rand == 5:
+                                        hp1 -= 12
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 17:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Terry, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 10
+                                    elif rand == 1:
+                                        hp1 -= 15
+                                    elif rand == 2:
+                                        hp1 -= 25
+                                    elif rand == 3:
+                                        hp1 -= 20
+                                    elif rand == 4:
+                                        hp1 -= 15
+                                    elif rand == 5:
+                                        hp1 -= 10
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                            turn = 'playerTwo'
                         if 100 <= bPy <= 200 and 900 <= bPx <= 1000:
                             Hoekfight(player1.hp, player2.hp)
                         elif 900 <= bPx <= 1000 and 550 <= bPy <= 650:
@@ -757,8 +6684,11 @@ def gameboard_3():
 
 
                     elif turn == 'playerTwo':
-                        DISPLAYSURF.blit(pygame.transform.scale(groenscore, (350, 450)), (0, 300))
-                        DISPLAYSURF.blit(pygame.transform.scale(hudpion_groen, (100, 100)), (1000, 0))
+                        DISPLAYSURF.blit(pygame.transform.scale(shade, (350, 450)), (0, 300))
+                        DISPLAYSURF.blit(pygame.transform.scale(shade, (100, 100)), (200, 80))
+                        DISPLAYSURF.blit(pygame.transform.scale(hudpion_groen, (100, 100)), (200, 160))
+                        if hp3 <= 0:
+                            DISPLAYSURF.blit(pygame.transform.scale(shade, (100, 100)), (200, 160))
                         if rDirection == 'right':
                             for i in list[:grand]:
                                 if rPx == 950:
@@ -768,6 +6698,298 @@ def gameboard_3():
                                     break
                                 else:
                                     rPx += 50
+                            if (rPx == fightx1 and rPy == fighty1) or (rPx == fightx3 and rPy == fighty2) or (rPx == fightx1 and rPy == fighty3) or (rPx == fightx2 and rPy == fighty2):
+                                super_list = ["John Cena", "Jason Statham", "Bruce Hee", "Jackie Chen", "Agua man", "Pariz Hilten", "Dexter", " Steve Urkel", "Ernold Schwarzenegger", "James Bend", "The Roch", "Chack Norris", "Vin Dieser", "Super Merio", "Steve Seagal", "Jet Ri", "Wesley Sniper", "Terry Crews"]
+                                super_random = random.randint(0, 17)
+                                print(super_list[super_random])
+                                if super_random == 0:
+                                    DISPLAYSURF.blit(pygame.transform.scale(John, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 10
+                                    elif rand == 1:
+                                        hp2 -= 6
+                                    elif rand == 2:
+                                        hp2 -= 25
+                                    elif rand == 3:
+                                        hp2 -= 7
+                                    elif rand == 4:
+                                        hp2 -= 8
+                                    elif rand == 5:
+                                        hp2 -= 11
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 1:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Jason, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 15
+                                    elif rand == 1:
+                                        hp2 -= 17
+                                    elif rand == 2:
+                                        hp2 -= 19
+                                    elif rand == 3:
+                                        hp2 -= 21
+                                    elif rand == 4:
+                                        hp2 -= 23
+                                    elif rand == 5:
+                                        hp2 -= 26
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 2:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Bruce, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 20
+                                    elif rand == 1:
+                                        hp2 -= 15
+                                    elif rand == 2:
+                                        hp2 -= 5
+                                    elif rand == 3:
+                                        hp2 -= 7
+                                    elif rand == 4:
+                                        hp2 -= 8
+                                    elif rand == 5:
+                                        hp2 -= 26
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 3:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Jackie, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 12
+                                    elif rand == 1:
+                                        hp2 -= 10
+                                    elif rand == 2:
+                                        hp2 -= 15
+                                    elif rand == 3:
+                                        hp2 -= 9
+                                    elif rand == 4:
+                                        hp2 -= 10
+                                    elif rand == 5:
+                                        hp2 -= 25
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 4:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Agua, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 12
+                                    elif rand == 1:
+                                        hp2 -= 15
+                                    elif rand == 2:
+                                        hp2 -= 9
+                                    elif rand == 3:
+                                        hp2 -= 7
+                                    elif rand == 4:
+                                        hp2 -= 7
+                                    elif rand == 5:
+                                        hp2 -= 13
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 5:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Pariz, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 12
+                                    elif rand == 1:
+                                        hp2 -= 8
+                                    elif rand == 2:
+                                        hp2 -= 7
+                                    elif rand == 3:
+                                        hp2 -= 15
+                                    elif rand == 4:
+                                        hp2 -= 13
+                                    elif rand == 5:
+                                        hp2 -= 9
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 6:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Dexter, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 9
+                                    elif rand == 1:
+                                        hp2 -= 8
+                                    elif rand == 2:
+                                        hp2 -= 7
+                                    elif rand == 3:
+                                        hp2 -= 15
+                                    elif rand == 4:
+                                        hp2 -= 13
+                                    elif rand == 5:
+                                        hp2 -= 9
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 7:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Steve_Urkel, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 10
+                                    elif rand == 1:
+                                        hp2 -= 5
+                                    elif rand == 2:
+                                        hp2 -= 12
+                                    elif rand == 3:
+                                        hp2 -= 11
+                                    elif rand == 4:
+                                        hp2 -= 15
+                                    elif rand == 5:
+                                        hp2 -= 8
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 8:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Ernold, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 25
+                                    elif rand == 1:
+                                        hp2 -= 25
+                                    elif rand == 2:
+                                        hp2 -= 20
+                                    elif rand == 3:
+                                        hp2 -= 15
+                                    elif rand == 4:
+                                        hp2 -= 15
+                                    elif rand == 5:
+                                        hp2 -= 10
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 9:
+                                    DISPLAYSURF.blit(pygame.transform.scale(James, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 25
+                                    elif rand == 1:
+                                        hp2 -= 15
+                                    elif rand == 2:
+                                        hp2 -= 15
+                                    elif rand == 3:
+                                        hp2 -= 7
+                                    elif rand == 4:
+                                        hp2 -= 20
+                                    elif rand == 5:
+                                        hp2 -= 25
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 10:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Roch, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 13
+                                    elif rand == 1:
+                                        hp2 -= 28
+                                    elif rand == 2:
+                                        hp2 -= 30
+                                    elif rand == 3:
+                                        hp2 -= 17
+                                    elif rand == 4:
+                                        hp2 -= 10
+                                    elif rand == 5:
+                                        hp2 -= 7
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 11:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Chack, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 15
+                                    elif rand == 1:
+                                        hp2 -= 28
+                                    elif rand == 2:
+                                        hp2 -= 27
+                                    elif rand == 3:
+                                        hp2 -= 25
+                                    elif rand == 4:
+                                        hp2 -= 29
+                                    elif rand == 5:
+                                        hp2 -= 30
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 12:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Vin, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 20
+                                    elif rand == 1:
+                                        hp2 -= 25
+                                    elif rand == 2:
+                                        hp2 -= 30
+                                    elif rand == 3:
+                                        hp2 -= 25
+                                    elif rand == 4:
+                                        hp2 -= 20
+                                    elif rand == 5:
+                                        hp2 -= 15
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 13:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Merio, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 10
+                                    elif rand == 1:
+                                        hp2 -= 10
+                                    elif rand == 2:
+                                        hp2 -= 30
+                                    elif rand == 3:
+                                        hp2 -= 30
+                                    elif rand == 4:
+                                        hp2 -= 15
+                                    elif rand == 5:
+                                        hp2 -= 15
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 14:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Steve_Seagal, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 10
+                                    elif rand == 1:
+                                        hp2 -= 15
+                                    elif rand == 2:
+                                        hp2 -= 12
+                                    elif rand == 3:
+                                        hp2 -= 11
+                                    elif rand == 4:
+                                        hp2 -= 25
+                                    elif rand == 5:
+                                        hp2 -= 20
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 15:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Jet, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 10
+                                    elif rand == 1:
+                                        hp2 -= 30
+                                    elif rand == 2:
+                                        hp2 -= 12
+                                    elif rand == 3:
+                                        hp2 -= 25
+                                    elif rand == 4:
+                                        hp2 -= 14
+                                    elif rand == 5:
+                                        hp2 -= 23
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 16:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Wesley, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 10
+                                    elif rand == 1:
+                                        hp2 -= 12
+                                    elif rand == 2:
+                                        hp2 -= 14
+                                    elif rand == 3:
+                                        hp2 -= 16
+                                    elif rand == 4:
+                                        hp2 -= 14
+                                    elif rand == 5:
+                                        hp2 -= 12
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 17:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Terry, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 10
+                                    elif rand == 1:
+                                        hp2 -= 15
+                                    elif rand == 2:
+                                        hp2 -= 25
+                                    elif rand == 3:
+                                        hp2 -= 20
+                                    elif rand == 4:
+                                        hp2 -= 15
+                                    elif rand == 5:
+                                        hp2 -= 10
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
                             turn = 'playerThree'
                         elif rDirection == 'down':
                             for i in list[:grand]:
@@ -778,6 +7000,298 @@ def gameboard_3():
                                     break
                                 else:
                                     rPy += 50
+                            if (rPx == fightx1 and rPy == fighty1) or (rPx == fightx3 and rPy == fighty2) or (rPx == fightx1 and rPy == fighty3) or (rPx == fightx2 and rPy == fighty2):
+                                super_list = ["John Cena", "Jason Statham", "Bruce Hee", "Jackie Chen", "Agua man", "Pariz Hilten", "Dexter", "Steve Urkel", "Ernold Schwarzenegger", "James Bend", "The Roch", "Chack Norris", "Vin Dieser", "Super Merio", "Steve Seagal", "Jet Ri", "Wesley Sniper", "Terry Crews"]
+                                super_random = random.randint(0, 17)
+                                print(super_list[super_random])
+                                if super_random == 0:
+                                    DISPLAYSURF.blit(pygame.transform.scale(John, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 10
+                                    elif rand == 1:
+                                        hp2 -= 6
+                                    elif rand == 2:
+                                        hp2 -= 25
+                                    elif rand == 3:
+                                        hp2 -= 7
+                                    elif rand == 4:
+                                        hp2 -= 8
+                                    elif rand == 5:
+                                        hp2 -= 11
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 1:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Jason, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 15
+                                    elif rand == 1:
+                                        hp2 -= 17
+                                    elif rand == 2:
+                                        hp2 -= 19
+                                    elif rand == 3:
+                                        hp2 -= 21
+                                    elif rand == 4:
+                                        hp2 -= 23
+                                    elif rand == 5:
+                                        hp2 -= 26
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 2:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Bruce, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 20
+                                    elif rand == 1:
+                                        hp2 -= 15
+                                    elif rand == 2:
+                                        hp2 -= 5
+                                    elif rand == 3:
+                                        hp2 -= 7
+                                    elif rand == 4:
+                                        hp2 -= 8
+                                    elif rand == 5:
+                                        hp2 -= 26
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 3:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Jackie, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 12
+                                    elif rand == 1:
+                                        hp2 -= 10
+                                    elif rand == 2:
+                                        hp2 -= 15
+                                    elif rand == 3:
+                                        hp2 -= 9
+                                    elif rand == 4:
+                                        hp2 -= 10
+                                    elif rand == 5:
+                                        hp2 -= 25
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 4:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Agua, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 12
+                                    elif rand == 1:
+                                        hp2 -= 15
+                                    elif rand == 2:
+                                        hp2 -= 9
+                                    elif rand == 3:
+                                        hp2 -= 7
+                                    elif rand == 4:
+                                        hp2 -= 7
+                                    elif rand == 5:
+                                        hp2 -= 13
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 5:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Pariz, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 12
+                                    elif rand == 1:
+                                        hp2 -= 8
+                                    elif rand == 2:
+                                        hp2 -= 7
+                                    elif rand == 3:
+                                        hp2 -= 15
+                                    elif rand == 4:
+                                        hp2 -= 13
+                                    elif rand == 5:
+                                        hp2 -= 9
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 6:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Dexter, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 9
+                                    elif rand == 1:
+                                        hp2 -= 8
+                                    elif rand == 2:
+                                        hp2 -= 7
+                                    elif rand == 3:
+                                        hp2 -= 15
+                                    elif rand == 4:
+                                        hp2 -= 13
+                                    elif rand == 5:
+                                        hp2 -= 9
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 7:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Steve_Urkel, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 10
+                                    elif rand == 1:
+                                        hp2 -= 5
+                                    elif rand == 2:
+                                        hp2 -= 12
+                                    elif rand == 3:
+                                        hp2 -= 11
+                                    elif rand == 4:
+                                        hp2 -= 15
+                                    elif rand == 5:
+                                        hp2 -= 8
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 8:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Ernold, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 25
+                                    elif rand == 1:
+                                        hp2 -= 25
+                                    elif rand == 2:
+                                        hp2 -= 20
+                                    elif rand == 3:
+                                        hp2 -= 15
+                                    elif rand == 4:
+                                        hp2 -= 15
+                                    elif rand == 5:
+                                        hp2 -= 10
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 9:
+                                    DISPLAYSURF.blit(pygame.transform.scale(James, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 25
+                                    elif rand == 1:
+                                        hp2 -= 15
+                                    elif rand == 2:
+                                        hp2 -= 15
+                                    elif rand == 3:
+                                        hp2 -= 7
+                                    elif rand == 4:
+                                        hp2 -= 20
+                                    elif rand == 5:
+                                        hp2 -= 25
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 10:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Roch, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 13
+                                    elif rand == 1:
+                                        hp2 -= 28
+                                    elif rand == 2:
+                                        hp2 -= 30
+                                    elif rand == 3:
+                                        hp2 -= 17
+                                    elif rand == 4:
+                                        hp2 -= 10
+                                    elif rand == 5:
+                                        hp2 -= 7
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 11:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Chack, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 15
+                                    elif rand == 1:
+                                        hp2 -= 28
+                                    elif rand == 2:
+                                        hp2 -= 27
+                                    elif rand == 3:
+                                        hp2 -= 25
+                                    elif rand == 4:
+                                        hp2 -= 29
+                                    elif rand == 5:
+                                        hp2 -= 30
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 12:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Vin, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 20
+                                    elif rand == 1:
+                                        hp2 -= 25
+                                    elif rand == 2:
+                                        hp2 -= 30
+                                    elif rand == 3:
+                                        hp2 -= 25
+                                    elif rand == 4:
+                                        hp2 -= 20
+                                    elif rand == 5:
+                                        hp2 -= 15
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 13:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Merio, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 10
+                                    elif rand == 1:
+                                        hp2 -= 10
+                                    elif rand == 2:
+                                        hp2 -= 30
+                                    elif rand == 3:
+                                        hp2 -= 30
+                                    elif rand == 4:
+                                        hp2 -= 15
+                                    elif rand == 5:
+                                        hp2 -= 15
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 14:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Steve_Seagal, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 10
+                                    elif rand == 1:
+                                        hp2 -= 15
+                                    elif rand == 2:
+                                        hp2 -= 12
+                                    elif rand == 3:
+                                        hp2 -= 11
+                                    elif rand == 4:
+                                        hp2 -= 25
+                                    elif rand == 5:
+                                        hp2 -= 20
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 15:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Jet, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 10
+                                    elif rand == 1:
+                                        hp2 -= 30
+                                    elif rand == 2:
+                                        hp2 -= 12
+                                    elif rand == 3:
+                                        hp2 -= 25
+                                    elif rand == 4:
+                                        hp2 -= 14
+                                    elif rand == 5:
+                                        hp2 -= 23
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 16:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Wesley, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 10
+                                    elif rand == 1:
+                                        hp2 -= 12
+                                    elif rand == 2:
+                                        hp2 -= 14
+                                    elif rand == 3:
+                                        hp2 -= 16
+                                    elif rand == 4:
+                                        hp2 -= 14
+                                    elif rand == 5:
+                                        hp2 -= 12
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 17:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Terry, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 10
+                                    elif rand == 1:
+                                        hp2 -= 15
+                                    elif rand == 2:
+                                        hp2 -= 25
+                                    elif rand == 3:
+                                        hp2 -= 20
+                                    elif rand == 4:
+                                        hp2 -= 15
+                                    elif rand == 5:
+                                        hp2 -= 10
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
                             turn = 'playerThree'
                         elif rDirection == 'left':
                             for i in list[:grand]:
@@ -788,6 +7302,298 @@ def gameboard_3():
                                     break
                                 else:
                                     rPx -= 50
+                            if (rPx == fightx1 and rPy == fighty1) or (rPx == fightx3 and rPy == fighty2) or (rPx == fightx1 and rPy == fighty3) or (rPx == fightx2 and rPy == fighty2):
+                                super_list = ["John Cena", "Jason Statham", "Bruce Hee", "Jackie Chen", "Agua man", "Pariz Hilten", "Dexter", "Steve Urkel", "Ernold Schwarzenegger", "James Bend", "The Roch", "Chack Norris", "Vin Dieser", "Super Merio", "Steve Seagal", "Jet Ri", "Wesley Sniper", "Terry Crews"]
+                                super_random = random.randint(0, 17)
+                                print(super_list[super_random])
+                                if super_random == 0:
+                                    DISPLAYSURF.blit(pygame.transform.scale(John, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 10
+                                    elif rand == 1:
+                                        hp2 -= 6
+                                    elif rand == 2:
+                                        hp2 -= 25
+                                    elif rand == 3:
+                                        hp2 -= 7
+                                    elif rand == 4:
+                                        hp2 -= 8
+                                    elif rand == 5:
+                                        hp2 -= 11
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 1:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Jason, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 15
+                                    elif rand == 1:
+                                        hp2 -= 17
+                                    elif rand == 2:
+                                        hp2 -= 19
+                                    elif rand == 3:
+                                        hp2 -= 21
+                                    elif rand == 4:
+                                        hp2 -= 23
+                                    elif rand == 5:
+                                        hp2 -= 26
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 2:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Bruce, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 20
+                                    elif rand == 1:
+                                        hp2 -= 15
+                                    elif rand == 2:
+                                        hp2 -= 5
+                                    elif rand == 3:
+                                        hp2 -= 7
+                                    elif rand == 4:
+                                        hp2 -= 8
+                                    elif rand == 5:
+                                        hp2 -= 26
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 3:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Jackie, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 12
+                                    elif rand == 1:
+                                        hp2 -= 10
+                                    elif rand == 2:
+                                        hp2 -= 15
+                                    elif rand == 3:
+                                        hp2 -= 9
+                                    elif rand == 4:
+                                        hp2 -= 10
+                                    elif rand == 5:
+                                        hp2 -= 25
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 4:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Agua, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 12
+                                    elif rand == 1:
+                                        hp2 -= 15
+                                    elif rand == 2:
+                                        hp2 -= 9
+                                    elif rand == 3:
+                                        hp2 -= 7
+                                    elif rand == 4:
+                                        hp2 -= 7
+                                    elif rand == 5:
+                                        hp2 -= 13
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 5:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Pariz, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 12
+                                    elif rand == 1:
+                                        hp2 -= 8
+                                    elif rand == 2:
+                                        hp2 -= 7
+                                    elif rand == 3:
+                                        hp2 -= 15
+                                    elif rand == 4:
+                                        hp2 -= 13
+                                    elif rand == 5:
+                                        hp2 -= 9
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 6:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Dexter, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 9
+                                    elif rand == 1:
+                                        hp2 -= 8
+                                    elif rand == 2:
+                                        hp2 -= 7
+                                    elif rand == 3:
+                                        hp2 -= 15
+                                    elif rand == 4:
+                                        hp2 -= 13
+                                    elif rand == 5:
+                                        hp2 -= 9
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 7:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Steve_Urkel, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 10
+                                    elif rand == 1:
+                                        hp2 -= 5
+                                    elif rand == 2:
+                                        hp2 -= 12
+                                    elif rand == 3:
+                                        hp2 -= 11
+                                    elif rand == 4:
+                                        hp2 -= 15
+                                    elif rand == 5:
+                                        hp2 -= 8
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 8:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Ernold, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 25
+                                    elif rand == 1:
+                                        hp2 -= 25
+                                    elif rand == 2:
+                                        hp2 -= 20
+                                    elif rand == 3:
+                                        hp2 -= 15
+                                    elif rand == 4:
+                                        hp2 -= 15
+                                    elif rand == 5:
+                                        hp2 -= 10
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 9:
+                                    DISPLAYSURF.blit(pygame.transform.scale(James, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 25
+                                    elif rand == 1:
+                                        hp2 -= 15
+                                    elif rand == 2:
+                                        hp2 -= 15
+                                    elif rand == 3:
+                                        hp2 -= 7
+                                    elif rand == 4:
+                                        hp2 -= 20
+                                    elif rand == 5:
+                                        hp2 -= 25
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 10:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Roch, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 13
+                                    elif rand == 1:
+                                        hp2 -= 28
+                                    elif rand == 2:
+                                        hp2 -= 30
+                                    elif rand == 3:
+                                        hp2 -= 17
+                                    elif rand == 4:
+                                        hp2 -= 10
+                                    elif rand == 5:
+                                        hp2 -= 7
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 11:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Chack, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 15
+                                    elif rand == 1:
+                                        hp2 -= 28
+                                    elif rand == 2:
+                                        hp2 -= 27
+                                    elif rand == 3:
+                                        hp2 -= 25
+                                    elif rand == 4:
+                                        hp2 -= 29
+                                    elif rand == 5:
+                                        hp2 -= 30
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 12:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Vin, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 20
+                                    elif rand == 1:
+                                        hp2 -= 25
+                                    elif rand == 2:
+                                        hp2 -= 30
+                                    elif rand == 3:
+                                        hp2 -= 25
+                                    elif rand == 4:
+                                        hp2 -= 20
+                                    elif rand == 5:
+                                        hp2 -= 15
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 13:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Merio, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 10
+                                    elif rand == 1:
+                                        hp2 -= 10
+                                    elif rand == 2:
+                                        hp2 -= 30
+                                    elif rand == 3:
+                                        hp2 -= 30
+                                    elif rand == 4:
+                                        hp2 -= 15
+                                    elif rand == 5:
+                                        hp2 -= 15
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 14:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Steve_Seagal, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 10
+                                    elif rand == 1:
+                                        hp2 -= 15
+                                    elif rand == 2:
+                                        hp2 -= 12
+                                    elif rand == 3:
+                                        hp2 -= 11
+                                    elif rand == 4:
+                                        hp2 -= 25
+                                    elif rand == 5:
+                                        hp2 -= 20
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 15:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Jet, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 10
+                                    elif rand == 1:
+                                        hp2 -= 30
+                                    elif rand == 2:
+                                        hp2 -= 12
+                                    elif rand == 3:
+                                        hp2 -= 25
+                                    elif rand == 4:
+                                        hp2 -= 14
+                                    elif rand == 5:
+                                        hp2 -= 23
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 16:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Wesley, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 10
+                                    elif rand == 1:
+                                        hp2 -= 12
+                                    elif rand == 2:
+                                        hp2 -= 14
+                                    elif rand == 3:
+                                        hp2 -= 16
+                                    elif rand == 4:
+                                        hp2 -= 14
+                                    elif rand == 5:
+                                        hp2 -= 12
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 17:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Terry, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 10
+                                    elif rand == 1:
+                                        hp2 -= 15
+                                    elif rand == 2:
+                                        hp2 -= 25
+                                    elif rand == 3:
+                                        hp2 -= 20
+                                    elif rand == 4:
+                                        hp2 -= 15
+                                    elif rand == 5:
+                                        hp2 -= 10
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
                             turn = 'playerThree'
                         elif rDirection == 'up':
                             for i in list[:grand]:
@@ -798,6 +7604,299 @@ def gameboard_3():
                                     break
                                 else:
                                     rPy -= 50
+                            if (rPx == fightx1 and rPy == fighty1) or (rPx == fightx3 and rPy == fighty2) or (rPx == fightx1 and rPy == fighty3) or (rPx == fightx2 and rPy == fighty2):
+                                super_list = ["John Cena", "Jason Statham", "Bruce Hee", "Jackie Chen", "Agua man", "Pariz Hilten", "Dexter", "Steve Urkel", "Ernold Schwarzenegger", "James Bend", "The Roch", "Chack Norris", "Vin Dieser", "Super Merio", "Steve Seagal", "Jet Ri", "Wesley Sniper", "Terry Crews"]
+                                super_random = random.randint(0, 17)
+                                print(super_list[super_random])
+                                if super_random == 0:
+                                    DISPLAYSURF.blit(pygame.transform.scale(John, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 10
+                                    elif rand == 1:
+                                        hp2 -= 6
+                                    elif rand == 2:
+                                        hp2 -= 25
+                                    elif rand == 3:
+                                        hp2 -= 7
+                                    elif rand == 4:
+                                        hp2 -= 8
+                                    elif rand == 5:
+                                        hp2 -= 11
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 1:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Jason, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 15
+                                    elif rand == 1:
+                                        hp2 -= 17
+                                    elif rand == 2:
+                                        hp2 -= 19
+                                    elif rand == 3:
+                                        hp2 -= 21
+                                    elif rand == 4:
+                                        hp2 -= 23
+                                    elif rand == 5:
+                                        hp2 -= 26
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 2:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Bruce, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 20
+                                    elif rand == 1:
+                                        hp2 -= 15
+                                    elif rand == 2:
+                                        hp2 -= 5
+                                    elif rand == 3:
+                                        hp2 -= 7
+                                    elif rand == 4:
+                                        hp2 -= 8
+                                    elif rand == 5:
+                                        hp2 -= 26
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 3:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Jackie, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 12
+                                    elif rand == 1:
+                                        hp2 -= 10
+                                    elif rand == 2:
+                                        hp2 -= 15
+                                    elif rand == 3:
+                                        hp2 -= 9
+                                    elif rand == 4:
+                                        hp2 -= 10
+                                    elif rand == 5:
+                                        hp2 -= 25
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 4:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Agua, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 12
+                                    elif rand == 1:
+                                        hp2 -= 15
+                                    elif rand == 2:
+                                        hp2 -= 9
+                                    elif rand == 3:
+                                        hp2 -= 7
+                                    elif rand == 4:
+                                        hp2 -= 7
+                                    elif rand == 5:
+                                        hp2 -= 13
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 5:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Pariz, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 12
+                                    elif rand == 1:
+                                        hp2 -= 8
+                                    elif rand == 2:
+                                        hp2 -= 7
+                                    elif rand == 3:
+                                        hp2 -= 15
+                                    elif rand == 4:
+                                        hp2 -= 13
+                                    elif rand == 5:
+                                        hp2 -= 9
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 6:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Dexter, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 9
+                                    elif rand == 1:
+                                        hp2 -= 8
+                                    elif rand == 2:
+                                        hp2 -= 7
+                                    elif rand == 3:
+                                        hp2 -= 15
+                                    elif rand == 4:
+                                        hp2 -= 13
+                                    elif rand == 5:
+                                        hp2 -= 9
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 7:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Steve_Urkel, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 10
+                                    elif rand == 1:
+                                        hp2 -= 5
+                                    elif rand == 2:
+                                        hp2 -= 12
+                                    elif rand == 3:
+                                        hp2 -= 11
+                                    elif rand == 4:
+                                        hp2 -= 15
+                                    elif rand == 5:
+                                        hp2 -= 8
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 8:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Ernold, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 25
+                                    elif rand == 1:
+                                        hp2 -= 25
+                                    elif rand == 2:
+                                        hp2 -= 20
+                                    elif rand == 3:
+                                        hp2 -= 15
+                                    elif rand == 4:
+                                        hp2 -= 15
+                                    elif rand == 5:
+                                        hp2 -= 10
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 9:
+                                    DISPLAYSURF.blit(pygame.transform.scale(James, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 25
+                                    elif rand == 1:
+                                        hp2 -= 15
+                                    elif rand == 2:
+                                        hp2 -= 15
+                                    elif rand == 3:
+                                        hp2 -= 7
+                                    elif rand == 4:
+                                        hp2 -= 20
+                                    elif rand == 5:
+                                        hp2 -= 25
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 10:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Roch, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 13
+                                    elif rand == 1:
+                                        hp2 -= 28
+                                    elif rand == 2:
+                                        hp2 -= 30
+                                    elif rand == 3:
+                                        hp2 -= 17
+                                    elif rand == 4:
+                                        hp2 -= 10
+                                    elif rand == 5:
+                                        hp2 -= 7
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 11:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Chack, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 15
+                                    elif rand == 1:
+                                        hp2 -= 28
+                                    elif rand == 2:
+                                        hp2 -= 27
+                                    elif rand == 3:
+                                        hp2 -= 25
+                                    elif rand == 4:
+                                        hp2 -= 29
+                                    elif rand == 5:
+                                        hp2 -= 30
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 12:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Vin, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 20
+                                    elif rand == 1:
+                                        hp2 -= 25
+                                    elif rand == 2:
+                                        hp2 -= 30
+                                    elif rand == 3:
+                                        hp2 -= 25
+                                    elif rand == 4:
+                                        hp2 -= 20
+                                    elif rand == 5:
+                                        hp2 -= 15
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 13:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Merio, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 10
+                                    elif rand == 1:
+                                        hp2 -= 10
+                                    elif rand == 2:
+                                        hp2 -= 30
+                                    elif rand == 3:
+                                        hp2 -= 30
+                                    elif rand == 4:
+                                        hp2 -= 15
+                                    elif rand == 5:
+                                        hp2 -= 15
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 14:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Steve_Seagal, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 10
+                                    elif rand == 1:
+                                        hp2 -= 15
+                                    elif rand == 2:
+                                        hp2 -= 12
+                                    elif rand == 3:
+                                        hp2 -= 11
+                                    elif rand == 4:
+                                        hp2 -= 25
+                                    elif rand == 5:
+                                        hp2 -= 20
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 15:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Jet, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 10
+                                    elif rand == 1:
+                                        hp2 -= 30
+                                    elif rand == 2:
+                                        hp2 -= 12
+                                    elif rand == 3:
+                                        hp2 -= 25
+                                    elif rand == 4:
+                                        hp2 -= 14
+                                    elif rand == 5:
+                                        hp2 -= 23
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 16:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Wesley, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 10
+                                    elif rand == 1:
+                                        hp2 -= 12
+                                    elif rand == 2:
+                                        hp2 -= 14
+                                    elif rand == 3:
+                                        hp2 -= 16
+                                    elif rand == 4:
+                                        hp2 -= 14
+                                    elif rand == 5:
+                                        hp2 -= 12
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 17:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Terry, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 10
+                                    elif rand == 1:
+                                        hp2 -= 15
+                                    elif rand == 2:
+                                        hp2 -= 25
+                                    elif rand == 3:
+                                        hp2 -= 20
+                                    elif rand == 4:
+                                        hp2 -= 15
+                                    elif rand == 5:
+                                        hp2 -= 10
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                            turn = 'playerThree'
                         if 100 <= rPy <= 200 and 900 <= rPx <= 1000:
                             if player2.hp < 46:
                                 player2.hp += 5
@@ -812,8 +7911,11 @@ def gameboard_3():
                         turn = 'playerThree'
 
                     elif turn == 'playerThree':
-                        DISPLAYSURF.blit(pygame.transform.scale(blauwscore, (350, 450)), (0, 300))
-                        DISPLAYSURF.blit(pygame.transform.scale(hudpion_blauw, (100, 100)), (1000, 0))
+                        DISPLAYSURF.blit(pygame.transform.scale(shade, (350, 450)), (0, 300))
+                        DISPLAYSURF.blit(pygame.transform.scale(shade, (100, 100)), (200, 160))
+                        DISPLAYSURF.blit(pygame.transform.scale(hudpion_blauw, (100, 100)), (200, 0))
+                        if hp1 <= 0:
+                            DISPLAYSURF.blit(pygame.transform.scale(shade, (100, 100)), (200, 0))
                         if grDirection == 'right':
                             for i in list[:grand]:
                                 if grPx == 950:
@@ -823,7 +7925,300 @@ def gameboard_3():
                                     break
                                 else:
                                     grPx += 50
+                            if (grPx == fightx1 and grPy == fighty1) or (grPx == fightx3 and grPy == fighty2) or (grPx == fightx1 and grPy == fighty3) or (grPx == fightx2 and grPy == fighty2):
+                                super_list = ["John Cena", "Jason Statham", "Bruce Hee", "Jackie Chen", "Agua man", "Pariz Hilten", "Dexter", "Steve Urkel", "Ernold Schwarzenegger", "James Bend", "The Roch", "Chack Norris", "Vin Dieser", "Super Merio", "Steve Seagal", "Jet Ri", "Wesley Sniper", "Terry Crews"]
+                                super_random = random.randint(0, 17)
+                                print(super_list[super_random])
+                                if super_random == 0:
+                                    DISPLAYSURF.blit(pygame.transform.scale(John, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp3 -= 10
+                                    elif rand == 1:
+                                        hp3 -= 6
+                                    elif rand == 2:
+                                        hp3 -= 25
+                                    elif rand == 3:
+                                        hp3 -= 7
+                                    elif rand == 4:
+                                        hp3 -= 8
+                                    elif rand == 5:
+                                        hp3 -= 11
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 180))
+                                    text("HP:       " + str(hp3), white, 30, 20, 180)
+                                elif super_random == 1:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Jason, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp3 -= 15
+                                    elif rand == 1:
+                                        hp3 -= 17
+                                    elif rand == 2:
+                                        hp3 -= 19
+                                    elif rand == 3:
+                                        hp3 -= 21
+                                    elif rand == 4:
+                                        hp3 -= 23
+                                    elif rand == 5:
+                                        hp3 -= 26
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 180))
+                                    text("HP:       " + str(hp3), white, 30, 20, 180)
+                                elif super_random == 2:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Bruce, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp3 -= 20
+                                    elif rand == 1:
+                                        hp3 -= 15
+                                    elif rand == 2:
+                                        hp3 -= 5
+                                    elif rand == 3:
+                                        hp3 -= 7
+                                    elif rand == 4:
+                                        hp3 -= 8
+                                    elif rand == 5:
+                                        hp3 -= 26
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 180))
+                                    text("HP:       " + str(hp3), white, 30, 20, 180)
+                                elif super_random == 3:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Jackie, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp3 -= 12
+                                    elif rand == 1:
+                                        hp3 -= 10
+                                    elif rand == 2:
+                                        hp3 -= 15
+                                    elif rand == 3:
+                                        hp3 -= 9
+                                    elif rand == 4:
+                                        hp3 -= 10
+                                    elif rand == 5:
+                                        hp3 -= 25
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 180))
+                                    text("HP:       " + str(hp3), white, 30, 20, 180)
+                                elif super_random == 4:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Agua, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp3 -= 12
+                                    elif rand == 1:
+                                        hp3 -= 15
+                                    elif rand == 2:
+                                        hp3 -= 9
+                                    elif rand == 3:
+                                        hp3 -= 7
+                                    elif rand == 4:
+                                        hp3 -= 7
+                                    elif rand == 5:
+                                        hp3 -= 13
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 180))
+                                    text("HP:       " + str(hp3), white, 30, 20, 180)
+                                elif super_random == 5:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Pariz, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp3 -= 12
+                                    elif rand == 1:
+                                        hp3 -= 8
+                                    elif rand == 2:
+                                        hp3 -= 7
+                                    elif rand == 3:
+                                        hp3 -= 15
+                                    elif rand == 4:
+                                        hp3 -= 13
+                                    elif rand == 5:
+                                        hp3 -= 9
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 180))
+                                    text("HP:       " + str(hp3), white, 30, 20, 180)
+                                elif super_random == 6:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Dexter, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp3 -= 9
+                                    elif rand == 1:
+                                        hp3 -= 8
+                                    elif rand == 2:
+                                        hp3 -= 7
+                                    elif rand == 3:
+                                        hp3 -= 15
+                                    elif rand == 4:
+                                        hp3 -= 13
+                                    elif rand == 5:
+                                        hp3 -= 9
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 180))
+                                    text("HP:       " + str(hp3), white, 30, 20, 180)
+                                elif super_random == 7:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Steve_Urkel, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp3 -= 10
+                                    elif rand == 1:
+                                        hp3 -= 5
+                                    elif rand == 2:
+                                        hp3 -= 12
+                                    elif rand == 3:
+                                        hp3 -= 11
+                                    elif rand == 4:
+                                        hp3 -= 15
+                                    elif rand == 5:
+                                        hp3 -= 8
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 180))
+                                    text("HP:       " + str(hp3), white, 30, 20, 180)
+                                elif super_random == 8:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Ernold, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp3 -= 25
+                                    elif rand == 1:
+                                        hp3 -= 25
+                                    elif rand == 2:
+                                        hp3 -= 20
+                                    elif rand == 3:
+                                        hp3 -= 15
+                                    elif rand == 4:
+                                        hp3 -= 15
+                                    elif rand == 5:
+                                        hp3 -= 10
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 180))
+                                    text("HP:       " + str(hp3), white, 30, 20, 180)
+                                elif super_random == 9:
+                                    DISPLAYSURF.blit(pygame.transform.scale(James, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp3 -= 25
+                                    elif rand == 1:
+                                        hp3 -= 15
+                                    elif rand == 2:
+                                        hp3 -= 15
+                                    elif rand == 3:
+                                        hp3 -= 7
+                                    elif rand == 4:
+                                        hp3 -= 20
+                                    elif rand == 5:
+                                        hp3 -= 25
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 180))
+                                    text("HP:       " + str(hp3), white, 30, 20, 180)
+                                elif super_random == 10:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Roch, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp3 -= 13
+                                    elif rand == 1:
+                                        hp3 -= 28
+                                    elif rand == 2:
+                                        hp3 -= 30
+                                    elif rand == 3:
+                                        hp3 -= 17
+                                    elif rand == 4:
+                                        hp3 -= 10
+                                    elif rand == 5:
+                                        hp3 -= 7
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 180))
+                                    text("HP:       " + str(hp3), white, 30, 20, 180)
+                                elif super_random == 11:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Chack, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp3 -= 15
+                                    elif rand == 1:
+                                        hp3 -= 28
+                                    elif rand == 2:
+                                        hp3 -= 27
+                                    elif rand == 3:
+                                        hp3 -= 25
+                                    elif rand == 4:
+                                        hp3 -= 29
+                                    elif rand == 5:
+                                        hp3 -= 30
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 180))
+                                    text("HP:       " + str(hp3), white, 30, 20, 180)
+                                elif super_random == 12:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Vin, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp3 -= 20
+                                    elif rand == 1:
+                                        hp3 -= 25
+                                    elif rand == 2:
+                                        hp3 -= 30
+                                    elif rand == 3:
+                                        hp3 -= 25
+                                    elif rand == 4:
+                                        hp3 -= 20
+                                    elif rand == 5:
+                                        hp3 -= 15
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 180))
+                                    text("HP:       " + str(hp3), white, 30, 20, 180)
+                                elif super_random == 13:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Merio, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp3 -= 10
+                                    elif rand == 1:
+                                        hp3 -= 10
+                                    elif rand == 2:
+                                        hp3 -= 30
+                                    elif rand == 3:
+                                        hp3 -= 30
+                                    elif rand == 4:
+                                        hp3 -= 15
+                                    elif rand == 5:
+                                        hp3 -= 15
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 180))
+                                    text("HP:       " + str(hp3), white, 30, 20, 180)
+                                elif super_random == 14:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Steve_Seagal, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp3 -= 10
+                                    elif rand == 1:
+                                        hp3 -= 15
+                                    elif rand == 2:
+                                        hp3 -= 12
+                                    elif rand == 3:
+                                        hp3 -= 11
+                                    elif rand == 4:
+                                        hp3 -= 25
+                                    elif rand == 5:
+                                        hp3 -= 20
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 180))
+                                    text("HP:       " + str(hp3), white, 30, 20, 180)
+                                elif super_random == 15:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Jet, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp3 -= 10
+                                    elif rand == 1:
+                                        hp3 -= 30
+                                    elif rand == 2:
+                                        hp3 -= 12
+                                    elif rand == 3:
+                                        hp3 -= 25
+                                    elif rand == 4:
+                                        hp3 -= 14
+                                    elif rand == 5:
+                                        hp3 -= 23
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 180))
+                                    text("HP:       " + str(hp3), white, 30, 20, 180)
+                                elif super_random == 16:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Wesley, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp3 -= 10
+                                    elif rand == 1:
+                                        hp3 -= 12
+                                    elif rand == 2:
+                                        hp3 -= 14
+                                    elif rand == 3:
+                                        hp3 -= 16
+                                    elif rand == 4:
+                                        hp3 -= 14
+                                    elif rand == 5:
+                                        hp3 -= 12
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 180))
+                                    text("HP:       " + str(hp3), white, 30, 20, 180)
+                                elif super_random == 17:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Terry, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp3 -= 10
+                                    elif rand == 1:
+                                        hp3 -= 15
+                                    elif rand == 2:
+                                        hp3 -= 25
+                                    elif rand == 3:
+                                        hp3 -= 20
+                                    elif rand == 4:
+                                        hp3 -= 15
+                                    elif rand == 5:
+                                        hp3 -= 10
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 180))
+                                    text("HP:       " + str(hp3), white, 30, 20, 180)
                             turn = 'playerOne'
+
                         elif grDirection == 'down':
                             for i in list[:grand]:
                                 if grPy == 600:
@@ -833,7 +8228,300 @@ def gameboard_3():
                                     break
                                 else:
                                     grPy += 50
+                            if (grPx == fightx1 and grPy == fighty1) or (grPx == fightx3 and grPy == fighty2) or (grPx == fightx1 and grPy == fighty3) or (grPx == fightx2 and grPy == fighty2):
+                                super_list = ["John Cena", "Jason Statham", "Bruce Hee", "Jackie Chen", "Agua man", "Pariz Hilten", "Dexter", "Steve Urkel", "Ernold Schwarzenegger", "James Bend", "The Roch", "Chack Norris", "Vin Dieser", "Super Merio", "Steve Seagal", "Jet Ri", "Wesley Sniper", "Terry Crews"]
+                                super_random = random.randint(0, 17)
+                                print(super_list[super_random])
+                                if super_random == 0:
+                                    DISPLAYSURF.blit(pygame.transform.scale(John, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp3 -= 10
+                                    elif rand == 1:
+                                        hp3 -= 6
+                                    elif rand == 2:
+                                        hp3 -= 25
+                                    elif rand == 3:
+                                        hp3 -= 7
+                                    elif rand == 4:
+                                        hp3 -= 8
+                                    elif rand == 5:
+                                        hp3 -= 11
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 180))
+                                    text("HP:       " + str(hp3), white, 30, 20, 180)
+                                elif super_random == 1:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Jason, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp3 -= 15
+                                    elif rand == 1:
+                                        hp3 -= 17
+                                    elif rand == 2:
+                                        hp3 -= 19
+                                    elif rand == 3:
+                                        hp3 -= 21
+                                    elif rand == 4:
+                                        hp3 -= 23
+                                    elif rand == 5:
+                                        hp3 -= 26
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 180))
+                                    text("HP:       " + str(hp3), white, 30, 20, 180)
+                                elif super_random == 2:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Bruce, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp3 -= 20
+                                    elif rand == 1:
+                                        hp3 -= 15
+                                    elif rand == 2:
+                                        hp3 -= 5
+                                    elif rand == 3:
+                                        hp3 -= 7
+                                    elif rand == 4:
+                                        hp3 -= 8
+                                    elif rand == 5:
+                                        hp3 -= 26
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 180))
+                                    text("HP:       " + str(hp3), white, 30, 20, 180)
+                                elif super_random == 3:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Jackie, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp3 -= 12
+                                    elif rand == 1:
+                                        hp3 -= 10
+                                    elif rand == 2:
+                                        hp3 -= 15
+                                    elif rand == 3:
+                                        hp3 -= 9
+                                    elif rand == 4:
+                                        hp3 -= 10
+                                    elif rand == 5:
+                                        hp3 -= 25
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 180))
+                                    text("HP:       " + str(hp3), white, 30, 20, 180)
+                                elif super_random == 4:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Agua, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp3 -= 12
+                                    elif rand == 1:
+                                        hp3 -= 15
+                                    elif rand == 2:
+                                        hp3 -= 9
+                                    elif rand == 3:
+                                        hp3 -= 7
+                                    elif rand == 4:
+                                        hp3 -= 7
+                                    elif rand == 5:
+                                        hp3 -= 13
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 180))
+                                    text("HP:       " + str(hp3), white, 30, 20, 180)
+                                elif super_random == 5:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Pariz, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp3 -= 12
+                                    elif rand == 1:
+                                        hp3 -= 8
+                                    elif rand == 2:
+                                        hp3 -= 7
+                                    elif rand == 3:
+                                        hp3 -= 15
+                                    elif rand == 4:
+                                        hp3 -= 13
+                                    elif rand == 5:
+                                        hp3 -= 9
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 180))
+                                    text("HP:       " + str(hp3), white, 30, 20, 180)
+                                elif super_random == 6:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Dexter, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp3 -= 9
+                                    elif rand == 1:
+                                        hp3 -= 8
+                                    elif rand == 2:
+                                        hp3 -= 7
+                                    elif rand == 3:
+                                        hp3 -= 15
+                                    elif rand == 4:
+                                        hp3 -= 13
+                                    elif rand == 5:
+                                        hp3 -= 9
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 180))
+                                    text("HP:       " + str(hp3), white, 30, 20, 180)
+                                elif super_random == 7:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Steve_Urkel, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp3 -= 10
+                                    elif rand == 1:
+                                        hp3 -= 5
+                                    elif rand == 2:
+                                        hp3 -= 12
+                                    elif rand == 3:
+                                        hp3 -= 11
+                                    elif rand == 4:
+                                        hp3 -= 15
+                                    elif rand == 5:
+                                        hp3 -= 8
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 180))
+                                    text("HP:       " + str(hp3), white, 30, 20, 180)
+                                elif super_random == 8:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Ernold, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp3 -= 25
+                                    elif rand == 1:
+                                        hp3 -= 25
+                                    elif rand == 2:
+                                        hp3 -= 20
+                                    elif rand == 3:
+                                        hp3 -= 15
+                                    elif rand == 4:
+                                        hp3 -= 15
+                                    elif rand == 5:
+                                        hp3 -= 10
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 180))
+                                    text("HP:       " + str(hp3), white, 30, 20, 180)
+                                elif super_random == 9:
+                                    DISPLAYSURF.blit(pygame.transform.scale(James, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp3 -= 25
+                                    elif rand == 1:
+                                        hp3 -= 15
+                                    elif rand == 2:
+                                        hp3 -= 15
+                                    elif rand == 3:
+                                        hp3 -= 7
+                                    elif rand == 4:
+                                        hp3 -= 20
+                                    elif rand == 5:
+                                        hp3 -= 25
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 180))
+                                    text("HP:       " + str(hp3), white, 30, 20, 180)
+                                elif super_random == 10:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Roch, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp3 -= 13
+                                    elif rand == 1:
+                                        hp3 -= 28
+                                    elif rand == 2:
+                                        hp3 -= 30
+                                    elif rand == 3:
+                                        hp3 -= 17
+                                    elif rand == 4:
+                                        hp3 -= 10
+                                    elif rand == 5:
+                                        hp3 -= 7
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 180))
+                                    text("HP:       " + str(hp3), white, 30, 20, 180)
+                                elif super_random == 11:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Chack, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp3 -= 15
+                                    elif rand == 1:
+                                        hp3 -= 28
+                                    elif rand == 2:
+                                        hp3 -= 27
+                                    elif rand == 3:
+                                        hp3 -= 25
+                                    elif rand == 4:
+                                        hp3 -= 29
+                                    elif rand == 5:
+                                        hp3 -= 30
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 180))
+                                    text("HP:       " + str(hp3), white, 30, 20, 180)
+                                elif super_random == 12:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Vin, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp3 -= 20
+                                    elif rand == 1:
+                                        hp3 -= 25
+                                    elif rand == 2:
+                                        hp3 -= 30
+                                    elif rand == 3:
+                                        hp3 -= 25
+                                    elif rand == 4:
+                                        hp3 -= 20
+                                    elif rand == 5:
+                                        hp3 -= 15
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 180))
+                                    text("HP:       " + str(hp3), white, 30, 20, 180)
+                                elif super_random == 13:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Merio, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp3 -= 10
+                                    elif rand == 1:
+                                        hp3 -= 10
+                                    elif rand == 2:
+                                        hp3 -= 30
+                                    elif rand == 3:
+                                        hp3 -= 30
+                                    elif rand == 4:
+                                        hp3 -= 15
+                                    elif rand == 5:
+                                        hp3 -= 15
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 180))
+                                    text("HP:       " + str(hp3), white, 30, 20, 180)
+                                elif super_random == 14:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Steve_Seagal, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp3 -= 10
+                                    elif rand == 1:
+                                        hp3 -= 15
+                                    elif rand == 2:
+                                        hp3 -= 12
+                                    elif rand == 3:
+                                        hp3 -= 11
+                                    elif rand == 4:
+                                        hp3 -= 25
+                                    elif rand == 5:
+                                        hp3 -= 20
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 180))
+                                    text("HP:       " + str(hp3), white, 30, 20, 180)
+                                elif super_random == 15:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Jet, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp3 -= 10
+                                    elif rand == 1:
+                                        hp3 -= 30
+                                    elif rand == 2:
+                                        hp3 -= 12
+                                    elif rand == 3:
+                                        hp3 -= 25
+                                    elif rand == 4:
+                                        hp3 -= 14
+                                    elif rand == 5:
+                                        hp3 -= 23
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 180))
+                                    text("HP:       " + str(hp3), white, 30, 20, 180)
+                                elif super_random == 16:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Wesley, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp3 -= 10
+                                    elif rand == 1:
+                                        hp3 -= 12
+                                    elif rand == 2:
+                                        hp3 -= 14
+                                    elif rand == 3:
+                                        hp3 -= 16
+                                    elif rand == 4:
+                                        hp3 -= 14
+                                    elif rand == 5:
+                                        hp3 -= 12
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 180))
+                                    text("HP:       " + str(hp3), white, 30, 20, 180)
+                                elif super_random == 17:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Terry, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp3 -= 10
+                                    elif rand == 1:
+                                        hp3 -= 15
+                                    elif rand == 2:
+                                        hp3 -= 25
+                                    elif rand == 3:
+                                        hp3 -= 20
+                                    elif rand == 4:
+                                        hp3 -= 15
+                                    elif rand == 5:
+                                        hp3 -= 10
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 180))
+                                    text("HP:       " + str(hp3), white, 30, 20, 180)
                             turn = 'playerOne'
+
                         elif grDirection == 'left':
                             for i in list[:grand]:
                                 if grPx == 450:
@@ -843,7 +8531,300 @@ def gameboard_3():
                                     break
                                 else:
                                     grPx -= 50
+                            if (grPx == fightx1 and grPy == fighty1) or (grPx == fightx3 and grPy == fighty2) or (grPx == fightx1 and grPy == fighty3) or (grPx == fightx2 and grPy == fighty2):
+                                super_list = ["John Cena", "Jason Statham", "Bruce Hee", "Jackie Chen", "Agua man", "Pariz Hilten", "Dexter", "Steve Urkel", "Ernold Schwarzenegger", "James Bend", "The Roch", "Chack Norris", "Vin Dieser", "Super Merio", "Steve Seagal", "Jet Ri", "Wesley Sniper", "Terry Crews"]
+                                super_random = random.randint(0, 17)
+                                print(super_list[super_random])
+                                if super_random == 0:
+                                    DISPLAYSURF.blit(pygame.transform.scale(John, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp3 -= 10
+                                    elif rand == 1:
+                                        hp3 -= 6
+                                    elif rand == 2:
+                                        hp3 -= 25
+                                    elif rand == 3:
+                                        hp3 -= 7
+                                    elif rand == 4:
+                                        hp3 -= 8
+                                    elif rand == 5:
+                                        hp3 -= 11
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 180))
+                                    text("HP:       " + str(hp3), white, 30, 20, 180)
+                                elif super_random == 1:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Jason, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp3 -= 15
+                                    elif rand == 1:
+                                        hp3 -= 17
+                                    elif rand == 2:
+                                        hp3 -= 19
+                                    elif rand == 3:
+                                        hp3 -= 21
+                                    elif rand == 4:
+                                        hp3 -= 23
+                                    elif rand == 5:
+                                        hp3 -= 26
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 180))
+                                    text("HP:       " + str(hp3), white, 30, 20, 180)
+                                elif super_random == 2:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Bruce, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp3 -= 20
+                                    elif rand == 1:
+                                        hp3 -= 15
+                                    elif rand == 2:
+                                        hp3 -= 5
+                                    elif rand == 3:
+                                        hp3 -= 7
+                                    elif rand == 4:
+                                        hp3 -= 8
+                                    elif rand == 5:
+                                        hp3 -= 26
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 180))
+                                    text("HP:       " + str(hp3), white, 30, 20, 180)
+                                elif super_random == 3:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Jackie, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp3 -= 12
+                                    elif rand == 1:
+                                        hp3 -= 10
+                                    elif rand == 2:
+                                        hp3 -= 15
+                                    elif rand == 3:
+                                        hp3 -= 9
+                                    elif rand == 4:
+                                        hp3 -= 10
+                                    elif rand == 5:
+                                        hp3 -= 25
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 180))
+                                    text("HP:       " + str(hp3), white, 30, 20, 180)
+                                elif super_random == 4:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Agua, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp3 -= 12
+                                    elif rand == 1:
+                                        hp3 -= 15
+                                    elif rand == 2:
+                                        hp3 -= 9
+                                    elif rand == 3:
+                                        hp3 -= 7
+                                    elif rand == 4:
+                                        hp3 -= 7
+                                    elif rand == 5:
+                                        hp3 -= 13
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 180))
+                                    text("HP:       " + str(hp3), white, 30, 20, 180)
+                                elif super_random == 5:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Pariz, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp3 -= 12
+                                    elif rand == 1:
+                                        hp3 -= 8
+                                    elif rand == 2:
+                                        hp3 -= 7
+                                    elif rand == 3:
+                                        hp3 -= 15
+                                    elif rand == 4:
+                                        hp3 -= 13
+                                    elif rand == 5:
+                                        hp3 -= 9
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 180))
+                                    text("HP:       " + str(hp3), white, 30, 20, 180)
+                                elif super_random == 6:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Dexter, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp3 -= 9
+                                    elif rand == 1:
+                                        hp3 -= 8
+                                    elif rand == 2:
+                                        hp3 -= 7
+                                    elif rand == 3:
+                                        hp3 -= 15
+                                    elif rand == 4:
+                                        hp3 -= 13
+                                    elif rand == 5:
+                                        hp3 -= 9
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 180))
+                                    text("HP:       " + str(hp3), white, 30, 20, 180)
+                                elif super_random == 7:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Steve_Urkel, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp3 -= 10
+                                    elif rand == 1:
+                                        hp3 -= 5
+                                    elif rand == 2:
+                                        hp3 -= 12
+                                    elif rand == 3:
+                                        hp3 -= 11
+                                    elif rand == 4:
+                                        hp3 -= 15
+                                    elif rand == 5:
+                                        hp3 -= 8
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 180))
+                                    text("HP:       " + str(hp3), white, 30, 20, 180)
+                                elif super_random == 8:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Ernold, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp3 -= 25
+                                    elif rand == 1:
+                                        hp3 -= 25
+                                    elif rand == 2:
+                                        hp3 -= 20
+                                    elif rand == 3:
+                                        hp3 -= 15
+                                    elif rand == 4:
+                                        hp3 -= 15
+                                    elif rand == 5:
+                                        hp3 -= 10
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 180))
+                                    text("HP:       " + str(hp3), white, 30, 20, 180)
+                                elif super_random == 9:
+                                    DISPLAYSURF.blit(pygame.transform.scale(James, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp3 -= 25
+                                    elif rand == 1:
+                                        hp3 -= 15
+                                    elif rand == 2:
+                                        hp3 -= 15
+                                    elif rand == 3:
+                                        hp3 -= 7
+                                    elif rand == 4:
+                                        hp3 -= 20
+                                    elif rand == 5:
+                                        hp3 -= 25
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 180))
+                                    text("HP:       " + str(hp3), white, 30, 20, 180)
+                                elif super_random == 10:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Roch, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp3 -= 13
+                                    elif rand == 1:
+                                        hp3 -= 28
+                                    elif rand == 2:
+                                        hp3 -= 30
+                                    elif rand == 3:
+                                        hp3 -= 17
+                                    elif rand == 4:
+                                        hp3 -= 10
+                                    elif rand == 5:
+                                        hp3 -= 7
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 180))
+                                    text("HP:       " + str(hp3), white, 30, 20, 180)
+                                elif super_random == 11:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Chack, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp3 -= 15
+                                    elif rand == 1:
+                                        hp3 -= 28
+                                    elif rand == 2:
+                                        hp3 -= 27
+                                    elif rand == 3:
+                                        hp3 -= 25
+                                    elif rand == 4:
+                                        hp3 -= 29
+                                    elif rand == 5:
+                                        hp3 -= 30
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 180))
+                                    text("HP:       " + str(hp3), white, 30, 20, 180)
+                                elif super_random == 12:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Vin, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp3 -= 20
+                                    elif rand == 1:
+                                        hp3 -= 25
+                                    elif rand == 2:
+                                        hp3 -= 30
+                                    elif rand == 3:
+                                        hp3 -= 25
+                                    elif rand == 4:
+                                        hp3 -= 20
+                                    elif rand == 5:
+                                        hp3 -= 15
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 180))
+                                    text("HP:       " + str(hp3), white, 30, 20, 180)
+                                elif super_random == 13:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Merio, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp3 -= 10
+                                    elif rand == 1:
+                                        hp3 -= 10
+                                    elif rand == 2:
+                                        hp3 -= 30
+                                    elif rand == 3:
+                                        hp3 -= 30
+                                    elif rand == 4:
+                                        hp3 -= 15
+                                    elif rand == 5:
+                                        hp3 -= 15
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 180))
+                                    text("HP:       " + str(hp3), white, 30, 20, 180)
+                                elif super_random == 14:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Steve_Seagal, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp3 -= 10
+                                    elif rand == 1:
+                                        hp3 -= 15
+                                    elif rand == 2:
+                                        hp3 -= 12
+                                    elif rand == 3:
+                                        hp3 -= 11
+                                    elif rand == 4:
+                                        hp3 -= 25
+                                    elif rand == 5:
+                                        hp3 -= 20
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 180))
+                                    text("HP:       " + str(hp3), white, 30, 20, 180)
+                                elif super_random == 15:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Jet, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp3 -= 10
+                                    elif rand == 1:
+                                        hp3 -= 30
+                                    elif rand == 2:
+                                        hp3 -= 12
+                                    elif rand == 3:
+                                        hp3 -= 25
+                                    elif rand == 4:
+                                        hp3 -= 14
+                                    elif rand == 5:
+                                        hp3 -= 23
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 180))
+                                    text("HP:       " + str(hp3), white, 30, 20, 180)
+                                elif super_random == 16:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Wesley, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp3 -= 10
+                                    elif rand == 1:
+                                        hp3 -= 12
+                                    elif rand == 2:
+                                        hp3 -= 14
+                                    elif rand == 3:
+                                        hp3 -= 16
+                                    elif rand == 4:
+                                        hp3 -= 14
+                                    elif rand == 5:
+                                        hp3 -= 12
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 180))
+                                    text("HP:       " + str(hp3), white, 30, 20, 180)
+                                elif super_random == 17:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Terry, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp3 -= 10
+                                    elif rand == 1:
+                                        hp3 -= 15
+                                    elif rand == 2:
+                                        hp3 -= 25
+                                    elif rand == 3:
+                                        hp3 -= 20
+                                    elif rand == 4:
+                                        hp3 -= 15
+                                    elif rand == 5:
+                                        hp3 -= 10
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 180))
+                                    text("HP:       " + str(hp3), white, 30, 20, 180)
                             turn = 'playerOne'
+
                         elif grDirection == 'up':
                             for i in list[:grand]:
                                 if grPy == 100:
@@ -853,6 +8834,299 @@ def gameboard_3():
                                     break
                                 else:
                                     grPy -= 50
+                            if (grPx == fightx1 and grPy == fighty1) or (grPx == fightx3 and grPy == fighty2) or (grPx == fightx1 and grPy == fighty3) or (grPx == fightx2 and grPy == fighty2):
+                                super_list = ["John Cena", "Jason Statham", "Bruce Hee", "Jackie Chen", "Agua man", "Pariz Hilten", "Dexter", "Steve Urkel", "Ernold Schwarzenegger", "James Bend", "The Roch", "Chack Norris", "Vin Dieser", "Super Merio", "Steve Seagal", "Jet Ri", "Wesley Sniper", "Terry Crews"]
+                                super_random = random.randint(0, 17)
+                                print(super_list[super_random])
+                                if super_random == 0:
+                                    DISPLAYSURF.blit(pygame.transform.scale(John, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp3 -= 10
+                                    elif rand == 1:
+                                        hp3 -= 6
+                                    elif rand == 2:
+                                        hp3 -= 25
+                                    elif rand == 3:
+                                        hp3 -= 7
+                                    elif rand == 4:
+                                        hp3 -= 8
+                                    elif rand == 5:
+                                        hp3 -= 11
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 180))
+                                    text("HP:       " + str(hp3), white, 30, 20, 180)
+                                elif super_random == 1:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Jason, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp3 -= 15
+                                    elif rand == 1:
+                                        hp3 -= 17
+                                    elif rand == 2:
+                                        hp3 -= 19
+                                    elif rand == 3:
+                                        hp3 -= 21
+                                    elif rand == 4:
+                                        hp3 -= 23
+                                    elif rand == 5:
+                                        hp3 -= 26
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 180))
+                                    text("HP:       " + str(hp3), white, 30, 20, 180)
+                                elif super_random == 2:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Bruce, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp3 -= 20
+                                    elif rand == 1:
+                                        hp3 -= 15
+                                    elif rand == 2:
+                                        hp3 -= 5
+                                    elif rand == 3:
+                                        hp3 -= 7
+                                    elif rand == 4:
+                                        hp3 -= 8
+                                    elif rand == 5:
+                                        hp3 -= 26
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 180))
+                                    text("HP:       " + str(hp3), white, 30, 20, 180)
+                                elif super_random == 3:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Jackie, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp3 -= 12
+                                    elif rand == 1:
+                                        hp3 -= 10
+                                    elif rand == 2:
+                                        hp3 -= 15
+                                    elif rand == 3:
+                                        hp3 -= 9
+                                    elif rand == 4:
+                                        hp3 -= 10
+                                    elif rand == 5:
+                                        hp3 -= 25
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 180))
+                                    text("HP:       " + str(hp3), white, 30, 20, 180)
+                                elif super_random == 4:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Agua, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp3 -= 12
+                                    elif rand == 1:
+                                        hp3 -= 15
+                                    elif rand == 2:
+                                        hp3 -= 9
+                                    elif rand == 3:
+                                        hp3 -= 7
+                                    elif rand == 4:
+                                        hp3 -= 7
+                                    elif rand == 5:
+                                        hp3 -= 13
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 180))
+                                    text("HP:       " + str(hp3), white, 30, 20, 180)
+                                elif super_random == 5:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Pariz, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp3 -= 12
+                                    elif rand == 1:
+                                        hp3 -= 8
+                                    elif rand == 2:
+                                        hp3 -= 7
+                                    elif rand == 3:
+                                        hp3 -= 15
+                                    elif rand == 4:
+                                        hp3 -= 13
+                                    elif rand == 5:
+                                        hp3 -= 9
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 180))
+                                    text("HP:       " + str(hp3), white, 30, 20, 180)
+                                elif super_random == 6:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Dexter, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp3 -= 9
+                                    elif rand == 1:
+                                        hp3 -= 8
+                                    elif rand == 2:
+                                        hp3 -= 7
+                                    elif rand == 3:
+                                        hp3 -= 15
+                                    elif rand == 4:
+                                        hp3 -= 13
+                                    elif rand == 5:
+                                        hp3 -= 9
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 180))
+                                    text("HP:       " + str(hp3), white, 30, 20, 180)
+                                elif super_random == 7:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Steve_Urkel, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp3 -= 10
+                                    elif rand == 1:
+                                        hp3 -= 5
+                                    elif rand == 2:
+                                        hp3 -= 12
+                                    elif rand == 3:
+                                        hp3 -= 11
+                                    elif rand == 4:
+                                        hp3 -= 15
+                                    elif rand == 5:
+                                        hp3 -= 8
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 180))
+                                    text("HP:       " + str(hp3), white, 30, 20, 180)
+                                elif super_random == 8:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Ernold, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp3 -= 25
+                                    elif rand == 1:
+                                        hp3 -= 25
+                                    elif rand == 2:
+                                        hp3 -= 20
+                                    elif rand == 3:
+                                        hp3 -= 15
+                                    elif rand == 4:
+                                        hp3 -= 15
+                                    elif rand == 5:
+                                        hp3 -= 10
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 180))
+                                    text("HP:       " + str(hp3), white, 30, 20, 180)
+                                elif super_random == 9:
+                                    DISPLAYSURF.blit(pygame.transform.scale(James, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp3 -= 25
+                                    elif rand == 1:
+                                        hp3 -= 15
+                                    elif rand == 2:
+                                        hp3 -= 15
+                                    elif rand == 3:
+                                        hp3 -= 7
+                                    elif rand == 4:
+                                        hp3 -= 20
+                                    elif rand == 5:
+                                        hp3 -= 25
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 180))
+                                    text("HP:       " + str(hp3), white, 30, 20, 180)
+                                elif super_random == 10:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Roch, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp3 -= 13
+                                    elif rand == 1:
+                                        hp3 -= 28
+                                    elif rand == 2:
+                                        hp3 -= 30
+                                    elif rand == 3:
+                                        hp3 -= 17
+                                    elif rand == 4:
+                                        hp3 -= 10
+                                    elif rand == 5:
+                                        hp3 -= 7
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 180))
+                                    text("HP:       " + str(hp3), white, 30, 20, 180)
+                                elif super_random == 11:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Chack, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp3 -= 15
+                                    elif rand == 1:
+                                        hp3 -= 28
+                                    elif rand == 2:
+                                        hp3 -= 27
+                                    elif rand == 3:
+                                        hp3 -= 25
+                                    elif rand == 4:
+                                        hp3 -= 29
+                                    elif rand == 5:
+                                        hp3 -= 30
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 180))
+                                    text("HP:       " + str(hp3), white, 30, 20, 180)
+                                elif super_random == 12:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Vin, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp3 -= 20
+                                    elif rand == 1:
+                                        hp3 -= 25
+                                    elif rand == 2:
+                                        hp3 -= 30
+                                    elif rand == 3:
+                                        hp3 -= 25
+                                    elif rand == 4:
+                                        hp3 -= 20
+                                    elif rand == 5:
+                                        hp3 -= 15
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 180))
+                                    text("HP:       " + str(hp3), white, 30, 20, 180)
+                                elif super_random == 13:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Merio, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp3 -= 10
+                                    elif rand == 1:
+                                        hp3 -= 10
+                                    elif rand == 2:
+                                        hp3 -= 30
+                                    elif rand == 3:
+                                        hp3 -= 30
+                                    elif rand == 4:
+                                        hp3 -= 15
+                                    elif rand == 5:
+                                        hp3 -= 15
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 180))
+                                    text("HP:       " + str(hp3), white, 30, 20, 180)
+                                elif super_random == 14:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Steve_Seagal, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp3 -= 10
+                                    elif rand == 1:
+                                        hp3 -= 15
+                                    elif rand == 2:
+                                        hp3 -= 12
+                                    elif rand == 3:
+                                        hp3 -= 11
+                                    elif rand == 4:
+                                        hp3 -= 25
+                                    elif rand == 5:
+                                        hp3 -= 20
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 180))
+                                    text("HP:       " + str(hp3), white, 30, 20, 180)
+                                elif super_random == 15:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Jet, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp3 -= 10
+                                    elif rand == 1:
+                                        hp3 -= 30
+                                    elif rand == 2:
+                                        hp3 -= 12
+                                    elif rand == 3:
+                                        hp3 -= 25
+                                    elif rand == 4:
+                                        hp3 -= 14
+                                    elif rand == 5:
+                                        hp3 -= 23
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 180))
+                                    text("HP:       " + str(hp3), white, 30, 20, 180)
+                                elif super_random == 16:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Wesley, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp3 -= 10
+                                    elif rand == 1:
+                                        hp3 -= 12
+                                    elif rand == 2:
+                                        hp3 -= 14
+                                    elif rand == 3:
+                                        hp3 -= 16
+                                    elif rand == 4:
+                                        hp3 -= 14
+                                    elif rand == 5:
+                                        hp3 -= 12
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 180))
+                                    text("HP:       " + str(hp3), white, 30, 20, 180)
+                                elif super_random == 17:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Terry, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp3 -= 10
+                                    elif rand == 1:
+                                        hp3 -= 15
+                                    elif rand == 2:
+                                        hp3 -= 25
+                                    elif rand == 3:
+                                        hp3 -= 20
+                                    elif rand == 4:
+                                        hp3 -= 15
+                                    elif rand == 5:
+                                        hp3 -= 10
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 180))
+                                    text("HP:       " + str(hp3), white, 30, 20, 180)
+                            turn = 'playerOne'
                         if 100 <= grPy <= 200 and 900 <= grPx <= 1000:
                             Hoekfight(player3.hp, player2.hp)
                         elif 550 <= grPy <= 650 and 900 <= grPx <= 1000:
@@ -1025,8 +9299,7 @@ def gameboard_2():
 
 
     turn = 'playerOne'
-    DISPLAYSURF.blit(pygame.transform.scale(blauwscore, (350, 450)), (0, 300))
-    DISPLAYSURF.blit(pygame.transform.scale(hudpion_blauw, (100, 100)), (1000, 0))
+    DISPLAYSURF.blit(pygame.transform.scale(hudpion_blauw, (100, 100)), (200, 0))
 
     P1color = (0,   102,   205)
     player1 = Player(1, 30)
@@ -1044,7 +9317,25 @@ def gameboard_2():
             if event.type == QUIT:
                 pygame.quit()
                 sys.exit()
-            elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+            if hp1 > 0 and hp2 <= 0:
+                winningscreen('P1 Mike Tysen WINS')
+            if hp1 <= 0 and hp2 > 0:
+                winningscreen('P2 Rocky Belboa WINS')
+            if turn == 'playerOne':
+                if hp1 <= 0:
+                    bPx = 1500
+                    bPy = 1500
+                    DISPLAYSURF.blit(pygame.transform.scale(hudpion_rood, (100, 100)), (200, 80))
+                    DISPLAYSURF.blit(pygame.transform.scale(shade, (350, 80)), (0, 0))
+                    turn = 'playerTwo'
+            if turn == 'playerTwo':
+                if hp2 <= 0:
+                    rPx = 1500
+                    rPy = 1500
+                    DISPLAYSURF.blit(pygame.transform.scale(hudpion_blauw, (100, 100)), (200, 0))
+                    DISPLAYSURF.blit(pygame.transform.scale(shade, (350, 80)), (0, 80))
+                    turn = 'playerOne'
+            if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                 if btn.rect.collidepoint(pygame.mouse.get_pos()):
                     list = [1,2,3,4,5,6,7]
                     rand = random.randint(0,5)
@@ -1053,8 +9344,11 @@ def gameboard_2():
                     ggrand = grand + 1
 
                     if turn == 'playerOne':
-                        DISPLAYSURF.blit(pygame.transform.scale(roodscore, (350, 450)), (0, 300))
-                        DISPLAYSURF.blit(pygame.transform.scale(hudpion_rood, (100, 100)), (1000, 0))
+                        DISPLAYSURF.blit(pygame.transform.scale(shade, (100, 100)), (200, 0))
+                        DISPLAYSURF.blit(pygame.transform.scale(shade, (350, 450)), (0, 300))
+                        DISPLAYSURF.blit(pygame.transform.scale(hudpion_rood, (100, 100)), (200, 80))
+                        if hp2 <= 0:
+                            DISPLAYSURF.blit(pygame.transform.scale(shade, (100, 100)), (200, 160))
                         if bDirection == 'right':
                             for i in list[:grand]:
                                 if bPx == 950:
@@ -1064,6 +9358,298 @@ def gameboard_2():
                                     break
                                 else:
                                     bPx += 50
+                            if (bPx == fightx1 and bPy == fighty1) or (bPx == fightx3 and bPy == fighty2) or (bPx == fightx1 and bPy == fighty3) or (bPx == fightx2 and bPy == fighty2):
+                                super_list = ["John Cena", "Jason Statham", "Bruce Hee", "Jackie Chen", "Agua man", "Pariz Hilten", "Dexter", "Steve Urkel", "Ernold Schwarzenegger", "James Bend", "The Roch", "Chack Norris", "Vin Dieser", "Super Merio", "Steve Seagal", "Jet Ri", "Wesley Sniper", "Terry Crews"]
+                                super_random = random.randint(0, 17)
+                                print(super_list[super_random])
+                                if super_random == 0:
+                                    DISPLAYSURF.blit(pygame.transform.scale(John, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 10
+                                    elif rand == 1:
+                                        hp1 -= 6
+                                    elif rand == 2:
+                                        hp1 -= 25
+                                    elif rand == 3:
+                                        hp1 -= 7
+                                    elif rand == 4:
+                                        hp1 -= 8
+                                    elif rand == 5:
+                                        hp1 -= 11
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 1:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Jason, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 15
+                                    elif rand == 1:
+                                        hp1 -= 17
+                                    elif rand == 2:
+                                        hp1 -= 19
+                                    elif rand == 3:
+                                        hp1 -= 21
+                                    elif rand == 4:
+                                        hp1 -= 23
+                                    elif rand == 5:
+                                        hp1 -= 26
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 2:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Bruce, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 20
+                                    elif rand == 1:
+                                        hp1 -= 15
+                                    elif rand == 2:
+                                        hp1 -= 5
+                                    elif rand == 3:
+                                        hp1 -= 7
+                                    elif rand == 4:
+                                        hp1 -= 8
+                                    elif rand == 5:
+                                        hp1 -= 26
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 3:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Jackie, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 12
+                                    elif rand == 1:
+                                        hp1 -= 10
+                                    elif rand == 2:
+                                        hp1 -= 15
+                                    elif rand == 3:
+                                        hp1 -= 9
+                                    elif rand == 4:
+                                        hp1 -= 10
+                                    elif rand == 5:
+                                        hp1 -= 25
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 4:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Agua, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 12
+                                    elif rand == 1:
+                                        hp1 -= 15
+                                    elif rand == 2:
+                                        hp1 -= 9
+                                    elif rand == 3:
+                                        hp1 -= 7
+                                    elif rand == 4:
+                                        hp1 -= 7
+                                    elif rand == 5:
+                                        hp1 -= 13
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 5:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Pariz, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 12
+                                    elif rand == 1:
+                                        hp1 -= 8
+                                    elif rand == 2:
+                                        hp1 -= 7
+                                    elif rand == 3:
+                                        hp1 -= 15
+                                    elif rand == 4:
+                                        hp1 -= 13
+                                    elif rand == 5:
+                                        hp1 -= 9
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 6:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Dexter, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 9
+                                    elif rand == 1:
+                                        hp1 -= 8
+                                    elif rand == 2:
+                                        hp1 -= 7
+                                    elif rand == 3:
+                                        hp1 -= 15
+                                    elif rand == 4:
+                                        hp1 -= 13
+                                    elif rand == 5:
+                                        hp1 -= 9
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 7:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Steve_Urkel, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 10
+                                    elif rand == 1:
+                                        hp1 -= 5
+                                    elif rand == 2:
+                                        hp1 -= 12
+                                    elif rand == 3:
+                                        hp1 -= 11
+                                    elif rand == 4:
+                                        hp1 -= 15
+                                    elif rand == 5:
+                                        hp1 -= 8
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 8:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Ernold, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 25
+                                    elif rand == 1:
+                                        hp1 -= 25
+                                    elif rand == 2:
+                                        hp1 -= 20
+                                    elif rand == 3:
+                                        hp1 -= 15
+                                    elif rand == 4:
+                                        hp1 -= 15
+                                    elif rand == 5:
+                                        hp1 -= 10
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 9:
+                                    DISPLAYSURF.blit(pygame.transform.scale(James, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 25
+                                    elif rand == 1:
+                                        hp1 -= 15
+                                    elif rand == 2:
+                                        hp1 -= 15
+                                    elif rand == 3:
+                                        hp1 -= 7
+                                    elif rand == 4:
+                                        hp1 -= 20
+                                    elif rand == 5:
+                                        hp1 -= 25
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 10:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Roch, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 13
+                                    elif rand == 1:
+                                        hp1 -= 28
+                                    elif rand == 2:
+                                        hp1 -= 30
+                                    elif rand == 3:
+                                        hp1 -= 17
+                                    elif rand == 4:
+                                        hp1 -= 10
+                                    elif rand == 5:
+                                        hp1 -= 7
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 11:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Chack, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 15
+                                    elif rand == 1:
+                                        hp1 -= 28
+                                    elif rand == 2:
+                                        hp1 -= 27
+                                    elif rand == 3:
+                                        hp1 -= 25
+                                    elif rand == 4:
+                                        hp1 -= 29
+                                    elif rand == 5:
+                                        hp1 -= 30
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 12:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Vin, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 20
+                                    elif rand == 1:
+                                        hp1 -= 25
+                                    elif rand == 2:
+                                        hp1 -= 30
+                                    elif rand == 3:
+                                        hp1 -= 25
+                                    elif rand == 4:
+                                        hp1 -= 20
+                                    elif rand == 5:
+                                        hp1 -= 15
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 13:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Merio, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 10
+                                    elif rand == 1:
+                                        hp1 -= 10
+                                    elif rand == 2:
+                                        hp1 -= 30
+                                    elif rand == 3:
+                                        hp1 -= 30
+                                    elif rand == 4:
+                                        hp1 -= 15
+                                    elif rand == 5:
+                                        hp1 -= 15
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 14:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Steve_Seagal, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 10
+                                    elif rand == 1:
+                                        hp1 -= 15
+                                    elif rand == 2:
+                                        hp1 -= 12
+                                    elif rand == 3:
+                                        hp1 -= 11
+                                    elif rand == 4:
+                                        hp1 -= 25
+                                    elif rand == 5:
+                                        hp1 -= 20
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 15:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Jet, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 10
+                                    elif rand == 1:
+                                        hp1 -= 30
+                                    elif rand == 2:
+                                        hp1 -= 12
+                                    elif rand == 3:
+                                        hp1 -= 25
+                                    elif rand == 4:
+                                        hp1 -= 14
+                                    elif rand == 5:
+                                        hp1 -= 23
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 16:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Wesley, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 10
+                                    elif rand == 1:
+                                        hp1 -= 12
+                                    elif rand == 2:
+                                        hp1 -= 14
+                                    elif rand == 3:
+                                        hp1 -= 16
+                                    elif rand == 4:
+                                        hp1 -= 14
+                                    elif rand == 5:
+                                        hp1 -= 12
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 17:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Terry, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 10
+                                    elif rand == 1:
+                                        hp1 -= 15
+                                    elif rand == 2:
+                                        hp1 -= 25
+                                    elif rand == 3:
+                                        hp1 -= 20
+                                    elif rand == 4:
+                                        hp1 -= 15
+                                    elif rand == 5:
+                                        hp1 -= 10
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
                             turn = 'playerTwo'
                         elif bDirection == 'down':
                             for i in list[:grand]:
@@ -1074,6 +9660,298 @@ def gameboard_2():
                                     break
                                 else:
                                     bPy += 50
+                            if (bPx == fightx1 and bPy == fighty1) or (bPx == fightx3 and bPy == fighty2) or (bPx == fightx1 and bPy == fighty3) or (bPx == fightx2 and bPy == fighty2):
+                                super_list = ["John Cena", "Jason Statham", "Bruce Hee", "Jackie Chen", "Agua man", "Pariz Hilten", "Dexter", "Steve Urkel", "Ernold Schwarzenegger", "James Bend", "The Roch", "Chack Norris", "Vin Dieser", "Super Merio", "Steve Seagal", "Jet Ri", "Wesley Sniper", "Terry Crews"]
+                                super_random = random.randint(0, 17)
+                                print(super_list[super_random])
+                                if super_random == 0:
+                                    DISPLAYSURF.blit(pygame.transform.scale(John, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 10
+                                    elif rand == 1:
+                                        hp1 -= 6
+                                    elif rand == 2:
+                                        hp1 -= 25
+                                    elif rand == 3:
+                                        hp1 -= 7
+                                    elif rand == 4:
+                                        hp1 -= 8
+                                    elif rand == 5:
+                                        hp1 -= 11
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 1:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Jason, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 15
+                                    elif rand == 1:
+                                        hp1 -= 17
+                                    elif rand == 2:
+                                        hp1 -= 19
+                                    elif rand == 3:
+                                        hp1 -= 21
+                                    elif rand == 4:
+                                        hp1 -= 23
+                                    elif rand == 5:
+                                        hp1 -= 26
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 2:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Bruce, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 20
+                                    elif rand == 1:
+                                        hp1 -= 15
+                                    elif rand == 2:
+                                        hp1 -= 5
+                                    elif rand == 3:
+                                        hp1 -= 7
+                                    elif rand == 4:
+                                        hp1 -= 8
+                                    elif rand == 5:
+                                        hp1 -= 26
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 3:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Jackie, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 12
+                                    elif rand == 1:
+                                        hp1 -= 10
+                                    elif rand == 2:
+                                        hp1 -= 15
+                                    elif rand == 3:
+                                        hp1 -= 9
+                                    elif rand == 4:
+                                        hp1 -= 10
+                                    elif rand == 5:
+                                        hp1 -= 25
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 4:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Agua, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 12
+                                    elif rand == 1:
+                                        hp1 -= 15
+                                    elif rand == 2:
+                                        hp1 -= 9
+                                    elif rand == 3:
+                                        hp1 -= 7
+                                    elif rand == 4:
+                                        hp1 -= 7
+                                    elif rand == 5:
+                                        hp1 -= 13
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 5:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Pariz, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 12
+                                    elif rand == 1:
+                                        hp1 -= 8
+                                    elif rand == 2:
+                                        hp1 -= 7
+                                    elif rand == 3:
+                                        hp1 -= 15
+                                    elif rand == 4:
+                                        hp1 -= 13
+                                    elif rand == 5:
+                                        hp1 -= 9
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 6:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Dexter, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 9
+                                    elif rand == 1:
+                                        hp1 -= 8
+                                    elif rand == 2:
+                                        hp1 -= 7
+                                    elif rand == 3:
+                                        hp1 -= 15
+                                    elif rand == 4:
+                                        hp1 -= 13
+                                    elif rand == 5:
+                                        hp1 -= 9
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 7:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Steve_Urkel, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 10
+                                    elif rand == 1:
+                                        hp1 -= 5
+                                    elif rand == 2:
+                                        hp1 -= 12
+                                    elif rand == 3:
+                                        hp1 -= 11
+                                    elif rand == 4:
+                                        hp1 -= 15
+                                    elif rand == 5:
+                                        hp1 -= 8
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 8:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Ernold, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 25
+                                    elif rand == 1:
+                                        hp1 -= 25
+                                    elif rand == 2:
+                                        hp1 -= 20
+                                    elif rand == 3:
+                                        hp1 -= 15
+                                    elif rand == 4:
+                                        hp1 -= 15
+                                    elif rand == 5:
+                                        hp1 -= 10
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 9:
+                                    DISPLAYSURF.blit(pygame.transform.scale(James, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 25
+                                    elif rand == 1:
+                                        hp1 -= 15
+                                    elif rand == 2:
+                                        hp1 -= 15
+                                    elif rand == 3:
+                                        hp1 -= 7
+                                    elif rand == 4:
+                                        hp1 -= 20
+                                    elif rand == 5:
+                                        hp1 -= 25
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 10:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Roch, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 13
+                                    elif rand == 1:
+                                        hp1 -= 28
+                                    elif rand == 2:
+                                        hp1 -= 30
+                                    elif rand == 3:
+                                        hp1 -= 17
+                                    elif rand == 4:
+                                        hp1 -= 10
+                                    elif rand == 5:
+                                        hp1 -= 7
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 11:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Chack, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 15
+                                    elif rand == 1:
+                                        hp1 -= 28
+                                    elif rand == 2:
+                                        hp1 -= 27
+                                    elif rand == 3:
+                                        hp1 -= 25
+                                    elif rand == 4:
+                                        hp1 -= 29
+                                    elif rand == 5:
+                                        hp1 -= 30
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 12:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Vin, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 20
+                                    elif rand == 1:
+                                        hp1 -= 25
+                                    elif rand == 2:
+                                        hp1 -= 30
+                                    elif rand == 3:
+                                        hp1 -= 25
+                                    elif rand == 4:
+                                        hp1 -= 20
+                                    elif rand == 5:
+                                        hp1 -= 15
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 13:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Merio, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 10
+                                    elif rand == 1:
+                                        hp1 -= 10
+                                    elif rand == 2:
+                                        hp1 -= 30
+                                    elif rand == 3:
+                                        hp1 -= 30
+                                    elif rand == 4:
+                                        hp1 -= 15
+                                    elif rand == 5:
+                                        hp1 -= 15
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 14:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Steve_Seagal, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 10
+                                    elif rand == 1:
+                                        hp1 -= 15
+                                    elif rand == 2:
+                                        hp1 -= 12
+                                    elif rand == 3:
+                                        hp1 -= 11
+                                    elif rand == 4:
+                                        hp1 -= 25
+                                    elif rand == 5:
+                                        hp1 -= 20
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 15:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Jet, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 10
+                                    elif rand == 1:
+                                        hp1 -= 30
+                                    elif rand == 2:
+                                        hp1 -= 12
+                                    elif rand == 3:
+                                        hp1 -= 25
+                                    elif rand == 4:
+                                        hp1 -= 14
+                                    elif rand == 5:
+                                        hp1 -= 23
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 16:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Wesley, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 10
+                                    elif rand == 1:
+                                        hp1 -= 12
+                                    elif rand == 2:
+                                        hp1 -= 14
+                                    elif rand == 3:
+                                        hp1 -= 16
+                                    elif rand == 4:
+                                        hp1 -= 14
+                                    elif rand == 5:
+                                        hp1 -= 12
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 17:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Terry, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 10
+                                    elif rand == 1:
+                                        hp1 -= 15
+                                    elif rand == 2:
+                                        hp1 -= 25
+                                    elif rand == 3:
+                                        hp1 -= 20
+                                    elif rand == 4:
+                                        hp1 -= 15
+                                    elif rand == 5:
+                                        hp1 -= 10
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
                             turn = 'playerTwo'
                         elif bDirection == 'left':
                             for i in list[:grand]:
@@ -1084,6 +9962,298 @@ def gameboard_2():
                                     break
                                 else:
                                     bPx -= 50
+                            if (bPx == fightx1 and bPy == fighty1) or (bPx == fightx3 and bPy == fighty2) or (bPx == fightx1 and bPy == fighty3) or (bPx == fightx2 and bPy == fighty2):
+                                super_list = ["John Cena", "Jason Statham", "Bruce Hee", "Jackie Chen", "Agua man", "Pariz Hilten", "Dexter", "Steve Urkel", "Ernold Schwarzenegger", "James Bend", "The Roch", "Chack Norris", "Vin Dieser", "Super Merio", "Steve Seagal", "Jet Ri", "Wesley Sniper", "Terry Crews"]
+                                super_random = random.randint(0, 17)
+                                print(super_list[super_random])
+                                if super_random == 0:
+                                    DISPLAYSURF.blit(pygame.transform.scale(John, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 10
+                                    elif rand == 1:
+                                        hp1 -= 6
+                                    elif rand == 2:
+                                        hp1 -= 25
+                                    elif rand == 3:
+                                        hp1 -= 7
+                                    elif rand == 4:
+                                        hp1 -= 8
+                                    elif rand == 5:
+                                        hp1 -= 11
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 1:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Jason, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 15
+                                    elif rand == 1:
+                                        hp1 -= 17
+                                    elif rand == 2:
+                                        hp1 -= 19
+                                    elif rand == 3:
+                                        hp1 -= 21
+                                    elif rand == 4:
+                                        hp1 -= 23
+                                    elif rand == 5:
+                                        hp1 -= 26
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 2:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Bruce, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 20
+                                    elif rand == 1:
+                                        hp1 -= 15
+                                    elif rand == 2:
+                                        hp1 -= 5
+                                    elif rand == 3:
+                                        hp1 -= 7
+                                    elif rand == 4:
+                                        hp1 -= 8
+                                    elif rand == 5:
+                                        hp1 -= 26
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 3:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Jackie, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 12
+                                    elif rand == 1:
+                                        hp1 -= 10
+                                    elif rand == 2:
+                                        hp1 -= 15
+                                    elif rand == 3:
+                                        hp1 -= 9
+                                    elif rand == 4:
+                                        hp1 -= 10
+                                    elif rand == 5:
+                                        hp1 -= 25
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 4:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Agua, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 12
+                                    elif rand == 1:
+                                        hp1 -= 15
+                                    elif rand == 2:
+                                        hp1 -= 9
+                                    elif rand == 3:
+                                        hp1 -= 7
+                                    elif rand == 4:
+                                        hp1 -= 7
+                                    elif rand == 5:
+                                        hp1 -= 13
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 5:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Pariz, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 12
+                                    elif rand == 1:
+                                        hp1 -= 8
+                                    elif rand == 2:
+                                        hp1 -= 7
+                                    elif rand == 3:
+                                        hp1 -= 15
+                                    elif rand == 4:
+                                        hp1 -= 13
+                                    elif rand == 5:
+                                        hp1 -= 9
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 6:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Dexter, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 9
+                                    elif rand == 1:
+                                        hp1 -= 8
+                                    elif rand == 2:
+                                        hp1 -= 7
+                                    elif rand == 3:
+                                        hp1 -= 15
+                                    elif rand == 4:
+                                        hp1 -= 13
+                                    elif rand == 5:
+                                        hp1 -= 9
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 7:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Steve_Urkel, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 10
+                                    elif rand == 1:
+                                        hp1 -= 5
+                                    elif rand == 2:
+                                        hp1 -= 12
+                                    elif rand == 3:
+                                        hp1 -= 11
+                                    elif rand == 4:
+                                        hp1 -= 15
+                                    elif rand == 5:
+                                        hp1 -= 8
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 8:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Ernold, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 25
+                                    elif rand == 1:
+                                        hp1 -= 25
+                                    elif rand == 2:
+                                        hp1 -= 20
+                                    elif rand == 3:
+                                        hp1 -= 15
+                                    elif rand == 4:
+                                        hp1 -= 15
+                                    elif rand == 5:
+                                        hp1 -= 10
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 9:
+                                    DISPLAYSURF.blit(pygame.transform.scale(James, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 25
+                                    elif rand == 1:
+                                        hp1 -= 15
+                                    elif rand == 2:
+                                        hp1 -= 15
+                                    elif rand == 3:
+                                        hp1 -= 7
+                                    elif rand == 4:
+                                        hp1 -= 20
+                                    elif rand == 5:
+                                        hp1 -= 25
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 10:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Roch, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 13
+                                    elif rand == 1:
+                                        hp1 -= 28
+                                    elif rand == 2:
+                                        hp1 -= 30
+                                    elif rand == 3:
+                                        hp1 -= 17
+                                    elif rand == 4:
+                                        hp1 -= 10
+                                    elif rand == 5:
+                                        hp1 -= 7
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 11:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Chack, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 15
+                                    elif rand == 1:
+                                        hp1 -= 28
+                                    elif rand == 2:
+                                        hp1 -= 27
+                                    elif rand == 3:
+                                        hp1 -= 25
+                                    elif rand == 4:
+                                        hp1 -= 29
+                                    elif rand == 5:
+                                        hp1 -= 30
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 12:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Vin, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 20
+                                    elif rand == 1:
+                                        hp1 -= 25
+                                    elif rand == 2:
+                                        hp1 -= 30
+                                    elif rand == 3:
+                                        hp1 -= 25
+                                    elif rand == 4:
+                                        hp1 -= 20
+                                    elif rand == 5:
+                                        hp1 -= 15
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 13:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Merio, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 10
+                                    elif rand == 1:
+                                        hp1 -= 10
+                                    elif rand == 2:
+                                        hp1 -= 30
+                                    elif rand == 3:
+                                        hp1 -= 30
+                                    elif rand == 4:
+                                        hp1 -= 15
+                                    elif rand == 5:
+                                        hp1 -= 15
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 14:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Steve_Seagal, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 10
+                                    elif rand == 1:
+                                        hp1 -= 15
+                                    elif rand == 2:
+                                        hp1 -= 12
+                                    elif rand == 3:
+                                        hp1 -= 11
+                                    elif rand == 4:
+                                        hp1 -= 25
+                                    elif rand == 5:
+                                        hp1 -= 20
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 15:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Jet, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 10
+                                    elif rand == 1:
+                                        hp1 -= 30
+                                    elif rand == 2:
+                                        hp1 -= 12
+                                    elif rand == 3:
+                                        hp1 -= 25
+                                    elif rand == 4:
+                                        hp1 -= 14
+                                    elif rand == 5:
+                                        hp1 -= 23
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 16:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Wesley, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 10
+                                    elif rand == 1:
+                                        hp1 -= 12
+                                    elif rand == 2:
+                                        hp1 -= 14
+                                    elif rand == 3:
+                                        hp1 -= 16
+                                    elif rand == 4:
+                                        hp1 -= 14
+                                    elif rand == 5:
+                                        hp1 -= 12
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 17:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Terry, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 10
+                                    elif rand == 1:
+                                        hp1 -= 15
+                                    elif rand == 2:
+                                        hp1 -= 25
+                                    elif rand == 3:
+                                        hp1 -= 20
+                                    elif rand == 4:
+                                        hp1 -= 15
+                                    elif rand == 5:
+                                        hp1 -= 10
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
                             turn = 'playerTwo'
                         elif bDirection == 'up':
                             for i in list[:grand]:
@@ -1094,6 +10264,299 @@ def gameboard_2():
                                     break
                                 else:
                                     bPy -= 50
+                            if (bPx == fightx1 and bPy == fighty1) or (bPx == fightx3 and bPy == fighty2) or (bPx == fightx1 and bPy == fighty3) or (bPx == fightx2 and bPy == fighty2):
+                                super_list = ["John Cena", "Jason Statham", "Bruce Hee", "Jackie Chen", "Agua man", "Pariz Hilten", "Dexter", "Steve Urkel", "Ernold Schwarzenegger", "James Bend", "The Roch", "Chack Norris", "Vin Dieser", "Super Merio", "Steve Seagal", "Jet Ri", "Wesley Sniper", "Terry Crews"]
+                                super_random = random.randint(0, 17)
+                                print(super_list[super_random])
+                                if super_random == 0:
+                                    DISPLAYSURF.blit(pygame.transform.scale(John, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 10
+                                    elif rand == 1:
+                                        hp1 -= 6
+                                    elif rand == 2:
+                                        hp1 -= 25
+                                    elif rand == 3:
+                                        hp1 -= 7
+                                    elif rand == 4:
+                                        hp1 -= 8
+                                    elif rand == 5:
+                                        hp1 -= 11
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 1:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Jason, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 15
+                                    elif rand == 1:
+                                        hp1 -= 17
+                                    elif rand == 2:
+                                        hp1 -= 19
+                                    elif rand == 3:
+                                        hp1 -= 21
+                                    elif rand == 4:
+                                        hp1 -= 23
+                                    elif rand == 5:
+                                        hp1 -= 26
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 2:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Bruce, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 20
+                                    elif rand == 1:
+                                        hp1 -= 15
+                                    elif rand == 2:
+                                        hp1 -= 5
+                                    elif rand == 3:
+                                        hp1 -= 7
+                                    elif rand == 4:
+                                        hp1 -= 8
+                                    elif rand == 5:
+                                        hp1 -= 26
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 3:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Jackie, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 12
+                                    elif rand == 1:
+                                        hp1 -= 10
+                                    elif rand == 2:
+                                        hp1 -= 15
+                                    elif rand == 3:
+                                        hp1 -= 9
+                                    elif rand == 4:
+                                        hp1 -= 10
+                                    elif rand == 5:
+                                        hp1 -= 25
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 4:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Agua, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 12
+                                    elif rand == 1:
+                                        hp1 -= 15
+                                    elif rand == 2:
+                                        hp1 -= 9
+                                    elif rand == 3:
+                                        hp1 -= 7
+                                    elif rand == 4:
+                                        hp1 -= 7
+                                    elif rand == 5:
+                                        hp1 -= 13
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 5:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Pariz, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 12
+                                    elif rand == 1:
+                                        hp1 -= 8
+                                    elif rand == 2:
+                                        hp1 -= 7
+                                    elif rand == 3:
+                                        hp1 -= 15
+                                    elif rand == 4:
+                                        hp1 -= 13
+                                    elif rand == 5:
+                                        hp1 -= 9
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 6:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Dexter, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 9
+                                    elif rand == 1:
+                                        hp1 -= 8
+                                    elif rand == 2:
+                                        hp1 -= 7
+                                    elif rand == 3:
+                                        hp1 -= 15
+                                    elif rand == 4:
+                                        hp1 -= 13
+                                    elif rand == 5:
+                                        hp1 -= 9
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 7:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Steve_Urkel, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 10
+                                    elif rand == 1:
+                                        hp1 -= 5
+                                    elif rand == 2:
+                                        hp1 -= 12
+                                    elif rand == 3:
+                                        hp1 -= 11
+                                    elif rand == 4:
+                                        hp1 -= 15
+                                    elif rand == 5:
+                                        hp1 -= 8
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 8:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Ernold, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 25
+                                    elif rand == 1:
+                                        hp1 -= 25
+                                    elif rand == 2:
+                                        hp1 -= 20
+                                    elif rand == 3:
+                                        hp1 -= 15
+                                    elif rand == 4:
+                                        hp1 -= 15
+                                    elif rand == 5:
+                                        hp1 -= 10
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 9:
+                                    DISPLAYSURF.blit(pygame.transform.scale(James, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 25
+                                    elif rand == 1:
+                                        hp1 -= 15
+                                    elif rand == 2:
+                                        hp1 -= 15
+                                    elif rand == 3:
+                                        hp1 -= 7
+                                    elif rand == 4:
+                                        hp1 -= 20
+                                    elif rand == 5:
+                                        hp1 -= 25
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 10:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Roch, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 13
+                                    elif rand == 1:
+                                        hp1 -= 28
+                                    elif rand == 2:
+                                        hp1 -= 30
+                                    elif rand == 3:
+                                        hp1 -= 17
+                                    elif rand == 4:
+                                        hp1 -= 10
+                                    elif rand == 5:
+                                        hp1 -= 7
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 11:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Chack, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 15
+                                    elif rand == 1:
+                                        hp1 -= 28
+                                    elif rand == 2:
+                                        hp1 -= 27
+                                    elif rand == 3:
+                                        hp1 -= 25
+                                    elif rand == 4:
+                                        hp1 -= 29
+                                    elif rand == 5:
+                                        hp1 -= 30
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 12:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Vin, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 20
+                                    elif rand == 1:
+                                        hp1 -= 25
+                                    elif rand == 2:
+                                        hp1 -= 30
+                                    elif rand == 3:
+                                        hp1 -= 25
+                                    elif rand == 4:
+                                        hp1 -= 20
+                                    elif rand == 5:
+                                        hp1 -= 15
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 13:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Merio, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 10
+                                    elif rand == 1:
+                                        hp1 -= 10
+                                    elif rand == 2:
+                                        hp1 -= 30
+                                    elif rand == 3:
+                                        hp1 -= 30
+                                    elif rand == 4:
+                                        hp1 -= 15
+                                    elif rand == 5:
+                                        hp1 -= 15
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 14:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Steve_Seagal, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 10
+                                    elif rand == 1:
+                                        hp1 -= 15
+                                    elif rand == 2:
+                                        hp1 -= 12
+                                    elif rand == 3:
+                                        hp1 -= 11
+                                    elif rand == 4:
+                                        hp1 -= 25
+                                    elif rand == 5:
+                                        hp1 -= 20
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 15:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Jet, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 10
+                                    elif rand == 1:
+                                        hp1 -= 30
+                                    elif rand == 2:
+                                        hp1 -= 12
+                                    elif rand == 3:
+                                        hp1 -= 25
+                                    elif rand == 4:
+                                        hp1 -= 14
+                                    elif rand == 5:
+                                        hp1 -= 23
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 16:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Wesley, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 10
+                                    elif rand == 1:
+                                        hp1 -= 12
+                                    elif rand == 2:
+                                        hp1 -= 14
+                                    elif rand == 3:
+                                        hp1 -= 16
+                                    elif rand == 4:
+                                        hp1 -= 14
+                                    elif rand == 5:
+                                        hp1 -= 12
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                                elif super_random == 17:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Terry, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp1 -= 10
+                                    elif rand == 1:
+                                        hp1 -= 15
+                                    elif rand == 2:
+                                        hp1 -= 25
+                                    elif rand == 3:
+                                        hp1 -= 20
+                                    elif rand == 4:
+                                        hp1 -= 15
+                                    elif rand == 5:
+                                        hp1 -= 10
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
+                                    text("HP:       "+ str(hp1), white, 30, 20, 40)
+                            turn = 'playerTwo'
                         if 100 <= bPy <= 200 and 900 <= bPx <= 1000:
                             Hoekfight(player1.hp, player2.hp)
                         elif 100 <= bPy <= 200 and 450 <= bPx <= 550:
@@ -1107,8 +10570,11 @@ def gameboard_2():
 
 
                     elif turn == 'playerTwo':
-                        DISPLAYSURF.blit(pygame.transform.scale(blauwscore, (350, 450)), (0, 300))
-                        DISPLAYSURF.blit(pygame.transform.scale(hudpion_blauw, (100, 100)), (1000, 0))
+                        DISPLAYSURF.blit(pygame.transform.scale(shade, (350, 450)), (0, 300))
+                        DISPLAYSURF.blit(pygame.transform.scale(shade, (100, 100)), (200, 80))
+                        DISPLAYSURF.blit(pygame.transform.scale(hudpion_blauw, (100, 100)), (200, 0))
+                        if hp1 <= 0:
+                            DISPLAYSURF.blit(pygame.transform.scale(shade, (100, 100)), (200, 160))
                         if rDirection == 'right':
                             for i in list[:grand]:
                                 if rPx == 950:
@@ -1118,6 +10584,298 @@ def gameboard_2():
                                     break
                                 else:
                                     rPx += 50
+                            if (rPx == fightx1 and rPy == fighty1) or (rPx == fightx3 and rPy == fighty2) or (rPx == fightx1 and rPy == fighty3) or (rPx == fightx2 and rPy == fighty2):
+                                super_list = ["John Cena", "Jason Statham", "Bruce Hee", "Jackie Chen", "Agua man", "Pariz Hilten", "Dexter", " Steve Urkel", "Ernold Schwarzenegger", "James Bend", "The Roch", "Chack Norris", "Vin Dieser", "Super Merio", "Steve Seagal", "Jet Ri", "Wesley Sniper", "Terry Crews"]
+                                super_random = random.randint(0, 17)
+                                print(super_list[super_random])
+                                if super_random == 0:
+                                    DISPLAYSURF.blit(pygame.transform.scale(John, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 10
+                                    elif rand == 1:
+                                        hp2 -= 6
+                                    elif rand == 2:
+                                        hp2 -= 25
+                                    elif rand == 3:
+                                        hp2 -= 7
+                                    elif rand == 4:
+                                        hp2 -= 8
+                                    elif rand == 5:
+                                        hp2 -= 11
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 1:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Jason, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 15
+                                    elif rand == 1:
+                                        hp2 -= 17
+                                    elif rand == 2:
+                                        hp2 -= 19
+                                    elif rand == 3:
+                                        hp2 -= 21
+                                    elif rand == 4:
+                                        hp2 -= 23
+                                    elif rand == 5:
+                                        hp2 -= 26
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 2:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Bruce, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 20
+                                    elif rand == 1:
+                                        hp2 -= 15
+                                    elif rand == 2:
+                                        hp2 -= 5
+                                    elif rand == 3:
+                                        hp2 -= 7
+                                    elif rand == 4:
+                                        hp2 -= 8
+                                    elif rand == 5:
+                                        hp2 -= 26
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 3:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Jackie, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 12
+                                    elif rand == 1:
+                                        hp2 -= 10
+                                    elif rand == 2:
+                                        hp2 -= 15
+                                    elif rand == 3:
+                                        hp2 -= 9
+                                    elif rand == 4:
+                                        hp2 -= 10
+                                    elif rand == 5:
+                                        hp2 -= 25
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 4:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Agua, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 12
+                                    elif rand == 1:
+                                        hp2 -= 15
+                                    elif rand == 2:
+                                        hp2 -= 9
+                                    elif rand == 3:
+                                        hp2 -= 7
+                                    elif rand == 4:
+                                        hp2 -= 7
+                                    elif rand == 5:
+                                        hp2 -= 13
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 5:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Pariz, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 12
+                                    elif rand == 1:
+                                        hp2 -= 8
+                                    elif rand == 2:
+                                        hp2 -= 7
+                                    elif rand == 3:
+                                        hp2 -= 15
+                                    elif rand == 4:
+                                        hp2 -= 13
+                                    elif rand == 5:
+                                        hp2 -= 9
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 6:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Dexter, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 9
+                                    elif rand == 1:
+                                        hp2 -= 8
+                                    elif rand == 2:
+                                        hp2 -= 7
+                                    elif rand == 3:
+                                        hp2 -= 15
+                                    elif rand == 4:
+                                        hp2 -= 13
+                                    elif rand == 5:
+                                        hp2 -= 9
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 7:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Steve_Urkel, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 10
+                                    elif rand == 1:
+                                        hp2 -= 5
+                                    elif rand == 2:
+                                        hp2 -= 12
+                                    elif rand == 3:
+                                        hp2 -= 11
+                                    elif rand == 4:
+                                        hp2 -= 15
+                                    elif rand == 5:
+                                        hp2 -= 8
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 8:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Ernold, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 25
+                                    elif rand == 1:
+                                        hp2 -= 25
+                                    elif rand == 2:
+                                        hp2 -= 20
+                                    elif rand == 3:
+                                        hp2 -= 15
+                                    elif rand == 4:
+                                        hp2 -= 15
+                                    elif rand == 5:
+                                        hp2 -= 10
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 9:
+                                    DISPLAYSURF.blit(pygame.transform.scale(James, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 25
+                                    elif rand == 1:
+                                        hp2 -= 15
+                                    elif rand == 2:
+                                        hp2 -= 15
+                                    elif rand == 3:
+                                        hp2 -= 7
+                                    elif rand == 4:
+                                        hp2 -= 20
+                                    elif rand == 5:
+                                        hp2 -= 25
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 10:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Roch, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 13
+                                    elif rand == 1:
+                                        hp2 -= 28
+                                    elif rand == 2:
+                                        hp2 -= 30
+                                    elif rand == 3:
+                                        hp2 -= 17
+                                    elif rand == 4:
+                                        hp2 -= 10
+                                    elif rand == 5:
+                                        hp2 -= 7
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 11:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Chack, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 15
+                                    elif rand == 1:
+                                        hp2 -= 28
+                                    elif rand == 2:
+                                        hp2 -= 27
+                                    elif rand == 3:
+                                        hp2 -= 25
+                                    elif rand == 4:
+                                        hp2 -= 29
+                                    elif rand == 5:
+                                        hp2 -= 30
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 12:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Vin, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 20
+                                    elif rand == 1:
+                                        hp2 -= 25
+                                    elif rand == 2:
+                                        hp2 -= 30
+                                    elif rand == 3:
+                                        hp2 -= 25
+                                    elif rand == 4:
+                                        hp2 -= 20
+                                    elif rand == 5:
+                                        hp2 -= 15
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 13:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Merio, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 10
+                                    elif rand == 1:
+                                        hp2 -= 10
+                                    elif rand == 2:
+                                        hp2 -= 30
+                                    elif rand == 3:
+                                        hp2 -= 30
+                                    elif rand == 4:
+                                        hp2 -= 15
+                                    elif rand == 5:
+                                        hp2 -= 15
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 14:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Steve_Seagal, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 10
+                                    elif rand == 1:
+                                        hp2 -= 15
+                                    elif rand == 2:
+                                        hp2 -= 12
+                                    elif rand == 3:
+                                        hp2 -= 11
+                                    elif rand == 4:
+                                        hp2 -= 25
+                                    elif rand == 5:
+                                        hp2 -= 20
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 15:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Jet, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 10
+                                    elif rand == 1:
+                                        hp2 -= 30
+                                    elif rand == 2:
+                                        hp2 -= 12
+                                    elif rand == 3:
+                                        hp2 -= 25
+                                    elif rand == 4:
+                                        hp2 -= 14
+                                    elif rand == 5:
+                                        hp2 -= 23
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 16:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Wesley, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 10
+                                    elif rand == 1:
+                                        hp2 -= 12
+                                    elif rand == 2:
+                                        hp2 -= 14
+                                    elif rand == 3:
+                                        hp2 -= 16
+                                    elif rand == 4:
+                                        hp2 -= 14
+                                    elif rand == 5:
+                                        hp2 -= 12
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 17:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Terry, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 10
+                                    elif rand == 1:
+                                        hp2 -= 15
+                                    elif rand == 2:
+                                        hp2 -= 25
+                                    elif rand == 3:
+                                        hp2 -= 20
+                                    elif rand == 4:
+                                        hp2 -= 15
+                                    elif rand == 5:
+                                        hp2 -= 10
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
                             turn = 'playerOne'
                         elif rDirection == 'down':
                             for i in list[:grand]:
@@ -1128,6 +10886,298 @@ def gameboard_2():
                                     break
                                 else:
                                     rPy += 50
+                            if (rPx == fightx1 and rPy == fighty1) or (rPx == fightx3 and rPy == fighty2) or (rPx == fightx1 and rPy == fighty3) or (rPx == fightx2 and rPy == fighty2):
+                                super_list = ["John Cena", "Jason Statham", "Bruce Hee", "Jackie Chen", "Agua man", "Pariz Hilten", "Dexter", "Steve Urkel", "Ernold Schwarzenegger", "James Bend", "The Roch", "Chack Norris", "Vin Dieser", "Super Merio", "Steve Seagal", "Jet Ri", "Wesley Sniper", "Terry Crews"]
+                                super_random = random.randint(0, 17)
+                                print(super_list[super_random])
+                                if super_random == 0:
+                                    DISPLAYSURF.blit(pygame.transform.scale(John, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 10
+                                    elif rand == 1:
+                                        hp2 -= 6
+                                    elif rand == 2:
+                                        hp2 -= 25
+                                    elif rand == 3:
+                                        hp2 -= 7
+                                    elif rand == 4:
+                                        hp2 -= 8
+                                    elif rand == 5:
+                                        hp2 -= 11
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 1:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Jason, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 15
+                                    elif rand == 1:
+                                        hp2 -= 17
+                                    elif rand == 2:
+                                        hp2 -= 19
+                                    elif rand == 3:
+                                        hp2 -= 21
+                                    elif rand == 4:
+                                        hp2 -= 23
+                                    elif rand == 5:
+                                        hp2 -= 26
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 2:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Bruce, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 20
+                                    elif rand == 1:
+                                        hp2 -= 15
+                                    elif rand == 2:
+                                        hp2 -= 5
+                                    elif rand == 3:
+                                        hp2 -= 7
+                                    elif rand == 4:
+                                        hp2 -= 8
+                                    elif rand == 5:
+                                        hp2 -= 26
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 3:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Jackie, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 12
+                                    elif rand == 1:
+                                        hp2 -= 10
+                                    elif rand == 2:
+                                        hp2 -= 15
+                                    elif rand == 3:
+                                        hp2 -= 9
+                                    elif rand == 4:
+                                        hp2 -= 10
+                                    elif rand == 5:
+                                        hp2 -= 25
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 4:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Agua, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 12
+                                    elif rand == 1:
+                                        hp2 -= 15
+                                    elif rand == 2:
+                                        hp2 -= 9
+                                    elif rand == 3:
+                                        hp2 -= 7
+                                    elif rand == 4:
+                                        hp2 -= 7
+                                    elif rand == 5:
+                                        hp2 -= 13
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 5:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Pariz, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 12
+                                    elif rand == 1:
+                                        hp2 -= 8
+                                    elif rand == 2:
+                                        hp2 -= 7
+                                    elif rand == 3:
+                                        hp2 -= 15
+                                    elif rand == 4:
+                                        hp2 -= 13
+                                    elif rand == 5:
+                                        hp2 -= 9
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 6:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Dexter, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 9
+                                    elif rand == 1:
+                                        hp2 -= 8
+                                    elif rand == 2:
+                                        hp2 -= 7
+                                    elif rand == 3:
+                                        hp2 -= 15
+                                    elif rand == 4:
+                                        hp2 -= 13
+                                    elif rand == 5:
+                                        hp2 -= 9
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 7:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Steve_Urkel, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 10
+                                    elif rand == 1:
+                                        hp2 -= 5
+                                    elif rand == 2:
+                                        hp2 -= 12
+                                    elif rand == 3:
+                                        hp2 -= 11
+                                    elif rand == 4:
+                                        hp2 -= 15
+                                    elif rand == 5:
+                                        hp2 -= 8
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 8:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Ernold, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 25
+                                    elif rand == 1:
+                                        hp2 -= 25
+                                    elif rand == 2:
+                                        hp2 -= 20
+                                    elif rand == 3:
+                                        hp2 -= 15
+                                    elif rand == 4:
+                                        hp2 -= 15
+                                    elif rand == 5:
+                                        hp2 -= 10
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 9:
+                                    DISPLAYSURF.blit(pygame.transform.scale(James, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 25
+                                    elif rand == 1:
+                                        hp2 -= 15
+                                    elif rand == 2:
+                                        hp2 -= 15
+                                    elif rand == 3:
+                                        hp2 -= 7
+                                    elif rand == 4:
+                                        hp2 -= 20
+                                    elif rand == 5:
+                                        hp2 -= 25
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 10:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Roch, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 13
+                                    elif rand == 1:
+                                        hp2 -= 28
+                                    elif rand == 2:
+                                        hp2 -= 30
+                                    elif rand == 3:
+                                        hp2 -= 17
+                                    elif rand == 4:
+                                        hp2 -= 10
+                                    elif rand == 5:
+                                        hp2 -= 7
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 11:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Chack, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 15
+                                    elif rand == 1:
+                                        hp2 -= 28
+                                    elif rand == 2:
+                                        hp2 -= 27
+                                    elif rand == 3:
+                                        hp2 -= 25
+                                    elif rand == 4:
+                                        hp2 -= 29
+                                    elif rand == 5:
+                                        hp2 -= 30
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 12:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Vin, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 20
+                                    elif rand == 1:
+                                        hp2 -= 25
+                                    elif rand == 2:
+                                        hp2 -= 30
+                                    elif rand == 3:
+                                        hp2 -= 25
+                                    elif rand == 4:
+                                        hp2 -= 20
+                                    elif rand == 5:
+                                        hp2 -= 15
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 13:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Merio, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 10
+                                    elif rand == 1:
+                                        hp2 -= 10
+                                    elif rand == 2:
+                                        hp2 -= 30
+                                    elif rand == 3:
+                                        hp2 -= 30
+                                    elif rand == 4:
+                                        hp2 -= 15
+                                    elif rand == 5:
+                                        hp2 -= 15
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 14:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Steve_Seagal, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 10
+                                    elif rand == 1:
+                                        hp2 -= 15
+                                    elif rand == 2:
+                                        hp2 -= 12
+                                    elif rand == 3:
+                                        hp2 -= 11
+                                    elif rand == 4:
+                                        hp2 -= 25
+                                    elif rand == 5:
+                                        hp2 -= 20
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 15:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Jet, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 10
+                                    elif rand == 1:
+                                        hp2 -= 30
+                                    elif rand == 2:
+                                        hp2 -= 12
+                                    elif rand == 3:
+                                        hp2 -= 25
+                                    elif rand == 4:
+                                        hp2 -= 14
+                                    elif rand == 5:
+                                        hp2 -= 23
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 16:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Wesley, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 10
+                                    elif rand == 1:
+                                        hp2 -= 12
+                                    elif rand == 2:
+                                        hp2 -= 14
+                                    elif rand == 3:
+                                        hp2 -= 16
+                                    elif rand == 4:
+                                        hp2 -= 14
+                                    elif rand == 5:
+                                        hp2 -= 12
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 17:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Terry, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 10
+                                    elif rand == 1:
+                                        hp2 -= 15
+                                    elif rand == 2:
+                                        hp2 -= 25
+                                    elif rand == 3:
+                                        hp2 -= 20
+                                    elif rand == 4:
+                                        hp2 -= 15
+                                    elif rand == 5:
+                                        hp2 -= 10
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
                             turn = 'playerOne'
                         elif rDirection == 'left':
                             for i in list[:grand]:
@@ -1138,6 +11188,298 @@ def gameboard_2():
                                     break
                                 else:
                                     rPx -= 50
+                            if (rPx == fightx1 and rPy == fighty1) or (rPx == fightx3 and rPy == fighty2) or (rPx == fightx1 and rPy == fighty3) or (rPx == fightx2 and rPy == fighty2):
+                                super_list = ["John Cena", "Jason Statham", "Bruce Hee", "Jackie Chen", "Agua man", "Pariz Hilten", "Dexter", "Steve Urkel", "Ernold Schwarzenegger", "James Bend", "The Roch", "Chack Norris", "Vin Dieser", "Super Merio", "Steve Seagal", "Jet Ri", "Wesley Sniper", "Terry Crews"]
+                                super_random = random.randint(0, 17)
+                                print(super_list[super_random])
+                                if super_random == 0:
+                                    DISPLAYSURF.blit(pygame.transform.scale(John, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 10
+                                    elif rand == 1:
+                                        hp2 -= 6
+                                    elif rand == 2:
+                                        hp2 -= 25
+                                    elif rand == 3:
+                                        hp2 -= 7
+                                    elif rand == 4:
+                                        hp2 -= 8
+                                    elif rand == 5:
+                                        hp2 -= 11
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 1:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Jason, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 15
+                                    elif rand == 1:
+                                        hp2 -= 17
+                                    elif rand == 2:
+                                        hp2 -= 19
+                                    elif rand == 3:
+                                        hp2 -= 21
+                                    elif rand == 4:
+                                        hp2 -= 23
+                                    elif rand == 5:
+                                        hp2 -= 26
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 2:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Bruce, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 20
+                                    elif rand == 1:
+                                        hp2 -= 15
+                                    elif rand == 2:
+                                        hp2 -= 5
+                                    elif rand == 3:
+                                        hp2 -= 7
+                                    elif rand == 4:
+                                        hp2 -= 8
+                                    elif rand == 5:
+                                        hp2 -= 26
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 3:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Jackie, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 12
+                                    elif rand == 1:
+                                        hp2 -= 10
+                                    elif rand == 2:
+                                        hp2 -= 15
+                                    elif rand == 3:
+                                        hp2 -= 9
+                                    elif rand == 4:
+                                        hp2 -= 10
+                                    elif rand == 5:
+                                        hp2 -= 25
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 4:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Agua, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 12
+                                    elif rand == 1:
+                                        hp2 -= 15
+                                    elif rand == 2:
+                                        hp2 -= 9
+                                    elif rand == 3:
+                                        hp2 -= 7
+                                    elif rand == 4:
+                                        hp2 -= 7
+                                    elif rand == 5:
+                                        hp2 -= 13
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 5:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Pariz, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 12
+                                    elif rand == 1:
+                                        hp2 -= 8
+                                    elif rand == 2:
+                                        hp2 -= 7
+                                    elif rand == 3:
+                                        hp2 -= 15
+                                    elif rand == 4:
+                                        hp2 -= 13
+                                    elif rand == 5:
+                                        hp2 -= 9
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 6:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Dexter, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 9
+                                    elif rand == 1:
+                                        hp2 -= 8
+                                    elif rand == 2:
+                                        hp2 -= 7
+                                    elif rand == 3:
+                                        hp2 -= 15
+                                    elif rand == 4:
+                                        hp2 -= 13
+                                    elif rand == 5:
+                                        hp2 -= 9
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 7:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Steve_Urkel, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 10
+                                    elif rand == 1:
+                                        hp2 -= 5
+                                    elif rand == 2:
+                                        hp2 -= 12
+                                    elif rand == 3:
+                                        hp2 -= 11
+                                    elif rand == 4:
+                                        hp2 -= 15
+                                    elif rand == 5:
+                                        hp2 -= 8
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 8:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Ernold, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 25
+                                    elif rand == 1:
+                                        hp2 -= 25
+                                    elif rand == 2:
+                                        hp2 -= 20
+                                    elif rand == 3:
+                                        hp2 -= 15
+                                    elif rand == 4:
+                                        hp2 -= 15
+                                    elif rand == 5:
+                                        hp2 -= 10
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 9:
+                                    DISPLAYSURF.blit(pygame.transform.scale(James, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 25
+                                    elif rand == 1:
+                                        hp2 -= 15
+                                    elif rand == 2:
+                                        hp2 -= 15
+                                    elif rand == 3:
+                                        hp2 -= 7
+                                    elif rand == 4:
+                                        hp2 -= 20
+                                    elif rand == 5:
+                                        hp2 -= 25
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 10:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Roch, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 13
+                                    elif rand == 1:
+                                        hp2 -= 28
+                                    elif rand == 2:
+                                        hp2 -= 30
+                                    elif rand == 3:
+                                        hp2 -= 17
+                                    elif rand == 4:
+                                        hp2 -= 10
+                                    elif rand == 5:
+                                        hp2 -= 7
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 11:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Chack, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 15
+                                    elif rand == 1:
+                                        hp2 -= 28
+                                    elif rand == 2:
+                                        hp2 -= 27
+                                    elif rand == 3:
+                                        hp2 -= 25
+                                    elif rand == 4:
+                                        hp2 -= 29
+                                    elif rand == 5:
+                                        hp2 -= 30
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 12:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Vin, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 20
+                                    elif rand == 1:
+                                        hp2 -= 25
+                                    elif rand == 2:
+                                        hp2 -= 30
+                                    elif rand == 3:
+                                        hp2 -= 25
+                                    elif rand == 4:
+                                        hp2 -= 20
+                                    elif rand == 5:
+                                        hp2 -= 15
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 13:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Merio, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 10
+                                    elif rand == 1:
+                                        hp2 -= 10
+                                    elif rand == 2:
+                                        hp2 -= 30
+                                    elif rand == 3:
+                                        hp2 -= 30
+                                    elif rand == 4:
+                                        hp2 -= 15
+                                    elif rand == 5:
+                                        hp2 -= 15
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 14:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Steve_Seagal, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 10
+                                    elif rand == 1:
+                                        hp2 -= 15
+                                    elif rand == 2:
+                                        hp2 -= 12
+                                    elif rand == 3:
+                                        hp2 -= 11
+                                    elif rand == 4:
+                                        hp2 -= 25
+                                    elif rand == 5:
+                                        hp2 -= 20
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 15:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Jet, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 10
+                                    elif rand == 1:
+                                        hp2 -= 30
+                                    elif rand == 2:
+                                        hp2 -= 12
+                                    elif rand == 3:
+                                        hp2 -= 25
+                                    elif rand == 4:
+                                        hp2 -= 14
+                                    elif rand == 5:
+                                        hp2 -= 23
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 16:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Wesley, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 10
+                                    elif rand == 1:
+                                        hp2 -= 12
+                                    elif rand == 2:
+                                        hp2 -= 14
+                                    elif rand == 3:
+                                        hp2 -= 16
+                                    elif rand == 4:
+                                        hp2 -= 14
+                                    elif rand == 5:
+                                        hp2 -= 12
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 17:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Terry, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 10
+                                    elif rand == 1:
+                                        hp2 -= 15
+                                    elif rand == 2:
+                                        hp2 -= 25
+                                    elif rand == 3:
+                                        hp2 -= 20
+                                    elif rand == 4:
+                                        hp2 -= 15
+                                    elif rand == 5:
+                                        hp2 -= 10
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
                             turn = 'playerOne'
                         elif rDirection == 'up':
                             for i in list[:grand]:
@@ -1148,6 +11490,299 @@ def gameboard_2():
                                     break
                                 else:
                                     rPy -= 50
+                            if (rPx == fightx1 and rPy == fighty1) or (rPx == fightx3 and rPy == fighty2) or (rPx == fightx1 and rPy == fighty3) or (rPx == fightx2 and rPy == fighty2):
+                                super_list = ["John Cena", "Jason Statham", "Bruce Hee", "Jackie Chen", "Agua man", "Pariz Hilten", "Dexter", "Steve Urkel", "Ernold Schwarzenegger", "James Bend", "The Roch", "Chack Norris", "Vin Dieser", "Super Merio", "Steve Seagal", "Jet Ri", "Wesley Sniper", "Terry Crews"]
+                                super_random = random.randint(0, 17)
+                                print(super_list[super_random])
+                                if super_random == 0:
+                                    DISPLAYSURF.blit(pygame.transform.scale(John, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 10
+                                    elif rand == 1:
+                                        hp2 -= 6
+                                    elif rand == 2:
+                                        hp2 -= 25
+                                    elif rand == 3:
+                                        hp2 -= 7
+                                    elif rand == 4:
+                                        hp2 -= 8
+                                    elif rand == 5:
+                                        hp2 -= 11
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 1:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Jason, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 15
+                                    elif rand == 1:
+                                        hp2 -= 17
+                                    elif rand == 2:
+                                        hp2 -= 19
+                                    elif rand == 3:
+                                        hp2 -= 21
+                                    elif rand == 4:
+                                        hp2 -= 23
+                                    elif rand == 5:
+                                        hp2 -= 26
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 2:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Bruce, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 20
+                                    elif rand == 1:
+                                        hp2 -= 15
+                                    elif rand == 2:
+                                        hp2 -= 5
+                                    elif rand == 3:
+                                        hp2 -= 7
+                                    elif rand == 4:
+                                        hp2 -= 8
+                                    elif rand == 5:
+                                        hp2 -= 26
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 3:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Jackie, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 12
+                                    elif rand == 1:
+                                        hp2 -= 10
+                                    elif rand == 2:
+                                        hp2 -= 15
+                                    elif rand == 3:
+                                        hp2 -= 9
+                                    elif rand == 4:
+                                        hp2 -= 10
+                                    elif rand == 5:
+                                        hp2 -= 25
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 4:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Agua, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 12
+                                    elif rand == 1:
+                                        hp2 -= 15
+                                    elif rand == 2:
+                                        hp2 -= 9
+                                    elif rand == 3:
+                                        hp2 -= 7
+                                    elif rand == 4:
+                                        hp2 -= 7
+                                    elif rand == 5:
+                                        hp2 -= 13
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 5:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Pariz, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 12
+                                    elif rand == 1:
+                                        hp2 -= 8
+                                    elif rand == 2:
+                                        hp2 -= 7
+                                    elif rand == 3:
+                                        hp2 -= 15
+                                    elif rand == 4:
+                                        hp2 -= 13
+                                    elif rand == 5:
+                                        hp2 -= 9
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 6:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Dexter, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 9
+                                    elif rand == 1:
+                                        hp2 -= 8
+                                    elif rand == 2:
+                                        hp2 -= 7
+                                    elif rand == 3:
+                                        hp2 -= 15
+                                    elif rand == 4:
+                                        hp2 -= 13
+                                    elif rand == 5:
+                                        hp2 -= 9
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 7:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Steve_Urkel, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 10
+                                    elif rand == 1:
+                                        hp2 -= 5
+                                    elif rand == 2:
+                                        hp2 -= 12
+                                    elif rand == 3:
+                                        hp2 -= 11
+                                    elif rand == 4:
+                                        hp2 -= 15
+                                    elif rand == 5:
+                                        hp2 -= 8
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 8:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Ernold, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 25
+                                    elif rand == 1:
+                                        hp2 -= 25
+                                    elif rand == 2:
+                                        hp2 -= 20
+                                    elif rand == 3:
+                                        hp2 -= 15
+                                    elif rand == 4:
+                                        hp2 -= 15
+                                    elif rand == 5:
+                                        hp2 -= 10
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 9:
+                                    DISPLAYSURF.blit(pygame.transform.scale(James, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 25
+                                    elif rand == 1:
+                                        hp2 -= 15
+                                    elif rand == 2:
+                                        hp2 -= 15
+                                    elif rand == 3:
+                                        hp2 -= 7
+                                    elif rand == 4:
+                                        hp2 -= 20
+                                    elif rand == 5:
+                                        hp2 -= 25
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 10:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Roch, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 13
+                                    elif rand == 1:
+                                        hp2 -= 28
+                                    elif rand == 2:
+                                        hp2 -= 30
+                                    elif rand == 3:
+                                        hp2 -= 17
+                                    elif rand == 4:
+                                        hp2 -= 10
+                                    elif rand == 5:
+                                        hp2 -= 7
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 11:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Chack, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 15
+                                    elif rand == 1:
+                                        hp2 -= 28
+                                    elif rand == 2:
+                                        hp2 -= 27
+                                    elif rand == 3:
+                                        hp2 -= 25
+                                    elif rand == 4:
+                                        hp2 -= 29
+                                    elif rand == 5:
+                                        hp2 -= 30
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 12:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Vin, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 20
+                                    elif rand == 1:
+                                        hp2 -= 25
+                                    elif rand == 2:
+                                        hp2 -= 30
+                                    elif rand == 3:
+                                        hp2 -= 25
+                                    elif rand == 4:
+                                        hp2 -= 20
+                                    elif rand == 5:
+                                        hp2 -= 15
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 13:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Merio, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 10
+                                    elif rand == 1:
+                                        hp2 -= 10
+                                    elif rand == 2:
+                                        hp2 -= 30
+                                    elif rand == 3:
+                                        hp2 -= 30
+                                    elif rand == 4:
+                                        hp2 -= 15
+                                    elif rand == 5:
+                                        hp2 -= 15
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 14:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Steve_Seagal, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 10
+                                    elif rand == 1:
+                                        hp2 -= 15
+                                    elif rand == 2:
+                                        hp2 -= 12
+                                    elif rand == 3:
+                                        hp2 -= 11
+                                    elif rand == 4:
+                                        hp2 -= 25
+                                    elif rand == 5:
+                                        hp2 -= 20
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 15:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Jet, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 10
+                                    elif rand == 1:
+                                        hp2 -= 30
+                                    elif rand == 2:
+                                        hp2 -= 12
+                                    elif rand == 3:
+                                        hp2 -= 25
+                                    elif rand == 4:
+                                        hp2 -= 14
+                                    elif rand == 5:
+                                        hp2 -= 23
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 16:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Wesley, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 10
+                                    elif rand == 1:
+                                        hp2 -= 12
+                                    elif rand == 2:
+                                        hp2 -= 14
+                                    elif rand == 3:
+                                        hp2 -= 16
+                                    elif rand == 4:
+                                        hp2 -= 14
+                                    elif rand == 5:
+                                        hp2 -= 12
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                                elif super_random == 17:
+                                    DISPLAYSURF.blit(pygame.transform.scale(Terry, (350, 450)), (0, 300))
+                                    if rand == 0:
+                                        hp2 -= 10
+                                    elif rand == 1:
+                                        hp2 -= 15
+                                    elif rand == 2:
+                                        hp2 -= 25
+                                    elif rand == 3:
+                                        hp2 -= 20
+                                    elif rand == 4:
+                                        hp2 -= 15
+                                    elif rand == 5:
+                                        hp2 -= 10
+                                    DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
+                                    text("HP:       "+ str(hp2), white, 30, 20, 110)
+                            turn = 'playerOne'
                         if 100 <= rPy <= 200 and 900 <= rPx <= 1000:
                             if player2.hp < 46:
                                 player2.hp += 5
@@ -1158,7 +11793,6 @@ def gameboard_2():
                         DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
                         text("HP:       " + str(player2.hp), white, 30, 20, 110)
                         turn = 'playerOne'
-
 
     #loop through each row
         for row in range(MAPHEIGHT):
@@ -1201,6 +11835,7 @@ def button_main():
         if click[0] == 1:
             time.sleep(1)
             webbrowser.open_new("file://" + os.path.realpath("Manual.pdf"))
+
     else:
         pygame.draw.rect(display, red, (400, 450, 100, 50))
 
@@ -1433,8 +12068,6 @@ def options():
         button_options()
         pygame.display.flip()
         fps.tick()
-
-
 
 main_menu()
 pygame.quit()
