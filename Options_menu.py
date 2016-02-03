@@ -42,46 +42,11 @@ def button(action=None):
         pygame.draw.rect(display, red,(400,450,100,50))
 
 
-    if 550 + 100 > mouse[0] > 550 and 450 + 50 > mouse[1] > 450:  #Quit button
-        pygame.draw.rect(display, dark_red, (550,450,100,50))
-        if click[0] == 1:               #Checkt of linkermuisknop is ingedrukt op gegeven coordinaten
-            quit()                      #Actie bij de if statement, kan ook verwijzen naar functies en loops(dus andere screens)
-    else:
-        pygame.draw.rect(display, red,(550, 450, 100, 50))
-
-    if 150 + 100 > mouse[0] > 150 and 450 + 50 > mouse[1] > 450:
-        pygame.draw.rect(display, dark_red, (150,450,100,50))
-        if click[0] == 1:
-            pygame.display.set_mode((800,600),pygame.FULLSCREEN)
-            print("fullscreen mode")
-            # pygame.display.set_mode((800,600),pygame.FULLSCREEN)
-            # pygame.display.set_mode((800,600),pygame.RESIZABLE)
-    else:
-        pygame.draw.rect(display, red, (150,450,100,50))
-
-    # if 100 + 100 > mouse[0] > 100 and 450 + 50 > mouse[1] > 450:
-    #     pygame.draw.rect(display, dark_red,(100,450,100,50))
-    #     if click[0] == 1:
-    #         print("Starts a game with 2 players")
-    # else:
-    #     pygame.draw.rect(display, red, (100,450,100,50))
-
 
     textSurf, textRect = text_object("Return",tekst)
     textRect.center= ((550+(100/2)), (450 +(50/2)))
     display.blit(textSurf,textRect)
 
-    textSurf, textRect = text_object("Windowed",tekst)
-    textRect.center= ((400+(100/2)), (450 +(50/2)))
-    display.blit(textSurf,textRect)
-
-    textSurf, textRect = text_object("Fullscreen",tekst)
-    textRect.center= ((150+(100/2)), (450 +(50/2)))
-    display.blit(textSurf,textRect)
-
-    # textSurf, textRect = text_object("2 Players",tekst)
-    # textRect.center= ((100+(100/2)), (450 +(50/2)))
-    # display.blit(textSurf,textRect)
 
 
 

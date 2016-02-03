@@ -52,19 +52,20 @@ def fight_animation():
 
 
     fightsound.play()
-    pygame.display.flip()
+    pygame.display.update()
     DISPLAYSURF.blit(fight_image1,(500,250))
-    pygame.display.flip()
+    pygame.display.update()
     time.sleep(0.1)
     DISPLAYSURF.blit(fight_image2,(500,250))
-    pygame.display.flip()
+    pygame.display.update()
     time.sleep(0.1)
     DISPLAYSURF.blit(fight_image3,(500,250))
     time.sleep(5)
 def tile_fight():
     if rPx == bPx and rPy == bPy or rPx == grPx and rPy == grPy  or rPx == gPx and rPy == gPy or bPx == grPx \
             and bPy == grPy or bPx == gPx and bPy == gPy or grPx == gPx and grPy == gPy:
-        fight_animation()+
+        fight_animation()
+
 
 #a list representing our tilemap
 tilemap = [
