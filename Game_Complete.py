@@ -274,6 +274,43 @@ def gameboard_4():
             elif damage == defense:
                 Hoekfight(attacker, defender)
 
+    def fight_animation():
+        fight_image1 = pygame.image.load('fight1.png')
+        fight_image2 = pygame.image.load('fight2.png')
+        fight_image3 = pygame.image.load('fight3.png')
+        fightsound = pygame.mixer.Sound('fight.wav')
+
+
+        fightsound.play()
+        pygame.display.update()
+        DISPLAYSURF.blit(fight_image1,(500,250))
+        pygame.display.update()
+        time.sleep(0.1)
+        DISPLAYSURF.blit(fight_image2,(500,250))
+        pygame.display.update()
+        time.sleep(0.1)
+        DISPLAYSURF.blit(fight_image3,(500,250))
+        time.sleep(5)
+
+    def tile_fight():
+        if rPx == bPx and rPy == bPy:
+            fight_animation()
+            Hoekfight(player2, player1)
+        if rPx == grPx and rPy == grPy:
+            fight_animation()
+            Hoekfight(player2, player3)
+        if rPx == gPx and rPy == gPy:
+            fight_animation()
+            Hoekfight(player2, player4)
+        if bPx == grPx and bPy == grPy:
+            fight_animation()
+            Hoekfight(player1, player3)
+        if bPx == gPx and bPy == gPy:
+            fight_animation()
+            Hoekfight(player1, player4)
+        if grPx == gPx and grPy == gPy:
+            fight_animation()
+            Hoekfight(player3, player4)
     #def game(rPx, rPy, bPx, bPy, gPx, gPy, grPx, grPy):
     while True:
         for event in pygame.event.get():
@@ -5462,6 +5499,35 @@ def gameboard_3():
             elif damage == defense:
                 Hoekfight(attacker, defender)
 
+    def fight_animation():
+        fight_image1 = pygame.image.load('fight1.png')
+        fight_image2 = pygame.image.load('fight2.png')
+        fight_image3 = pygame.image.load('fight3.png')
+        fightsound = pygame.mixer.Sound('fight.wav')
+
+
+        fightsound.play()
+        pygame.display.update()
+        DISPLAYSURF.blit(fight_image1,(500,250))
+        pygame.display.update()
+        time.sleep(0.1)
+        DISPLAYSURF.blit(fight_image2,(500,250))
+        pygame.display.update()
+        time.sleep(0.1)
+        DISPLAYSURF.blit(fight_image3,(500,250))
+        time.sleep(5)
+
+    def tile_fight():
+        if rPx == bPx and rPy == bPy:
+            fight_animation()
+            Hoekfight(player2, player1)
+        if rPx == grPx and rPy == grPy:
+            fight_animation()
+            Hoekfight(player2, player3)
+        if bPx == grPx and bPy == grPy:
+            fight_animation()
+            Hoekfight(player1, player3)
+
     #def game(rPx, rPy, bPx, bPy, gPx, gPy, grPx, grPy):
     while True:
         for event in pygame.event.get():
@@ -9382,6 +9448,29 @@ def gameboard_2():
             Hoekfight(attacker, defender)
         print(player1.hp)
         print(player2.hp)
+
+    def fight_animation():
+        fight_image1 = pygame.image.load('fight1.png')
+        fight_image2 = pygame.image.load('fight2.png')
+        fight_image3 = pygame.image.load('fight3.png')
+        fightsound = pygame.mixer.Sound('fight.wav')
+
+
+        fightsound.play()
+        pygame.display.update()
+        DISPLAYSURF.blit(fight_image1,(500,250))
+        pygame.display.update()
+        time.sleep(0.1)
+        DISPLAYSURF.blit(fight_image2,(500,250))
+        pygame.display.update()
+        time.sleep(0.1)
+        DISPLAYSURF.blit(fight_image3,(500,250))
+        time.sleep(5)
+
+    def tile_fight():
+        if rPx == bPx and rPy == bPy:
+            fight_animation()
+            Hoekfight(player2, player1)
 
     #def game(rPx, rPy, bPx, bPy, gPx, gPy, grPx, grPy):
     while True:
