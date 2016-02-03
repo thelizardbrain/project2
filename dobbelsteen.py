@@ -47,7 +47,7 @@ while not done:
                 image = dice[rand]
                 print(rand + 1)
 
-    screen.blit(image, (300,100)) # positie dobbelsteen
+    screen.blit(image, (100, 750)) # positie dobbelsteen
     btn.render(screen)
     pygame.display.update()
 
