@@ -1,4 +1,5 @@
 import os
+import pygame
 
 
 class supercards:
@@ -62,3 +63,26 @@ class supercards:
 
     def damage(self, damage):
         self.damage -= damage
+
+# super_list = ["John Cena", "Jason Statham", "Bruce Hee", "Jackie Chen", "Agua man", "Pariz Hilten", "Dexter", "Steve Urkel", "Ernold Schwarzenegger", "James Bend", "The Roch", "Chack Norris", "Vin Dieser", "Super Merio", "Steve Seagal", "Jet Ri", "Wesley Sniper", "Terry Crews"]
+# super_random = random.randint(0, 17)
+# print(super_list[super_random])
+John = pygame.image.load('superfightcards/john cena.png')
+Bruce = pygame.image.load('superfightcards/bruce hee.png')
+Jackie = pygame.image.load('superfightcards/jackie chen.png')
+Agua = pygame.image.load('superfightcards/agua man.png')
+Pariz = pygame.image.load('superfightcards/pariz hilten.png')
+Dexter = pygame.image.load('superfightcards/dexter.png')
+Steve_Urkel = pygame.image.load('superfightcards/steve urkel.png')
+Ernold = pygame.image.load('superfightcards/ernold schwarzenegger.png')
+James = pygame.image.load('superfightcards/james bend.png')
+Roch = pygame.image.load('superfightcards/the roch.png')
+Chack = pygame.image.load('superfightcards/chack norris.png')
+Vin = pygame.image.load('superfightcards/vin dieser.png')
+Merio = pygame.image.load('superfightcards/super merio.png')
+Steve_Seagal = pygame.image.load('superfightcards/steve seagal.png')
+Jet = pygame.image.load('superfightcards/jet ri.png')
+Wesley = pygame.image.load('superfightcards/wesley sinper.png')
+Terry = pygame.image.load('superfightcards/terry crews.png')
+Jason = pygame.image.load('superfightcards/Jason statham.png')
+
