@@ -9338,7 +9338,6 @@ def gameboard_2():
         else:
             pygame.draw.rect(DISPLAYSURF, ANDERSROOD, (1100,450,100,50))
 
-
         textSurf, textRect = text_object("Info",tekst)
         textRect.center= ((1100+(100/2)), (450 +(50/2)))
         display.blit(textSurf,textRect)
