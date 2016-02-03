@@ -4,6 +4,7 @@ from pygame.locals import *
 import time
 import random
 from supercards import *
+from Winningscreen import *
 pygame.init()
 
 #pygame.mixer.music.load("test1.mp4")
@@ -195,30 +196,30 @@ def gameboard_4():
 
 
     turn = 'playerOne'
-    DISPLAYSURF.blit(pygame.transform.scale(hudpion_blauw, (100, 100)), (1000, 0))
+    DISPLAYSURF.blit(pygame.transform.scale(hudpion_blauw, (100, 100)), (200, 0))
 
     P1color = (0,   102,   205)
-    hp1 = 100
+    hp1 = 50
     cpnt1 = 15
     text("Mike Tysen ", P1color, 30, 20, 20)
     text("HP:       "+ str(hp1), white, 30, 20, 40)
     text("cpnt:     "+ str(cpnt1), white, 30, 20, 60)
 
-    hp2 = 100
+    hp2 = 50
     cpnt2 = 15
     P2color = (201, 57, 57)
     text("Rocky Belboa ", P2color, 30, 20, 90)
     text("HP:       " + str(hp2), white, 30, 20, 110)
     text("cpnt:     " + str(cpnt2), white, 30, 20, 130)
 
-    hp3 = 100
+    hp3 = 50
     cpnt3 = 15
     P3color = (102, 204, 0)
     text("Badr Heri ", P3color, 30, 20, 160)
     text("HP:       " + str(hp3), white, 30, 20, 180)
     text("cpnt:     " + str(cpnt3), white, 30, 20, 200)
 
-    hp4 = 100
+    hp4 = 50
     cpnt4 = 15
     P4color = (255, 255, 102)
     text("Manny Pecquiao ", P4color, 30, 20, 230)
@@ -231,7 +232,43 @@ def gameboard_4():
             if event.type == QUIT:
                 pygame.quit()
                 sys.exit()
-            elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+            if hp1 > 0 and hp2 <= 0 and hp3 <=0 and hp4 <= 0:
+                winningscreen('Mike Tysen WINS')
+            if hp1 <= 0 and hp2 > 0 and hp3 <= 0 and hp4 <= 0:
+                winningscreen('Rocky Belboa WINS')
+            if hp1 <= 0 and hp2 <= 0 and hp3 > 0 and hp4 <= 0:
+                winningscreen('Badr Heri WINS')
+            if hp1 <= 0 and hp2 <= 0 and hp3 <= 0 and hp4 > 0:
+                winningscreen('Manny Pecquiao WINS')
+            if turn == 'playerOne':
+                if hp1 <= 0:
+                    bPx = 1500
+                    bPy = 1500
+                    DISPLAYSURF.blit(pygame.transform.scale(hudpion_rood, (100, 100)), (200, 80))
+                    DISPLAYSURF.blit(pygame.transform.scale(shade, (350, 80)), (0, 0))
+                    turn = 'playerTwo'
+            if turn == 'playerTwo':
+                if hp2 <= 0:
+                    rPx = 1500
+                    rPy = 1500
+                    DISPLAYSURF.blit(pygame.transform.scale(hudpion_groen, (100, 100)), (200, 160))
+                    DISPLAYSURF.blit(pygame.transform.scale(shade, (350, 80)), (0, 80))
+                    turn = 'playerThree'
+            if turn == 'playerThree':
+                if hp3 <= 0:
+                    grPx = 1500
+                    grPy = 1500
+                    DISPLAYSURF.blit(pygame.transform.scale(hudpion_geel, (100, 100)), (200, 220))
+                    DISPLAYSURF.blit(pygame.transform.scale(shade, (350, 70)), (0, 160))
+                    turn = 'playerFour'
+            if turn =='playerFour':
+                if hp4 <= 0:
+                    gPx = 1500
+                    gPy = 1500
+                    DISPLAYSURF.blit(pygame.transform.scale(hudpion_blauw, (100, 100)), (200, 0))
+                    DISPLAYSURF.blit(pygame.transform.scale(shade, (350, 80)), (0, 220))
+                    turn = 'playerOne'
+            if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                 if btn.rect.collidepoint(pygame.mouse.get_pos()):
                     list = [1,2,3,4,5,6,7]
                     rand = random.randint(4, 4)
@@ -240,8 +277,11 @@ def gameboard_4():
                     ggrand = grand + 1
 
                     if turn == 'playerOne':
+                        DISPLAYSURF.blit(pygame.transform.scale(shade, (100, 100)), (200, 0))
                         DISPLAYSURF.blit(pygame.transform.scale(shade, (350, 450)), (0, 300))
-                        DISPLAYSURF.blit(pygame.transform.scale(hudpion_rood, (100, 100)), (1000, 0))
+                        DISPLAYSURF.blit(pygame.transform.scale(hudpion_rood, (100, 100)), (200, 80))
+                        if hp2 <= 0:
+                            DISPLAYSURF.blit(pygame.transform.scale(shade, (100, 100)), (200, 160))
                         if bDirection == 'right':
                             for i in list[:grand]:
                                 if bPx == 950:
@@ -544,7 +584,6 @@ def gameboard_4():
                                     DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
                                     text("HP:       "+ str(hp1), white, 30, 20, 40)
                             turn = 'playerTwo'
-
                         elif bDirection == 'down':
                             for i in list[:grand]:
                                 if bPy == 600:
@@ -847,7 +886,6 @@ def gameboard_4():
                                     DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
                                     text("HP:       "+ str(hp1), white, 30, 20, 40)
                             turn = 'playerTwo'
-
                         elif bDirection == 'left':
                             for i in list[:grand]:
                                 if bPx == 450:
@@ -1150,7 +1188,6 @@ def gameboard_4():
                                     DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
                                     text("HP:       "+ str(hp1), white, 30, 20, 40)
                             turn = 'playerTwo'
-
                         elif bDirection == 'up':
                             for i in list[:grand]:
                                 if bPy == 100:
@@ -1458,7 +1495,10 @@ def gameboard_4():
 
                     elif turn == 'playerTwo':
                         DISPLAYSURF.blit(pygame.transform.scale(shade, (350, 450)), (0, 300))
-                        DISPLAYSURF.blit(pygame.transform.scale(hudpion_groen, (100, 100)), (1000, 0))
+                        DISPLAYSURF.blit(pygame.transform.scale(shade, (100, 100)), (200, 80))
+                        DISPLAYSURF.blit(pygame.transform.scale(hudpion_groen, (100, 100)), (200, 160))
+                        if hp3 <= 0:
+                            DISPLAYSURF.blit(pygame.transform.scale(shade, (100, 100)), (200, 160))
                         if rDirection == 'right':
                             for i in list[:grand]:
                                 if rPx == 950:
@@ -1761,7 +1801,6 @@ def gameboard_4():
                                     DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
                                     text("HP:       "+ str(hp2), white, 30, 20, 110)
                             turn = 'playerThree'
-
                         elif rDirection == 'down':
                             for i in list[:grand]:
                                 if rPy == 600:
@@ -2064,7 +2103,6 @@ def gameboard_4():
                                     DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
                                     text("HP:       "+ str(hp2), white, 30, 20, 110)
                             turn = 'playerThree'
-
                         elif rDirection == 'left':
                             for i in list[:grand]:
                                 if rPx == 450:
@@ -2367,7 +2405,6 @@ def gameboard_4():
                                     DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
                                     text("HP:       "+ str(hp2), white, 30, 20, 110)
                             turn = 'playerThree'
-
                         elif rDirection == 'up':
                             for i in list[:grand]:
                                 if rPy == 100:
@@ -2675,7 +2712,10 @@ def gameboard_4():
 
                     elif turn == 'playerThree':
                         DISPLAYSURF.blit(pygame.transform.scale(shade, (350, 450)), (0, 300))
-                        DISPLAYSURF.blit(pygame.transform.scale(hudpion_geel, (100, 100)), (1000, 0))
+                        DISPLAYSURF.blit(pygame.transform.scale(shade, (100, 100)), (200, 160))
+                        DISPLAYSURF.blit(pygame.transform.scale(hudpion_geel, (100, 100)), (200, 220))
+                        if hp4 <= 0:
+                            DISPLAYSURF.blit(pygame.transform.scale(shade, (100, 100)), (200, 220))
                         if grDirection == 'right':
                             for i in list[:grand]:
                                 if grPx == 950:
@@ -3891,7 +3931,10 @@ def gameboard_4():
 
                     elif turn == 'playerFour':
                         DISPLAYSURF.blit(pygame.transform.scale(shade, (350, 450)), (0, 300))
-                        DISPLAYSURF.blit(pygame.transform.scale(hudpion_blauw, (100, 100)), (1000, 0))
+                        DISPLAYSURF.blit(pygame.transform.scale(shade, (100, 100)), (200, 220))
+                        DISPLAYSURF.blit(pygame.transform.scale(hudpion_blauw, (100, 100)), (200, 0))
+                        if hp1 <= 0:
+                            DISPLAYSURF.blit(pygame.transform.scale(shade, (100, 100)), (200, 0))
                         if gDirection == 'right':
                             for i in list[:grand]:
                                 if gPx == 950:
