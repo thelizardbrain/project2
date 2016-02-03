@@ -70,7 +70,6 @@ def gameboard_4():
     ANDERSGEELVAK = 8
     ANDERSROODVAK = 9
     ANDERSBLAUWVAK = 10
-
     #a dictionary linking resources to colours
     colours = {
                     ROODVAK:        RED,

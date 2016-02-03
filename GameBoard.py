@@ -44,6 +44,27 @@ colours =   {
                 ANDERSROODVAK : ANDERSROOD,
                 ANDERSBLAUWVAK : ANDERSBLAUW
             }
+def fight_animation():
+    fight_image1 = pygame.image.load('fight1.png')
+    fight_image2 = pygame.image.load('fight2.png')
+    fight_image3 = pygame.image.load('fight3.png')
+    fightsound = pygame.mixer.Sound('fight.wav')
+
+
+    fightsound.play()
+    pygame.display.flip()
+    DISPLAYSURF.blit(fight_image1,(500,250))
+    pygame.display.flip()
+    time.sleep(0.1)
+    DISPLAYSURF.blit(fight_image2,(500,250))
+    pygame.display.flip()
+    time.sleep(0.1)
+    DISPLAYSURF.blit(fight_image3,(500,250))
+    time.sleep(5)
+def tile_fight():
+    if rPx == bPx and rPy == bPy or rPx == grPx and rPy == grPy  or rPx == gPx and rPy == gPy or bPx == grPx \
+            and bPy == grPy or bPx == gPx and bPy == gPy or grPx == gPx and grPy == gPy:
+        fight_animation()+
 
 #a list representing our tilemap
 tilemap = [
@@ -64,7 +85,6 @@ tilemap = [
 TILESIZE  = 50
 MAPWIDTH  = 11
 MAPHEIGHT = 11
-
 #set up the display
 pygame.init()
 class Button:
@@ -147,6 +167,7 @@ while True:
 
                 if turn == 'playerOne':
                     DISPLAYSURF.blit(pygame.transform.scale(blauwscore, (350, 450)), (0, 300))
+                    tile_fight()
                     if bDirection == 'right':
                         for i in list[:grand]:
                             if bPx == 950:
@@ -191,6 +212,7 @@ while True:
 
                 elif turn == 'playerTwo':
                     DISPLAYSURF.blit(pygame.transform.scale(roodscore, (350, 450)), (0, 300))
+                    tile_fight()
                     if rDirection == 'right':
                         for i in list[:grand]:
                             if rPx == 950:
@@ -235,6 +257,7 @@ while True:
 
                 elif turn == 'playerFour':
                     DISPLAYSURF.blit(pygame.transform.scale(geelscore, (350, 450)), (0, 300))
+                    tile_fight()
                     if gDirection == 'right':
                         for i in list[:grand]:
                             if gPx == 950:
@@ -279,6 +302,7 @@ while True:
 
                 elif turn == 'playerThree':
                     DISPLAYSURF.blit(pygame.transform.scale(groenscore, (350, 450)), (0, 300))
+                    tile_fight()
                     if grDirection == 'right':
                         for i in list[:grand]:
                             if grPx == 950:
@@ -335,7 +359,6 @@ while True:
     DISPLAYSURF.blit(pygame.transform.scale(blauwPion, (50, 50)), (bPx, bPy))
     DISPLAYSURF.blit(pygame.transform.scale(geelPion, (50, 50)), (gPx, gPy))
     DISPLAYSURF.blit(pygame.transform.scale(groenPion, (50, 50)), (grPx, grPy))
-
 
     DISPLAYSURF.blit(image, (781,680))
     btn.render(DISPLAYSURF)
