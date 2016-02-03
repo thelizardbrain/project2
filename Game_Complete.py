@@ -318,7 +318,7 @@ def gameboard_4():
                     turn = 'playerOne'
             if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                 if btn.rect.collidepoint(pygame.mouse.get_pos()):
-                    list = [1, 2, 3, 4, 5, 6, 7]
+                    list = [1,2,3,4,5,6,7]
                     rand = random.randint(0, 5)
                     image = dice[rand]
                     grand = rand + 1
