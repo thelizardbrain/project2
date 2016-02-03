@@ -8,9 +8,9 @@ from Winningscreen import *
 
 pygame.init()
 
-#pygame.mixer.music.load("test1.mp4")
-#pygame.mixer.music.play(-1, 0.0)
-#pygame.mixer.music.set_volume(0.5)
+pygame.mixer.music.load("test1.mp4")
+pygame.mixer.music.play(-1, 0.0)
+pygame.mixer.music.set_volume(0.5)
 
 display = pygame.display.set_mode((800, 600))   # basis framework
 caption = pygame.display.set_caption('Survivor')
@@ -1575,13 +1575,13 @@ def gameboard_4():
                                     DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
                                     text("HP:       " + str(player1.hp), white, 30, 20, 40)
                             turn = 'playerTwo'
-                        if 100 <= bPy <= 200 and 900 <= bPx <= 1000:
+                        if 100 <= bPy < 200 and 900 <= bPx < 1000:
                             Hoekfight(player1, player2)
-                        elif 900 <= bPx <= 1000 and 550 <= bPy <= 650:
+                        elif 900 <= bPx < 1000 and 550 <= bPy < 650:
                             Hoekfight(player1, player3)
-                        elif 550 <= bPy <= 650 and 450 <= bPx <= 550:
+                        elif 550 <= bPy < 650 and 450 <= bPx < 550:
                             Hoekfight(player1, player4)
-                        elif 100 <= bPy <= 200 and 450 <= bPx <= 550:
+                        elif 100 <= bPy < 200 and 450 <= bPx < 550:
                             if player1.hp < 46:
                                 player1.hp += 5
                             else:
@@ -1593,7 +1593,7 @@ def gameboard_4():
                     elif turn == 'playerTwo':
                         DISPLAYSURF.blit(pygame.transform.scale(shade, (350, 450)), (0, 300))
                         DISPLAYSURF.blit(pygame.transform.scale(shade, (100, 100)), (200, 80))
-                        DISPLAYSURF.blit(pygame.transform.scale(hudpion_groen, (100, 100)), (200, 160))
+                        DISPLAYSURF.blit(pygame.transform.scale(hudpion_groen, (100, 100)), (200, 150))
                         if player3.hp <= 0:
                             DISPLAYSURF.blit(pygame.transform.scale(shade, (100, 100)), (200, 160))
                         if rDirection == 'right':
@@ -2804,16 +2804,16 @@ def gameboard_4():
                                     DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
                                     text("HP:       " + str(player2.hp), white, 30, 20, 110)
                             turn = 'playerThree'
-                        if 100 <= rPy <= 200 and 900 <= rPx <= 1000:
+                        if 100 <= rPy < 200 and 900 <= rPx < 1000:
                             if player2.hp < 46:
                                 player2.hp += 5
                             else:
                                 player2.hp = 50
-                        elif 550 <= rPy <= 650 and 900 <= rPx <= 1000:
+                        elif 550 <= rPy < 650 and 900 <= rPx < 1000:
                             Hoekfight(player2, player3)
-                        elif 550 <= rPy <= 650 and 450 <= rPx <= 550:
+                        elif 550 <= rPy < 650 and 450 <= rPx < 550:
                             Hoekfight(player2, player4)
-                        elif 100 <= rPy <= 200 and 450 <= rPx <= 550:
+                        elif 100 <= rPy < 200 and 450 <= rPx < 550:
                             Hoekfight(player2, player1)
                         DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
                         text("HP:       " + str(player2.hp), white, 30, 20, 110)
@@ -4038,16 +4038,16 @@ def gameboard_4():
                                     DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 180))
                                     text("HP:       " + str(player3.hp), white, 30, 20, 180)
                             turn = 'playerFour'
-                        if 100 <= grPy <= 200 and 900 <= grPx <= 1000:
+                        if 100 <= grPy < 200 and 900 <= grPx < 1000:
                             Hoekfight(player3, player2)
-                        elif 550 <= grPy <= 650 and 900 <= grPx <= 1000:
+                        elif 550 <= grPy < 650 and 900 < grPx <= 1000:
                             if player3.hp < 46:
                                 player3.hp += 5
                             else:
                                 player3.hp = 50
-                        elif 550 <= grPy <= 650 and 450 <= grPx <= 550:
+                        elif 550 <= grPy < 650 and 450 <= grPx < 550:
                             Hoekfight(player3, player4)
-                        elif 100 <= grPy <= 200 and 450 <= grPx <= 550:
+                        elif 100 <= grPy < 200 and 450 <= grPx < 550:
                             Hoekfight(player3, player1)
                         DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 180))
                         text("HP:       " + str(player3.hp), white, 30, 20, 180)
@@ -5271,16 +5271,16 @@ def gameboard_4():
                                     DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 250))
                                     text("HP:       " + str(player4.hp), white, 30, 20, 250)
                             turn = 'playerOne'
-                        if 100 <= gPy <= 200 and 900 <= gPx <= 1000:
+                        if 100 <= gPy < 200 and 900 <= gPx < 1000:
                             Hoekfight(player4, player2)
-                        elif 550 <= gPy <= 650 and 900 <= gPx <= 1000:
+                        elif 550 <= gPy < 650 and 900 <= gPx < 1000:
                             Hoekfight(player4, player3)
-                        elif 550 <= gPy <= 650 and 450 <= gPx <= 550:
+                        elif 550 <= gPy < 650 and 450 <= gPx < 550:
                             if player4.hp < 46:
                                 player4.hp += 5
                             else:
                                 player4.hp = 50
-                        elif 100 <= gPy <= 200 and 450 <= gPx <= 550:
+                        elif 100 <= gPy < 200 and 450 <= gPx < 550:
                             Hoekfight(player4, player1)
                         DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 250))
                         text("HP:       " + str(player4.hp), white, 30, 20, 250)
@@ -6784,11 +6784,11 @@ def gameboard_3():
                                     DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
                                     text("HP:       " + str(player1.hp), white, 30, 20, 40)
                             turn = 'playerTwo'
-                        if 100 <= bPy <= 200 and 900 <= bPx <= 1000:
+                        if 100 <= bPy < 200 and 900 <= bPx < 1000:
                             Hoekfight(player1, player2)
-                        elif 900 <= bPx <= 1000 and 550 <= bPy <= 650:
+                        elif 900 <= bPx < 1000 and 550 <= bPy < 650:
                             Hoekfight(player1, player3)
-                        elif 100 <= bPy <= 200 and 450 <= bPx <= 550:
+                        elif 100 <= bPy < 200 and 450 <= bPx < 550:
                             if player1.hp < 46:
                                 player1.hp += 5
                             else:
@@ -8012,14 +8012,14 @@ def gameboard_3():
                                     DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
                                     text("HP:       " + str(player2.hp), white, 30, 20, 110)
                             turn = 'playerThree'
-                        if 100 <= rPy <= 200 and 900 <= rPx <= 1000:
+                        if 100 <= rPy < 200 and 900 <= rPx < 1000:
                             if player2.hp < 46:
                                 player2.hp += 5
                             else:
                                 player2.hp = 50
-                        elif 550 <= rPy <= 650 and 900 <= rPx <= 1000:
+                        elif 550 <= rPy < 650 and 900 <= rPx < 1000:
                             Hoekfight(player2, player3)
-                        elif 100 <= rPy <= 200 and 450 <= rPx <= 550:
+                        elif 100 <= rPy < 200 and 450 <= rPx < 550:
                             Hoekfight(player2, player1)
                         DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
                         text("HP:       " + str(player2.hp), white, 30, 20, 110)
@@ -9242,14 +9242,14 @@ def gameboard_3():
                                     DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 180))
                                     text("HP:       " + str(player3.hp), white, 30, 20, 180)
                             turn = 'playerOne'
-                        if 100 <= grPy <= 200 and 900 <= grPx <= 1000:
+                        if 100 <= grPy < 200 and 900 <= grPx < 1000:
                             Hoekfight(player3, player2)
-                        elif 550 <= grPy <= 650 and 900 <= grPx <= 1000:
+                        elif 550 <= grPy < 650 and 900 <= grPx < 1000:
                             if player3.hp < 46:
                                 player3.hp += 5
                             else:
                                 player3.hp = 50
-                        elif 100 <= grPy <= 200 and 450 <= grPx <= 550:
+                        elif 100 <= grPy < 200 and 450 <= grPx < 550:
                             Hoekfight(player3, player1)
                         DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 180))
                         text("HP:       " + str(player3.hp), white, 30, 20, 180)
@@ -10718,9 +10718,9 @@ def gameboard_2():
                                     DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 40))
                                     text("HP:       " + str(player1.hp), white, 30, 20, 40)
                             turn = 'playerTwo'
-                        if 100 <= bPy <= 200 and 900 <= bPx <= 1000:
+                        if 100 <= bPy < 200 and 900 <= bPx < 1000:
                             Hoekfight(player1, player2)
-                        elif 100 <= bPy <= 200 and 450 <= bPx <= 550:
+                        elif 100 <= bPy < 200 and 450 <= bPx < 550:
                             if player1.hp < 46:
                                 player1.hp += 5
                             else:
@@ -11944,12 +11944,12 @@ def gameboard_2():
                                     DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
                                     text("HP:       "+ str(player2.hp), white, 30, 20, 110)
                             turn = 'playerOne'
-                        if 100 <= rPy <= 200 and 900 <= rPx <= 1000:
+                        if 100 <= rPy < 200 and 900 <= rPx < 1000:
                             if player2.hp < 46:
                                 player2.hp += 5
                             else:
                                 player2.hp = 50
-                        elif 100 <= rPy <= 200 and 450 <= rPx <= 550:
+                        elif 100 <= rPy < 200 and 450 <= rPx < 550:
                             Hoekfight(player2, player1)
                         DISPLAYSURF.blit(pygame.transform.scale(shade, (150, 20)), (20, 110))
                         text("HP:       " + str(player2.hp), white, 30, 20, 110)

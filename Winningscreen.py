@@ -20,7 +20,6 @@ def winningscreen(text):
         TextSurf, TextRect = winningscreen_object(text, largeText)
         TextRect.center = ((600),(350))
         display.fill(white)
-        button()
         display.blit(TextSurf, TextRect)
         pygame.display.flip()
         time.sleep(3)
