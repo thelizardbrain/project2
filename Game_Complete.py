@@ -311,6 +311,7 @@ def gameboard_4():
         if grPx == gPx and grPy == gPy:
             fight_animation()
             Hoekfight(player3, player4)
+    dit = False
     #def game(rPx, rPy, bPx, bPy, gPx, gPy, grPx, grPy):
     while True:
         for event in pygame.event.get():
@@ -318,12 +319,16 @@ def gameboard_4():
                 pygame.quit()
                 sys.exit()
             if player1.hp > 0 and player2.hp <= 0 and player3.hp <=0 and player4.hp <= 0:
+                dit = True
                 winningscreen('P1 Mike Tysen WINS')
             if player1.hp <= 0 and player2.hp > 0 and player3.hp <= 0 and player4.hp <= 0:
+                dit = True
                 winningscreen('P2 Rocky Belboa WINS')
             if player1.hp <= 0 and player2.hp <= 0 and player3.hp > 0 and player4.hp <= 0:
+                dit = True
                 winningscreen('P3 Badr Heri WINS')
             if player1.hp <= 0 and player2.hp <= 0 and player3.hp <= 0 and player4.hp > 0:
+                dit = True
                 winningscreen('P4 Manny Pecquiao WINS')
             if turn == 'playerOne':
                 if player1.hp <= 0:
@@ -5288,28 +5293,31 @@ def gameboard_4():
 
 
 
-        #loop through each row
-        for row in range(MAPHEIGHT):
-            #loop through each column in the row
-            for column in range(MAPWIDTH):
-                #draw the resource at that position in the tilemap, using the correct colour
-                pygame.draw.rect(DISPLAYSURF, colours[tilemap[row][column]], (450 + column*TILESIZE, 100 + row*TILESIZE, TILESIZE, TILESIZE))
-        DISPLAYSURF.blit(pygame.transform.scale(midPic, (450, 450)), (500, 150))
-        DISPLAYSURF.blit(pygame.transform.scale(fight, (50, 50)), (fightx1, fighty1))
-        DISPLAYSURF.blit(pygame.transform.scale(fight, (50, 50)), (fightx2, fighty2))
-        DISPLAYSURF.blit(pygame.transform.scale(fight, (50, 50)), (fightx1, fighty3))
-        DISPLAYSURF.blit(pygame.transform.scale(fight, (50, 50)), (fightx3, fighty2))
-        DISPLAYSURF.blit(pygame.transform.scale(roodPion, (50, 50)), (rPx, rPy))
-        DISPLAYSURF.blit(pygame.transform.scale(blauwPion, (50, 50)), (bPx, bPy))
-        DISPLAYSURF.blit(pygame.transform.scale(geelPion, (50, 50)), (gPx, gPy))
-        DISPLAYSURF.blit(pygame.transform.scale(groenPion, (50, 50)), (grPx, grPy))
-        #DISPLAYSURF.blit(pygame.transform.scale(centerPic, (100, 150)), (cPx, cPy))
+        if dit == False:
+            #loop through each row
+            for row in range(MAPHEIGHT):
+                #loop through each column in the row
+                for column in range(MAPWIDTH):
+                    #draw the resource at that position in the tilemap, using the correct colour
+                    pygame.draw.rect(DISPLAYSURF, colours[tilemap[row][column]], (450 + column*TILESIZE, 100 + row*TILESIZE, TILESIZE, TILESIZE))
+            DISPLAYSURF.blit(pygame.transform.scale(midPic, (450, 450)), (500, 150))
+            DISPLAYSURF.blit(pygame.transform.scale(fight, (50, 50)), (fightx1, fighty1))
+            DISPLAYSURF.blit(pygame.transform.scale(fight, (50, 50)), (fightx2, fighty2))
+            DISPLAYSURF.blit(pygame.transform.scale(fight, (50, 50)), (fightx1, fighty3))
+            DISPLAYSURF.blit(pygame.transform.scale(fight, (50, 50)), (fightx3, fighty2))
+            DISPLAYSURF.blit(pygame.transform.scale(roodPion, (50, 50)), (rPx, rPy))
+            DISPLAYSURF.blit(pygame.transform.scale(blauwPion, (50, 50)), (bPx, bPy))
+            DISPLAYSURF.blit(pygame.transform.scale(geelPion, (50, 50)), (gPx, gPy))
+            DISPLAYSURF.blit(pygame.transform.scale(groenPion, (50, 50)), (grPx, grPy))
+            #DISPLAYSURF.blit(pygame.transform.scale(centerPic, (100, 150)), (cPx, cPy))
 
 
-        quitbutton()
-        DISPLAYSURF.blit(image, (1130,200))
-        btn.render(DISPLAYSURF)
-        pygame.display.update()
+
+
+            quitbutton()
+            DISPLAYSURF.blit(image, (1130,200))
+            btn.render(DISPLAYSURF)
+            pygame.display.update()
 
 def gameboard_3():
 #constants representing colours
@@ -5527,7 +5535,7 @@ def gameboard_3():
         if bPx == grPx and bPy == grPy:
             fight_animation()
             Hoekfight(player1, player3)
-
+    dit = False
     #def game(rPx, rPy, bPx, bPy, gPx, gPy, grPx, grPy):
     while True:
         for event in pygame.event.get():
@@ -5535,10 +5543,13 @@ def gameboard_3():
                 pygame.quit()
                 sys.exit()
             if player1.hp > 0 and player2.hp <= 0 and player3.hp <=0:
+                dit = True
                 winningscreen('P1 Mike Tysen WINS')
             if player1.hp <= 0 and player2.hp > 0 and player3.hp <= 0:
+                dit = True
                 winningscreen('P2 Rocky Belboa WINS')
             if player1.hp <= 0 and player2.hp <= 0 and player3.hp > 0:
+                dit = True
                 winningscreen('P3 Badr Heri WINS')
             if turn == 'playerOne':
                 if player1.hp <= 0:
@@ -9255,25 +9266,26 @@ def gameboard_3():
                         text("HP:       " + str(player3.hp), white, 30, 20, 180)
                         turn = 'playerOne'
 
-    #loop through each row
-        for row in range(MAPHEIGHT):
-            #loop through each column in the row
-            for column in range(MAPWIDTH):
-                #draw the resource at that position in the tilemap, using the correct colour
-                pygame.draw.rect(DISPLAYSURF, colours[tilemap[row][column]], (450 + column*TILESIZE, 100 + row*TILESIZE, TILESIZE, TILESIZE))
-        DISPLAYSURF.blit(pygame.transform.scale(midPic, (450, 450)), (500, 150))
-        DISPLAYSURF.blit(pygame.transform.scale(fight, (50, 50)), (fightx1, fighty1))
-        DISPLAYSURF.blit(pygame.transform.scale(fight, (50, 50)), (fightx2, fighty2))
-        DISPLAYSURF.blit(pygame.transform.scale(fight, (50, 50)), (fightx1, fighty3))
-        DISPLAYSURF.blit(pygame.transform.scale(fight, (50, 50)), (fightx3, fighty2))
-        DISPLAYSURF.blit(pygame.transform.scale(roodPion, (50, 50)), (rPx, rPy))
-        DISPLAYSURF.blit(pygame.transform.scale(blauwPion, (50, 50)), (bPx, bPy))
-        DISPLAYSURF.blit(pygame.transform.scale(groenPion, (50, 50)), (grPx, grPy))
+        if dit == False:
+            #loop through each row
+            for row in range(MAPHEIGHT):
+                #loop through each column in the row
+                for column in range(MAPWIDTH):
+                    #draw the resource at that position in the tilemap, using the correct colour
+                    pygame.draw.rect(DISPLAYSURF, colours[tilemap[row][column]], (450 + column*TILESIZE, 100 + row*TILESIZE, TILESIZE, TILESIZE))
+            DISPLAYSURF.blit(pygame.transform.scale(midPic, (450, 450)), (500, 150))
+            DISPLAYSURF.blit(pygame.transform.scale(fight, (50, 50)), (fightx1, fighty1))
+            DISPLAYSURF.blit(pygame.transform.scale(fight, (50, 50)), (fightx2, fighty2))
+            DISPLAYSURF.blit(pygame.transform.scale(fight, (50, 50)), (fightx1, fighty3))
+            DISPLAYSURF.blit(pygame.transform.scale(fight, (50, 50)), (fightx3, fighty2))
+            DISPLAYSURF.blit(pygame.transform.scale(roodPion, (50, 50)), (rPx, rPy))
+            DISPLAYSURF.blit(pygame.transform.scale(blauwPion, (50, 50)), (bPx, bPy))
+            DISPLAYSURF.blit(pygame.transform.scale(groenPion, (50, 50)), (grPx, grPy))
 
-        quitbutton()
-        DISPLAYSURF.blit(image, (1130, 200))
-        btn.render(DISPLAYSURF)
-        pygame.display.update()
+            quitbutton()
+            DISPLAYSURF.blit(image, (1130, 200))
+            btn.render(DISPLAYSURF)
+            pygame.display.update()
 
 def gameboard_2():
 #constants representing colours
@@ -9471,7 +9483,7 @@ def gameboard_2():
         if rPx == bPx and rPy == bPy:
             fight_animation()
             Hoekfight(player2, player1)
-
+    dit = False
     #def game(rPx, rPy, bPx, bPy, gPx, gPy, grPx, grPy):
     while True:
         for event in pygame.event.get():
@@ -9479,8 +9491,10 @@ def gameboard_2():
                 pygame.quit()
                 sys.exit()
             if player1.hp > 0 and player2.hp <= 0:
+                dit = True
                 winningscreen('P1 Mike Tysen WINS')
             if player1.hp <= 0 and player2.hp > 0:
+                dit = True
                 winningscreen('P2 Rocky Belboa WINS')
             if turn == 'playerOne':
                 if player1.hp <= 0:
@@ -11955,24 +11969,25 @@ def gameboard_2():
                         text("HP:       " + str(player2.hp), white, 30, 20, 110)
                         turn = 'playerOne'
 
-    #loop through each row
-        for row in range(MAPHEIGHT):
-            #loop through each column in the row
-            for column in range(MAPWIDTH):
-                #draw the resource at that position in the tilemap, using the correct colour
-                pygame.draw.rect(DISPLAYSURF, colours[tilemap[row][column]], (450 + column*TILESIZE, 100 + row*TILESIZE, TILESIZE, TILESIZE))
-        DISPLAYSURF.blit(pygame.transform.scale(midPic, (450, 450)), (500, 150))
-        DISPLAYSURF.blit(pygame.transform.scale(fight, (50, 50)), (fightx1, fighty1))
-        DISPLAYSURF.blit(pygame.transform.scale(fight, (50, 50)), (fightx2, fighty2))
-        DISPLAYSURF.blit(pygame.transform.scale(fight, (50, 50)), (fightx1, fighty3))
-        DISPLAYSURF.blit(pygame.transform.scale(fight, (50, 50)), (fightx3, fighty2))
-        DISPLAYSURF.blit(pygame.transform.scale(roodPion, (50, 50)), (rPx, rPy))
-        DISPLAYSURF.blit(pygame.transform.scale(blauwPion, (50, 50)), (bPx, bPy))
+        if dit == False:
+            #loop through each row
+            for row in range(MAPHEIGHT):
+                #loop through each column in the row
+                for column in range(MAPWIDTH):
+                    #draw the resource at that position in the tilemap, using the correct colour
+                    pygame.draw.rect(DISPLAYSURF, colours[tilemap[row][column]], (450 + column*TILESIZE, 100 + row*TILESIZE, TILESIZE, TILESIZE))
+            DISPLAYSURF.blit(pygame.transform.scale(midPic, (450, 450)), (500, 150))
+            DISPLAYSURF.blit(pygame.transform.scale(fight, (50, 50)), (fightx1, fighty1))
+            DISPLAYSURF.blit(pygame.transform.scale(fight, (50, 50)), (fightx2, fighty2))
+            DISPLAYSURF.blit(pygame.transform.scale(fight, (50, 50)), (fightx1, fighty3))
+            DISPLAYSURF.blit(pygame.transform.scale(fight, (50, 50)), (fightx3, fighty2))
+            DISPLAYSURF.blit(pygame.transform.scale(roodPion, (50, 50)), (rPx, rPy))
+            DISPLAYSURF.blit(pygame.transform.scale(blauwPion, (50, 50)), (bPx, bPy))
 
-        quitbutton()
-        DISPLAYSURF.blit(image, (1130,200))
-        btn.render(DISPLAYSURF)
-        pygame.display.update()
+            quitbutton()
+            DISPLAYSURF.blit(image, (1130,200))
+            btn.render(DISPLAYSURF)
+            pygame.display.update()
 
 
 def text_object(text, font):
