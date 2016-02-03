@@ -81,7 +81,7 @@ def game():
     #set up the display
     pygame.init()
     DISPLAYSURF = pygame.display.set_mode((750, 750))
-    midPic = pygame.image.load('Midden van bord.png')
+    midPic = pygame.image.load('Midden van bord oud.png')
     backPic = pygame.image.load('Hout2.png')
     roodPion = pygame.image.load('glove_red.png')
     rPx = 600

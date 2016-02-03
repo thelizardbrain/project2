@@ -114,7 +114,7 @@ image = pygame.Surface([0, 0]).convert()
 btn = Button(screen_rect)
 
 
-midPic = pygame.image.load('Midden van bord.png')
+midPic = pygame.image.load('Midden van bord oud.png')
 backPic = pygame.image.load('Hout2.png')
 roodPion = pygame.image.load('glove_red.png')
 roodscore = pygame.image.load('red_score.png')
