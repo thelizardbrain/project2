@@ -234,13 +234,13 @@ def gameboard_4():
                 pygame.quit()
                 sys.exit()
             if hp1 > 0 and hp2 <= 0 and hp3 <=0 and hp4 <= 0:
-                winningscreen('Mike Tysen WINS')
+                winningscreen('P1 Mike Tysen WINS')
             if hp1 <= 0 and hp2 > 0 and hp3 <= 0 and hp4 <= 0:
-                winningscreen('Rocky Belboa WINS')
+                winningscreen('P2 Rocky Belboa WINS')
             if hp1 <= 0 and hp2 <= 0 and hp3 > 0 and hp4 <= 0:
-                winningscreen('Badr Heri WINS')
+                winningscreen('P3 Badr Heri WINS')
             if hp1 <= 0 and hp2 <= 0 and hp3 <= 0 and hp4 > 0:
-                winningscreen('Manny Pecquiao WINS')
+                winningscreen('P4 Manny Pecquiao WINS')
             if turn == 'playerOne':
                 if hp1 <= 0:
                     bPx = 1500
@@ -272,7 +272,7 @@ def gameboard_4():
             if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                 if btn.rect.collidepoint(pygame.mouse.get_pos()):
                     list = [1,2,3,4,5,6,7]
-                    rand = random.randint(4, 4)
+                    rand = random.randint(0, 5)
                     image = dice[rand]
                     grand = rand + 1
                     ggrand = grand + 1
@@ -294,7 +294,7 @@ def gameboard_4():
                                     bPx += 50
                             if (bPx == fightx1 and bPy == fighty1) or (bPx == fightx3 and bPy == fighty2) or (bPx == fightx1 and bPy == fighty3) or (bPx == fightx2 and bPy == fighty2):
                                 super_list = ["John Cena", "Jason Statham", "Bruce Hee", "Jackie Chen", "Agua man", "Pariz Hilten", "Dexter", "Steve Urkel", "Ernold Schwarzenegger", "James Bend", "The Roch", "Chack Norris", "Vin Dieser", "Super Merio", "Steve Seagal", "Jet Ri", "Wesley Sniper", "Terry Crews"]
-                                super_random = random.randint(0, 0)
+                                super_random = random.randint(0, 17)
                                 print(super_list[super_random])
                                 if super_random == 0:
                                     DISPLAYSURF.blit(pygame.transform.scale(John, (350, 450)), (0, 300))
